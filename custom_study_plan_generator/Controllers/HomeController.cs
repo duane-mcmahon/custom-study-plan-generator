@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace custom_study_plan_generator.Controllers
 {
+	[RequireHttps]
     public class HomeController : Controller
     {
         public ActionResult Index()
