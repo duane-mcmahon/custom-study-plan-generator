@@ -68,7 +68,7 @@ namespace custom_study_plan_generator
             CasAuthenticationOptions casOptions = new CasAuthenticationOptions()
             {
                 CasServerUrlBase = "https://ec2-52-88-235-117.us-west-2.compute.amazonaws.com:8443/cas-server-webapp-4.0.0",
-                CallbackPath = new PathString("/Home/Index")
+                CallbackPath = new PathString("/signin-cas")
             };
             app.UseCasAuthentication(casOptions);
         }
