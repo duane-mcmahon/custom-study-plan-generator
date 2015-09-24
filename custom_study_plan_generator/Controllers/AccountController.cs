@@ -9,6 +9,9 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using custom_study_plan_generator.Models;
+using System.Web.Security;
+using Microsoft.Owin;
+using System.Collections.Generic;
 
 namespace custom_study_plan_generator.Controllers
 {
@@ -320,6 +323,7 @@ namespace custom_study_plan_generator.Controllers
         //
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
+        /* public async Task<ActionResult> ExternalLoginCallback(string returnUrl)*/
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
@@ -344,7 +348,8 @@ namespace custom_study_plan_generator.Controllers
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
                     return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
-            }
+            } 
+
         }
 
         //

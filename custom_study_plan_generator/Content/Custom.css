@@ -1,0 +1,180 @@
+﻿@font-face {
+    font-family: Museo 300;
+    src: url(~/Content/Fonts/Museo-300.ttf);
+}
+
+body {
+    padding-top: 0px;
+}
+
+html body {
+    margin: 0px;
+}
+
+.inline {
+    display: inline-block;
+}
+
+.pagewideFont {
+    font-family: Arial sans-serif;
+    color: #242424;
+}
+
+.header {
+    height: 250px;
+    background-color: #DCDCD6;
+    padding-top: 35px; 
+}
+
+.pageTitle {
+    width: 70%;
+    height: 180px;
+    background-color: #333333;
+    margin-left: auto;
+    margin-right: auto;
+    color: white;
+    text-align: center;
+    line-height: 180px;
+    font-family: 'Museo 300';
+    font-size: 3vw;
+}
+
+.body {
+    background-image: url("Images/background.png");
+    height: calc(450px - 50px);
+    width: 100%;
+    background-size: 100% 450px;
+    padding-top: 50px;
+}
+
+.bodyBottom {
+    height: 250px;
+    background-color: #DCDCD6;
+}
+
+.footer {
+    font-family: Arial, sans-serif;
+    font-size: 1.2vw;
+    font-weight: bold;
+    color: #242424;
+    background-color: #DCDCD6;
+    padding-left: 2%;
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+.backerHome {
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    background-color: white;
+    height: 300px;
+}
+
+.textLogin {
+    width: calc(100% - 160px);
+    height: calc(300px - 120px);
+    background-color: #F6F6F4;
+    padding: 80px;
+    padding-top: 40px;
+    font-family: Arial sans-serif;
+    font-size: 1.5vw;
+    color: #242424;
+    word-wrap: break-word;
+}
+
+.textHome {
+    width: calc(100% - 40px);
+    height: calc(300px - 60px);
+    background-color: #F6F6F4;
+    padding: 20px;
+    padding-top: 40px;
+    font-family: Arial sans-serif;
+    font-size: 1.5vw;
+    color: #242424;
+    word-wrap: break-word;
+}
+
+.headingHome {
+    width: 100%;
+    text-align: center;
+    font-size: 2vw;
+    font-weight: bold;
+}
+
+.loginButton {
+    width: 120px;
+    height: 40px;
+}
+
+/* Temporary Login Button*/
+.loginButtonTemp {
+    width: 120px;
+    height: 40px;
+    margin-top: 5px;
+}
+
+/* Temporary Login button */
+#socialLoginForm {
+    text-align: center;
+}
+
+.homeInput {
+    width: 120px;
+    height: 40px;
+}
+
+.homeButton {
+    font-weight: bold;
+    font-size: 1.25vw;
+    width: 140px;
+    height: 40px;
+    cursor: pointer;
+}
+
+#loginForm {
+    text-align: center;
+}
+
+.studentIdInput {
+    height: 30px;
+    width: 90%;
+}
+
+.homeColumn1 {
+
+}
+
+.homeColumn2 {
+    padding-left: 10px;
+    padding-right: 20px;
+    border-right: 1px solid #808080;
+}
+
+.homeColumn3 {
+    padding-left: 10px;
+    width: 20%;
+    text-align: right;
+}
+
+.homeRow2 {
+    padding-top: 5px;
+}
+
+.homeInnerColumn2 {
+    padding-left: 10px;
+}
+
+.buttonHolder {
+    width: 140px;
+}
+
+.modeHolder {
+    
+}
+
+.rightAlign {
+    
+ 
+}

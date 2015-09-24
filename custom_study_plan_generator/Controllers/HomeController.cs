@@ -11,6 +11,7 @@ namespace custom_study_plan_generator.Controllers
     {
         public ActionResult Index()
         {
+            Session["dummy"] = "dummy";
             return View();
         }
 
