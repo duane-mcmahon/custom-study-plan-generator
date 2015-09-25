@@ -6,28 +6,32 @@
             </div>
             </br>
             </br>
-            <div class="modeHolder">
-                <div class="inline homeColumn1">
-                    <div class="pagewideFont">Student ID</div>
-                    </br>
-                    <div><input class="studentIdInput pagewideFont homeInput" /></div>
-                </div>
-                <div class="inline homeColumn2">
-                    <div>
-                        <div class="inline"><button class="homeButton">Create</button></div>
-                        <div class="inline pagewideFont homeInnerColumn2">Create a new study plan</div>
+                
+            @using (Html.BeginForm("CreateEdit", "Backend", FormMethod.Post, new { id = "selectionForm" }))
+            {
+                @:<div class="modeHolder">
+                    @:<div class="inline homeColumn1">
+                        <div class="pagewideFont">Student ID</div>
+                        @:</br>
+                        <div><input type="text" class="studentIdInput pagewideFont homeInput" name="studentID" /></div>
+                    @:</div>
+                    <div class="inline homeColumn2">
+                        <div>
+                            <div class="inline"><button type="submit" class="homeButton" name="create" value="create" title="Create Plan">Create</button></div>
+                            <div class="inline pagewideFont homeInnerColumn2">Create a new study plan</div>
+                        </div>
+                        <div class="homeRow2">
+                            <div class="inline"><button type="submit" class="homeButton" name="edit" value="create" title="EditPlan">Edit</button></div>
+                            <div class="inline pagewideFont homeInnerColumn2">Edit an existing study plan</div>
+                        </div>
                     </div>
-                    <div class="homeRow2">
-                        <div class="inline"><button class="homeButton">Edit</button></div>
-                        <div class="inline pagewideFont homeInnerColumn2">Edit an existing study plan</div>
+                    <div class="inline homeColumn3">
+                        <div>
+                            <div><button type="button" class="homeButton rightAlign" onclick="location.href = '../Backend/Edit';">Edit Courses</button></div>
+                        </div>
                     </div>
-                </div>
-                <div class="inline homeColumn3">
-                    <div>
-                        <div><button class="homeButton rightAlign">Edit Courses</button></div>
-                    </div>
-                </div>
-            </div>
+                @:</div>
+            }   
         </div>
     </div>
 </div>
