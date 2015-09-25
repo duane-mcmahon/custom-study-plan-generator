@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -33,6 +34,17 @@ namespace custom_study_plan_generator.Controllers
 
         public ActionResult CreatePlan()
         {
+
+            /* Sample databse connection, pulling connection string from web.config in the project root */
+            System.Configuration.Configuration rootWebConfig = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("/custom_study_plan_generator");
+            System.Configuration.ConnectionStringSettings connString;
+            connString = rootWebConfig.ConnectionStrings.ConnectionStrings["CPT331"];
+            
+            using (var con = new SqlConnection(connString.ToString()))
+            {
+
+                con.Open();
+            }
             
 
             return View();
