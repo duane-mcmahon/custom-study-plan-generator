@@ -11,20 +11,42 @@ namespace custom_study_plan_generator.Controllers
     {
         public ActionResult Index()
         {
+            /* force ASP.NET session initialsiation, needed for Google OAuth */
             Session["dummy"] = "dummy";
-            return View();
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
 
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult CreateEdit(string create)
         {
-            ViewBag.Message = "Your contact page.";
+ 
+            if (!string.IsNullOrEmpty(create))
+            {
+                return RedirectToAction("CreatePlan", "Home");
+            }
+            else
+            {
+                return RedirectToAction("EditPlan", "Home");
+            }
+
+        }
+
+        public ActionResult CreatePlan()
+        {
+            
+
+            return View();
+        }
+
+        public ActionResult EditPlan()
+        {
+            
+
+            return View();
+        }
+
+        public ActionResult EditCourse()
+        {
 
             return View();
         }

@@ -7,7 +7,7 @@
             </br>
             </br>
                 
-            @using (Html.BeginForm("CreateEdit", "Backend", FormMethod.Post, new { id = "selectionForm" }))
+            @using (Html.BeginForm("CreateEdit", "Home", FormMethod.Post, new { id = "selectionForm" }))
             {
                 @:<div class="modeHolder">
                     @:<div class="inline homeColumn1">
@@ -27,7 +27,7 @@
                     </div>
                     <div class="inline homeColumn3">
                         <div>
-                            <div><button type="button" class="homeButton rightAlign" onclick="location.href = '../Backend/Edit';">Edit Courses</button></div>
+                            <div><button type="button" class="homeButton rightAlign" onclick="location.href = '../Home/EditCourse';">Edit Courses</button></div>
                         </div>
                     </div>
                 @:</div>
