@@ -32,7 +32,7 @@ namespace custom_study_plan_generator.Controllers
 
         }
 
-        public ActionResult CreatePlan()
+        public ActionResult CreatePlan(string loadDefault, string next)
         {
 
             /* Test databse connection, pulling connection string from web.config in the project root */
@@ -47,6 +47,9 @@ namespace custom_study_plan_generator.Controllers
                 con.Open();
             }
 
+            /* ************** END TEST DATABASE *************** */
+
+            /* Create a list to send to default plan - Temporary list*/
             List<string> Courses = new List<string>()
             {
                 "Course 1",
@@ -58,6 +61,28 @@ namespace custom_study_plan_generator.Controllers
             MultiSelectList CourseList = new MultiSelectList(Courses);
 
             ViewBag.courseList = CourseList;
+
+            /* If "loadDefault" button is pressed, return the list of units to the view */
+            if (!string.IsNullOrEmpty(loadDefault))
+            {
+               
+
+                return View();
+            }
+
+            /* If "next" button is pressed, go to the next step in create plan (Exemptions) */
+            else if (!string.IsNullOrEmpty(next))
+            {
+                return RedirectToAction("Exemptions", "Home");
+            }
+
+            return View();
+
+            
+        }
+
+        public ActionResult Exemptions()
+        {
 
             return View();
         }

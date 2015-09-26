@@ -4,15 +4,15 @@
             <div class="headingHome pagewideFont">
                 Please select a mode to use
             </div>
-            </br>
-            </br>
+            <br>
+            <br>
                 
             @using (Html.BeginForm("CreateEdit", "Home", FormMethod.Post, new { id = "selectionForm" }))
             {
                 @:<div class="modeHolder">
                     @:<div class="inline homeColumn1">
                         <div class="pagewideFont">Student ID</div>
-                        @:</br>
+                        @:<br>
                         <div><input type="text" class="studentIdInput pagewideFont homeInput" name="studentID" /></div>
                     @:</div>
                     <div class="inline homeColumn2">

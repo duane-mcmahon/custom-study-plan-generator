@@ -246,7 +246,7 @@ html body {
 }
 
 .CPButton {
-    font-size: .8em;
+    font-size: .7em;
     width: 150px;
     height: 30px;
     cursor: pointer;
@@ -254,7 +254,7 @@ html body {
 }
 
 .CPButton2 {
-    font-size: .8em;
+    font-size: .7em;
     width: 150px;
     height: 30px;
     cursor: pointer;
@@ -292,6 +292,10 @@ html body {
     border-bottom: 1px solid #797979;
     border-left: 1px solid #797979;
     border-right: 1px solid #797979;
+}
+
+.active {
+    cursor: pointer;
 }
 
 .header1 {
@@ -365,6 +369,10 @@ html body {
 
 .lastRow {
     border-bottom: 1px solid #797979;
+}
+
+.marked {
+    background-color: rgba(220, 20, 60, 0.5);
 }
 
 
