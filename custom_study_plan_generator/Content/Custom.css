@@ -156,6 +156,20 @@ html body {
     cursor: pointer;
 }
 
+.logoutButton {
+    font-size: .8em;
+    width: 80px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.logoutForm {
+    width: 80px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
 #loginForm {
     text-align: center;
 }

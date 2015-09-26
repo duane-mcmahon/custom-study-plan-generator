@@ -17,10 +17,10 @@
             Custom Study Plan Generator
         </div>
     </header>
-    <nav>
+    <nav class="logoutForm">
         <form method="post" action="../Account/LogOff">
             @Html.AntiForgeryToken()
-            <button id="logoffButton" class="homeButton" type="submit" value="LogOff" name="LogOff">LogOff </button>
+            <button id="logoffButton" class="logoutButton" type="submit" value="Log Out" name="LogOff">LogOff </button>
         </form>
     </nav>
     
