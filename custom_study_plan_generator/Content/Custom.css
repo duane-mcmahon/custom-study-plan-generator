@@ -41,10 +41,12 @@ html body {
 
 .body {
     background-image: url("Images/background.png");
-    height: calc(450px - 50px);
+    height: calc(1350px - 50px);
     width: 100%;
     background-size: 100% 450px;
     padding-top: 50px;
+    background-repeat: no-repeat;
+    background-color: #DCDCD6;
 }
 
 .bodyBottom {
@@ -69,7 +71,16 @@ html body {
     margin-right: auto;
     padding: 20px;
     background-color: white;
-    height: 300px;
+    min-height: 300px;
+}
+
+.backerCP {
+    width: 75%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    background-color: white;
+    min-height: 600px;
 }
 
 .textLogin {
@@ -86,7 +97,19 @@ html body {
 
 .textHome {
     width: calc(100% - 40px);
-    height: calc(300px - 60px);
+    min-height: calc(300px - 60px);
+    background-color: #F6F6F4;
+    padding: 20px;
+    padding-top: 40px;
+    font-family: Arial sans-serif;
+    font-size: 1.5vw;
+    color: #242424;
+    word-wrap: break-word;
+}
+
+.textCP {
+    width: calc(100% - 40px);
+    min-height: calc(600px - 60px);
     background-color: #F6F6F4;
     padding: 20px;
     padding-top: 40px;
@@ -170,11 +193,179 @@ html body {
     width: 140px;
 }
 
-.modeHolder {
-    
+/*** ****************** ****/
+/*       Create Plan       */
+
+.headingCP {
+    font-size: 2vw;
+    font-weight: bold;
 }
 
-.rightAlign {
-    
- 
+.CPcol1 {
+    width: 33%;
+    position: relative;
+    top: -30px;
 }
+
+.CPcol2 {
+    width: 32%;
+    text-align: center;
+}
+
+.CPcol3 {
+    width: 33%;
+    text-align: right;
+    position: relative;
+    top: -30px;
+}
+
+.CPdescription {
+    font-size: 80%;
+    width: 35%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 10px;
+}
+
+.CPcol1desc {
+    width: 29%;
+    position: relative;
+    top: -30px;
+}
+
+.CPcol2desc {
+    width: 39%;
+    text-align: center;
+}
+
+.CPcol3desc {
+    width: 30%;
+    text-align: right;
+    position: relative;
+    top: -30px;
+}
+
+.CPButton {
+    font-size: .8em;
+    width: 150px;
+    height: 30px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.CPButton2 {
+    font-size: .8em;
+    width: 150px;
+    height: 30px;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.planTable {
+    padding-top: 50px;
+    text-align: center;
+}
+
+.planHeader {
+    width: 16%;
+    height: 30px;
+}
+
+.inlineGrid {
+    float: left;
+}
+
+.cell {
+    width: 16%;
+    height: 70px;
+}
+
+.innerCell {
+    width: 90%;
+    height: 60px;
+    margin-top: 5px;
+    margin-left: 5%;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    border-top: 1px solid #797979;
+    border-bottom: 1px solid #797979;
+    border-left: 1px solid #797979;
+    border-right: 1px solid #797979;
+}
+
+.header1 {
+    border-top: 1px solid #797979;
+    border-bottom: 1px solid #797979;
+    border-left: 1px solid #797979;
+    margin-left: 1%;
+}
+
+.header2 {
+    border-top: 1px solid #797979;
+    border-left: 1px solid #797979;
+}
+
+.header3 {
+    border-top: 1px solid #797979;
+    border-left: 1px solid #797979;
+}
+
+.header4 {
+    border-top: 1px solid #797979;
+    border-left: 1px solid #797979;
+}
+
+.header5 {
+    border-top: 1px solid #797979;
+    border-left: 1px solid #797979;
+}
+
+.header6 {
+    border-top: 1px solid #797979;
+    border-left: 1px solid #797979;
+    border-right: 1px solid #797979;
+}
+
+.col1 {
+    border-top: 1px solid #797979;
+    border-left: 1px solid #797979;
+    margin-left: 1%;
+}
+
+.col2 {
+    border-top: 1px solid #797979;
+    border-left: 1px solid #797979;
+}
+
+.col3 {
+    border-top: 1px solid #797979;
+    border-left: 1px solid #797979;
+}
+
+.col4 {
+    border-top: 1px solid #797979;
+    border-left: 1px solid #797979;
+}
+
+.col5 {
+    border-top: 1px solid #797979;
+    border-left: 1px solid #797979;
+}
+
+.col6 {
+    border-top: 1px solid #797979;
+    border-left: 1px solid #797979;
+    border-right: 1px solid #797979;
+}
+
+.row2 {
+    clear: both;
+}
+
+.lastRow {
+    border-bottom: 1px solid #797979;
+}
+
+
+

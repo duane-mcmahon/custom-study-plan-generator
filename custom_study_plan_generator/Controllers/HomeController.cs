@@ -35,7 +35,8 @@ namespace custom_study_plan_generator.Controllers
         public ActionResult CreatePlan()
         {
 
-            /* Sample databse connection, pulling connection string from web.config in the project root */
+            /* Test databse connection, pulling connection string from web.config in the project root */
+            
             System.Configuration.Configuration rootWebConfig = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("/custom_study_plan_generator");
             System.Configuration.ConnectionStringSettings connString;
             connString = rootWebConfig.ConnectionStrings.ConnectionStrings["CPT331"];
@@ -45,7 +46,18 @@ namespace custom_study_plan_generator.Controllers
 
                 con.Open();
             }
-            
+
+            List<string> Courses = new List<string>()
+            {
+                "Course 1",
+                "Course 2",
+                "Course 3"
+
+            };
+
+            MultiSelectList CourseList = new MultiSelectList(Courses);
+
+            ViewBag.courseList = CourseList;
 
             return View();
         }

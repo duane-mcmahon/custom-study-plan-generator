@@ -1,1 +1,194 @@
-﻿<h2>CreatePlan</h2>
+﻿<div class="body">
+    <div class="backerCP">
+        <div class="textCP">
+            <div class="CPcol1 inline">
+                <div class="inline">
+                    Student:
+                </div>
+                <div class="inline">
+                    XYZ
+                </div>
+            </div>
+            
+            <div class="headingCP pagewideFont inline CPcol2">
+                Create Mode
+            </div>
+            
+            <div class="CPcol3 inline">
+                <div class="inline">
+                    Course:
+                </div>
+                <div class="inline">
+                    @Html.DropDownList("CourseList", ViewBag.courseList as MultiSelectList, new { style = "width: 150px; font-size: 80%"})
+                </div>
+            </div>
+            <div class="inline CPcol1desc">
+
+            </div>
+            <div class="pagewideFont CPcol2desc inline">
+                Select a course then click "Load Default" to load the default study plan for the selected course. Click "Next" when ready to proceed
+            </div>
+            <div class="inline CPcol3desc">
+                @using (Html.BeginForm("LoadDefault", "Home", FormMethod.Post, new { id = "LoadDefaultForm" }))
+                {
+                    <button type="submit" class="CPButton" name="LoadDefault" title="Load Default Plan">Load Default</button><br/>
+                    <button type="submit" class="CPButton2" name="Next" title="Next Step">Next</button>
+                }
+            </div>
+
+            <div class="planTable">
+                <div class="row1">
+                    <div class="inlineGrid planHeader header1">
+                        Sem 1
+                    </div>
+                    <div class="inlineGrid planHeader header2">
+                        Sem 2
+                    </div>
+                    <div class="inlineGrid planHeader header3">
+                        Sem 3
+                    </div>
+                    <div class="inlineGrid planHeader header4">
+                        Sem 4
+                    </div>
+                    <div class="inlineGrid planHeader header5">
+                        Sem 5
+                    </div>
+                    <div class="inlineGrid planHeader header6">
+                        Sem 6
+                    </div>
+                </div>
+                <div class="row2">
+                    <div class="inlineGrid col1 cell">
+                        <div id ="1"class="innerCell">
+
+                        </div>
+                    </div>
+                    <div class="inlineGrid col2 cell">
+                        <div id="2" class="innerCell">
+
+                        </div>
+                    </div>
+                    <div class="inlineGrid col3 cell">
+                        <div id="3" class="innerCell">
+
+                        </div>
+                    </div>
+                    <div class="inlineGrid col4 cell">
+                        <div id="4" class="innerCell">
+
+                        </div>
+                    </div>
+                    <div class="inlineGrid col5 cell">
+                        <div id="5" class="innerCell">
+
+                        </div>
+                    </div>
+                    <div class="inlineGrid col6 cell">
+                        <div id="6" class="innerCell">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row3">
+                    <div class="inlineGrid col1 cell">
+                        <div id="7" class="innerCell">
+
+                        </div>
+                    </div>
+                    <div class="inlineGrid col2 cell">
+                        <div id="8" class="innerCell">
+
+                        </div>
+                    </div>
+                    <div class="inlineGrid col3 cell">
+                        <div id="9" class="innerCell">
+
+                        </div>
+                    </div>
+                    <div class="inlineGrid col4 cell">
+                        <div id="10" class="innerCell">
+
+                        </div>
+                    </div>
+                    <div class="inlineGrid col5 cell">
+                        <div id="11" class="innerCell">
+
+                        </div>
+                    </div>
+                    <div class="inlineGrid col6 cell">
+                        <div id="12" class="innerCell">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row4">
+                    <div class="inlineGrid col1 cell">
+                        <div id="13" class="innerCell">
+
+                        </div>
+                    </div>
+                    <div class="inlineGrid col2 cell">
+                        <div id="14" class="innerCell">
+
+                        </div>
+                    </div>
+                    <div class="inlineGrid col3 cell">
+                        <div id="15" class="innerCell">
+
+                        </div>
+                    </div>
+                    <div class="inlineGrid col4 cell">
+                        <div id="16" class="innerCell">
+
+                        </div>
+                    </div>
+                    <div class="inlineGrid col5 cell">
+                        <div id="17" class="innerCell">
+
+                        </div>
+                    </div>
+                    <div class="inlineGrid col6 cell">
+                        <div id="18" class="innerCell">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row5">
+                    <div class="inlineGrid col1 cell lastRow">
+                        <div id="19" class="innerCell">
+
+                        </div>
+                    </div>
+                    <div class="inlineGrid col2 cell lastRow">
+                        <div id="20" class="innerCell">
+
+                        </div>
+                    </div>
+                    <div class="inlineGrid col3 cell lastRow">
+                        <div id="21" class="innerCell">
+
+                        </div>
+                    </div>
+                    <div class="inlineGrid col4 cell lastRow">
+                        <div id="22" class="innerCell">
+
+                        </div>
+                    </div>
+                    <div class="inlineGrid col5 cell lastRow">
+                        <div id="23" class="innerCell">
+
+                        </div>
+                    </div>
+                    <div class="inlineGrid col6 cell lastRow">
+                        <div id="24" class="innerCell">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+
+        </div>
+    </div>
+</div>

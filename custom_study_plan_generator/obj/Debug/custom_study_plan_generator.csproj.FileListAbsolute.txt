@@ -54,7 +54,6 @@ c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator
 c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csprojResolveAssemblyReference.cache
 c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.dll
 c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.pdb
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csprojResolveAssemblyReference.cache
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\custom_study_plan_generator.dll.config
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\custom_study_plan_generator.dll
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\custom_study_plan_generator.pdb
@@ -110,3 +109,4 @@ D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_s
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\System.Web.Optimization.xml
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.dll
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.pdb
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csprojResolveAssemblyReference.cache
