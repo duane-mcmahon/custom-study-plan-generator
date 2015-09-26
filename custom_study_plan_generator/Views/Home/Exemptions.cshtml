@@ -31,11 +31,14 @@
                 Mark any exemptions, then click "Remove Exemptions" to remove selected units. Click "Next" when done.
             </div>
             <div class="inline CPcol3desc">
-                @using (Html.BeginForm("CreatePlan", "Home", FormMethod.Post, new { id = "LoadDefaultForm" }))
+                
+                <button id ="removeExemptions" type="button" class="CPButton" name="removeExemptions" value="removeExemptions" title="Remove Exemptions">Remove Exemptions</button><br />
+
+                @using (Html.BeginForm("Exemptions", "Home", FormMethod.Post, new { id = "LoadDefaultForm" }))
                 {
-                    <button type="submit" class="CPButton" name="removeExemptions" value="removeExemptions" title="Load Default Plan">Remove Exemptions</button><br />
                     <button type="submit" class="CPButton2" name="next" value="next" title="Next Step">Next</button>
                 }
+
             </div>
 
             <div class="planTable">

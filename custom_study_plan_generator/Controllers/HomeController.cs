@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 
 namespace custom_study_plan_generator.Controllers
 {
@@ -81,10 +84,36 @@ namespace custom_study_plan_generator.Controllers
             
         }
 
-        public ActionResult Exemptions()
+        public ActionResult Exemptions(string removeExemptions, string next)
         {
 
+            /* If "loadDefault" button is pressed, return the list of updated units to the view */
+            if (!string.IsNullOrEmpty(removeExemptions))
+            {
+
+
+                return View();
+            }
+
+            else if (!string.IsNullOrEmpty(next))
+            {
+                return RedirectToAction("Modify", "Home");
+            }
+
             return View();
+
+    
+        }
+
+        [HttpPost]
+        public void RemoveExemptions()
+        {
+            /* Remove exemptions from plan, return true or false */
+            /* Receives a string of unit id's to remove from the plan in the format of a string: "1,2,3,4,5" etc */
+            string data = Request["data[]"];
+
+
+
         }
 
         public ActionResult EditPlan()
