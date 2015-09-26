@@ -396,8 +396,10 @@ namespace custom_study_plan_generator.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            // Logs out of this app but not of CAS
+            // i.e. User can login to our app again without re-entering their CAS details
             AuthenticationManager.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //

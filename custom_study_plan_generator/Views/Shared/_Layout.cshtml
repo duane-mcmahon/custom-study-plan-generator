@@ -16,8 +16,13 @@
         <div class="pageTitle">
             Custom Study Plan Generator
         </div>
-
     </header>
+    <nav>
+        <form method="post" action="../Account/LogOff">
+            @Html.AntiForgeryToken()
+            <button id="logoffButton" class="homeButton" type="submit" value="LogOff" name="LogOff">LogOff </button>
+        </form>
+    </nav>
     
     @RenderBody()
     <footer class="footer">
