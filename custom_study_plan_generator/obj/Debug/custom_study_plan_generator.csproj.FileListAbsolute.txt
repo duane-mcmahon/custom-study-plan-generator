@@ -109,3 +109,4 @@ D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_s
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\System.Web.Optimization.xml
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.dll
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.pdb
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csprojResolveAssemblyReference.cache

@@ -28,7 +28,7 @@ function drop(ev, target) {
     }
 
     else {
-        alert("hello");
+      
     }
 }
 
