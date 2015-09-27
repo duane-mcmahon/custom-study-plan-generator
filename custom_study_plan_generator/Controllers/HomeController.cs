@@ -116,6 +116,25 @@ namespace custom_study_plan_generator.Controllers
 
         }
 
+        public ActionResult Modify()
+        {
+
+            /* Create a list of dummy units to send to modify page- Temporary list*/
+            List<string> Units = new List<string>()
+            {
+                "Unit 1",
+                "Unit 2",
+                "Unit 3"
+
+            };
+
+            MultiSelectList UnitList = new MultiSelectList(Units);
+
+            ViewBag.unitList = UnitList;
+
+            return View();
+        }
+
         public ActionResult EditPlan()
         {
             
