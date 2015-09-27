@@ -362,6 +362,24 @@ namespace custom_study_plan_generator.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [AllowAnonymous]
+        public ActionResult TempLogin()
+        {
+            // Temp login that acts like CAS has correctly authenticated a user
+            List<Claim> claims = new List<Claim>();
+            string tempUserName = "temp_user";
+
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, tempUserName));
+            claims.Add(new Claim(ClaimTypes.Name, tempUserName));
+            claims.Add(new Claim("http://schemas.microsoft.com/accesscontrolservice/2010/07/claims/identityprovider", tempUserName));
+
+            var identity = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
+
+            HttpContext.GetOwinContext().Authentication.SignIn(identity);
+
+            return RedirectToAction("Index", "Home");
+        }
+
         //
         // POST: /Account/ExternalLoginConfirmation
         [HttpPost]

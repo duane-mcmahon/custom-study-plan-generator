@@ -10,6 +10,7 @@ using System.Web.Script.Serialization;
 
 namespace custom_study_plan_generator.Controllers
 {
+    [Authorize]
 	[RequireHttps]
     public class HomeController : Controller
     {
