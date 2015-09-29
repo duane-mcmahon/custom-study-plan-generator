@@ -18,11 +18,11 @@ namespace custom_study_plan_generator
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Account", action = "Login", id = UrlParameter.Optional }
             );
-            routes.MapRoute(            
+           /* routes.MapRoute(            
                 name: "signin-cas",
                 url: "signin-cas",
                 defaults: new {  controller = "Account", action = "ExternalLoginCallback"});
-
+            */
         }
     }
 }
