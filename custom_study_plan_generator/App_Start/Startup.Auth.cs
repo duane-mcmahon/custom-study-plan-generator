@@ -7,12 +7,29 @@ using Microsoft.Owin.Security.Google;
 using Owin;
 using custom_study_plan_generator.Models;
 using Owin.Security.CAS;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Security;
 
 namespace custom_study_plan_generator
 {
     public partial class Startup
     {
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
+
+        public static void SetCertPolicy()
+        {
+            ServicePointManager.ServerCertificateValidationCallback += RemoteCertValidate;
+        }
+
+        private static bool RemoteCertValidate(object sender, X509Certificate cert, X509Chain chain,
+            SslPolicyErrors error)
+        {
+            // trust any cert!!!
+            return true;
+        }
+        
+        
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configure the db context, user manager and signin manager to use a single instance per request
