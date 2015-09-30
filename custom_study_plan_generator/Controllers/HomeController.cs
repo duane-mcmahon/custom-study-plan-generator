@@ -41,7 +41,7 @@ namespace custom_study_plan_generator.Controllers
 
             /* Test databse connection, pulling connection string from web.config in the project root */
             
-            System.Configuration.Configuration rootWebConfig = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("/custom_study_plan_generator");
+            /*System.Configuration.Configuration rootWebConfig = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("/custom_study_plan_generator");
             System.Configuration.ConnectionStringSettings connString;
             connString = rootWebConfig.ConnectionStrings.ConnectionStrings["CPT331"];
             
@@ -49,7 +49,7 @@ namespace custom_study_plan_generator.Controllers
             {
 
                 con.Open();
-            }
+            }*/
 
             /* ************** END TEST DATABASE *************** */
 
