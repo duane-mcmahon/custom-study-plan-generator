@@ -10,25 +10,23 @@
             @using (Html.BeginForm("CreateEdit", "Home", FormMethod.Post, new { id = "selectionForm" }))
             {
                 @:<div class="modeHolder">
-                    @:<div class="inline homeColumn1">
-                        <div class="pagewideFont">Student ID</div>
+                    @:<div class="pagewideFont inline homeColumn1">
+                        @:Student ID
                         @:<br>
                         <div><input type="text" class="studentIdInput pagewideFont homeInput" name="studentID" /></div>
                     @:</div>
                     <div class="inline homeColumn2">
                         <div>
-                            <div class="inline"><button type="submit" class="homeButton" name="create" value="create" title="Create Plan">Create</button></div>
-                            <div class="inline pagewideFont homeInnerColumn2">Create a new study plan</div>
+                            <button type="submit" class="homeButton" name="create" value="create" title="Create Plan">Create</button>
+                            Create a new study plan
                         </div>
                         <div class="homeRow2">
-                            <div class="inline"><button type="submit" class="homeButton" name="edit" value="edit" title="Edit Plan">Edit</button></div>
-                            <div class="inline pagewideFont homeInnerColumn2">Edit an existing study plan</div>
+                            <button type="submit" class="homeButton" name="edit" value="edit" title="Edit Plan">Edit</button>
+                            Edit an existing study plan
                         </div>
                     </div>
                     <div class="inline homeColumn3">
-                        <div>
-                            <div><button type="button" class="homeButton rightAlign" onclick="location.href = '../Home/EditCourse';">Edit Courses</button></div>
-                        </div>
+                        <button type="button" class="homeButton2 rightAlign" onclick="location.href = '../Home/EditCourse';">Edit Courses</button>
                     </div>
                 @:</div>
             }   
