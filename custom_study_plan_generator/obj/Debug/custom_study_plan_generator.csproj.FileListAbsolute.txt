@@ -221,3 +221,4 @@ C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csprojResolveAssemblyReference.cache
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.dll
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.pdb
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csprojResolveAssemblyReference.cache

@@ -1,252 +1,256 @@
 ﻿@Scripts.Render("~/Scripts/Modify.js")
 
 <div class="body">
-    <div class="backerEdit">
-        <div class="textEdit">
-            <div class="CPcol1 inline">
-                <div class="inline">
-                    Student:
+        <div id="backerEdit" class="backerEdit">
+            <div id="textEdit" class="textEdit">
+                <div class="CPcol1 inline">
+                    <div class="inline">
+                        Student:
+                    </div>
+                    <div class="inline">
+                        XYZ
+                    </div>
                 </div>
-                <div class="inline">
-                    XYZ
+
+                <div class="headingCP pagewideFont inline CPcol2">
+                    Create Mode
                 </div>
+
+                <div class="CPcol3 inline">
+                    <div class="inline">
+                        Course:
+                    </div>
+                    <div class="inline">
+                        Course 1
+                    </div>
+                </div>
+                <div class="inline CPcol1desc">
+
+                </div>
+                <div class="pagewideFont CPcol2desc inline">
+                    Make any manual adjustments using the unit swap space, then click "Next".
+                </div>
+                <div class="inline CPcol3desc">
+                    @using (Html.BeginForm("Final", "Home", FormMethod.Post))
+                    {
+                        <button type="submit" class="CPButton" name="next" value="next" title="Next Step">Next</button><br />
+                    }
+                </div>
+
+                <div id="planTable" class="planTable">
+                    <div class="row1">
+                        <div id ="topCell" class="inlineGrid planHeader header1">
+                            Sem 1
+                        </div>
+                        <div class="inlineGrid planHeader header2">
+                            Sem 2
+                        </div>
+                        <div class="inlineGrid planHeader header3">
+                            Sem 3
+                        </div>
+                        <div class="inlineGrid planHeader header4">
+                            Sem 4
+                        </div>
+                        <div class="inlineGrid planHeader header5">
+                            Sem 5
+                        </div>
+                        <div class="inlineGrid planHeader header6">
+                            Sem 6
+                        </div>
+                    </div>
+                    <div class="row2">
+                        <div id ="p1" class="inlineGrid col1 cell">
+                            <div id="1" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p5" class="inlineGrid col2 cell">
+                            <div id="5" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p9" class="inlineGrid col3 cell">
+                            <div id="9" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p13" class="inlineGrid col4 cell">
+                            <div id="13" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p17" class="inlineGrid col5 cell">
+                            <div id="17" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p21" class="inlineGrid col6 cell">
+                            <div id="21" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row3">
+                        <div id="p2" class="inlineGrid col1 cell">
+                            <div id="2" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p6" class="inlineGrid col2 cell">
+                            <div id="6" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p10" class="inlineGrid col3 cell">
+                            <div id="10" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p14" class="inlineGrid col4 cell">
+                            <div id="14" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p18" class="inlineGrid col5 cell">
+                            <div id="18" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p22" class="inlineGrid col6 cell">
+                            <div id="22" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row4">
+                        <div id="p3" class="inlineGrid col1 cell">
+                            <div id="3" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p7" class="inlineGrid col2 cell">
+                            <div id="7" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id ="p11" class="inlineGrid col3 cell">
+                            <div id="11" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p15" class="inlineGrid col4 cell">
+                            <div id="15" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p19" class="inlineGrid col5 cell">
+                            <div id="19" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p23" class="inlineGrid col6 cell">
+                            <div id="23" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row5">
+                        <div id="p4" class="inlineGrid col1 cell lastRow">
+                            <div id="4" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p8" class="inlineGrid col2 cell lastRow">
+                            <div id="8" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p12" class="inlineGrid col3 cell lastRow">
+                            <div id="12" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p16" class="inlineGrid col4 cell lastRow">
+                            <div id="16" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p20" class="inlineGrid col5 cell lastRow">
+                            <div id="20" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p24" class="inlineGrid col6 cell lastRow">
+                            <div id="24" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+        
+                <div class="swapSpaceHeader pagewideFont">
+                    Unit Swap Space
+                </div>
+                <div class="swapSpaceHolder">
+                    <div>
+                        @Html.DropDownList("CourseList", ViewBag.unitList as MultiSelectList, new { style = "width: 15%; font-size: 1vw" })
+                    </div>
+                    <div>
+                        <button type="button" class="modifyButton" name="addUnit" value="addUnit" title="Add a Unit">AddUnit</button><br />
+                    </div>
+                </div>
+
+           
+
+                 <div class="planTable">
+                    <div class="row1">
+                        <div class="inlineGrid col1 cell target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                        </div>
+                        <div class="inlineGrid col2 cell target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                        </div>
+                        <div class="inlineGrid col3 cell target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                        </div>
+                        <div class="inlineGrid col4 cell target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                        </div>
+                        <div class="inlineGrid col5 cell target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                        </div>
+                        <div class="inlineGrid col6 cell target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                        </div>
+
+                    </div>
+                    <div class="row2">
+                        <div class="inlineGrid col1 cell lastRow target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                        </div>
+                        <div class="inlineGrid col2 cell lastRow target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                        </div>
+                        <div class="inlineGrid col3 cell lastRow target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                        </div>
+                        <div class="inlineGrid col4 cell lastRow target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                        </div>
+                        <div class="inlineGrid col5 cell lastRow target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                        </div>
+                        <div class="inlineGrid col6 cell lastRow target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                        </div>
+
+                    </div>
+                </div>
+           
             </div>
-
-            <div class="headingCP pagewideFont inline CPcol2">
-                Create Mode
-            </div>
-
-            <div class="CPcol3 inline">
-                <div class="inline">
-                    Course:
-                </div>
-                <div class="inline">
-                    Course 1
-                </div>
-            </div>
-            <div class="inline CPcol1desc">
-
-            </div>
-            <div class="pagewideFont CPcol2desc inline">
-                Make any manual adjustments using the unit swap space, then click "Next".
-            </div>
-            <div class="inline CPcol3desc">
-                @using (Html.BeginForm("Final", "Home", FormMethod.Post))
-                {
-                    <button type="submit" class="CPButton" name="next" value="next" title="Next Step">Next</button><br />
-                }
-            </div>
-
-            <div class="planTable">
-                <div class="row1">
-                    <div class="inlineGrid planHeader header1">
-                        Sem 1
-                    </div>
-                    <div class="inlineGrid planHeader header2">
-                        Sem 2
-                    </div>
-                    <div class="inlineGrid planHeader header3">
-                        Sem 3
-                    </div>
-                    <div class="inlineGrid planHeader header4">
-                        Sem 4
-                    </div>
-                    <div class="inlineGrid planHeader header5">
-                        Sem 5
-                    </div>
-                    <div class="inlineGrid planHeader header6">
-                        Sem 6
-                    </div>
-                </div>
-                <div class="row2">
-                    <div id ="p1" class="inlineGrid col1 cell">
-                        <div id="1" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                        </div>
-                    </div>
-                    <div id="p5" class="inlineGrid col2 cell">
-                        <div id="5" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                        </div>
-                    </div>
-                    <div id="p9" class="inlineGrid col3 cell">
-                        <div id="9" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                        </div>
-                    </div>
-                    <div id="p13" class="inlineGrid col4 cell">
-                        <div id="13" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                        </div>
-                    </div>
-                    <div id="p17" class="inlineGrid col5 cell">
-                        <div id="17" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                        </div>
-                    </div>
-                    <div id="p21" class="inlineGrid col6 cell">
-                        <div id="21" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                        </div>
-                    </div>
-                </div>
-                <div class="row3">
-                    <div id="p2" class="inlineGrid col1 cell">
-                        <div id="2" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                        </div>
-                    </div>
-                    <div id="p6" class="inlineGrid col2 cell">
-                        <div id="6" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                        </div>
-                    </div>
-                    <div id="p10" class="inlineGrid col3 cell">
-                        <div id="10" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                        </div>
-                    </div>
-                    <div id="p14" class="inlineGrid col4 cell">
-                        <div id="14" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                        </div>
-                    </div>
-                    <div id="p18" class="inlineGrid col5 cell">
-                        <div id="18" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                        </div>
-                    </div>
-                    <div id="p22" class="inlineGrid col6 cell">
-                        <div id="22" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                        </div>
-                    </div>
-                </div>
-                <div class="row4">
-                    <div id="p3" class="inlineGrid col1 cell">
-                        <div id="3" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                        </div>
-                    </div>
-                    <div id="p7" class="inlineGrid col2 cell">
-                        <div id="7" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                        </div>
-                    </div>
-                    <div id ="p11" class="inlineGrid col3 cell">
-                        <div id="11" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                        </div>
-                    </div>
-                    <div id="p15" class="inlineGrid col4 cell">
-                        <div id="15" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                        </div>
-                    </div>
-                    <div id="p19" class="inlineGrid col5 cell">
-                        <div id="19" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                        </div>
-                    </div>
-                    <div id="p23" class="inlineGrid col6 cell">
-                        <div id="23" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                        </div>
-                    </div>
-                </div>
-                <div class="row5">
-                    <div id="p4" class="inlineGrid col1 cell lastRow">
-                        <div id="4" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                        </div>
-                    </div>
-                    <div id="p8" class="inlineGrid col2 cell lastRow">
-                        <div id="8" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                        </div>
-                    </div>
-                    <div id="p12" class="inlineGrid col3 cell lastRow">
-                        <div id="12" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                        </div>
-                    </div>
-                    <div id="p16" class="inlineGrid col4 cell lastRow">
-                        <div id="16" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                        </div>
-                    </div>
-                    <div id="p20" class="inlineGrid col5 cell lastRow">
-                        <div id="20" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                        </div>
-                    </div>
-                    <div id="p24" class="inlineGrid col6 cell lastRow">
-                        <div id="24" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
         </div>
-        <div class="swapSpace subHeadingCP pagewideFont">
-            Unit Swap Space
-        </div>
-        <div class="rightAlign modifyAddUnit">
-            <div>
-                @Html.DropDownList("CourseList", ViewBag.unitList as MultiSelectList, new { style = "width: 150px; font-size: 100%" })
-            </div>
-            <div>
-                <button type="button" class="CPButton2" name="addUnit" value="addUnit" title="Add a Unit">AddUnit</button><br />
-           </div>
-
-        </div>
-
-        <div class="planTable">
-            <div class="row1">
-                <div class="inlineGrid col1 cell target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
-
-                </div>
-                <div class="inlineGrid col2 cell target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
-
-                </div>
-                <div class="inlineGrid col3 cell target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
-
-                </div>
-                <div class="inlineGrid col4 cell target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
-
-                </div>
-                <div class="inlineGrid col5 cell target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
-
-                </div>
-                <div class="inlineGrid col6 cell target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
-
-                </div>
-
-            </div>
-            <div class="row2">
-                <div class="inlineGrid col1 cell lastRow target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
-
-                </div>
-                <div class="inlineGrid col2 cell lastRow target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
-
-                </div>
-                <div class="inlineGrid col3 cell lastRow target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
-
-                </div>
-                <div class="inlineGrid col4 cell lastRow target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
-
-                </div>
-                <div class="inlineGrid col5 cell lastRow target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
-
-                </div>
-                <div class="inlineGrid col6 cell lastRow target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
-
-                </div>
-
-            </div>
-        </div>
-    </div>
 </div>

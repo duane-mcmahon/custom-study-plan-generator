@@ -1,4 +1,31 @@
-﻿function allowDrop(ev) {
+﻿$(document).ready(function () {
+
+    /* Dynamic sizing of background divs and table height */
+    var widthBacker = $('#backerEdit').width();
+    var widthText = $('#textEdit').width();
+    $('#backerEdit').css("height", widthBacker * .75);
+    $('#textEdit').css("height", widthText * .73);
+
+    var heightTopCell = $('#topCell').height();
+    var heightp1 = $('#p1').height();
+
+    $('#planTable').css("height", heightTopCell + (heightp1 * 4));
+});
+
+$(window).on('resize', function () {
+    var widthBacker = $('#backerEdit').width();
+    var widthText = $('#textEdit').width();
+    $('#backerEdit').css("height", widthBacker * .75);
+    $('#textEdit').css("height", widthText * .73);
+
+    var heightTopCell = $('#topCell').height();
+    var heightp1 = $('#p1').height();
+
+    $('#planTable').css("height", heightTopCell + (heightp1 * 4));
+});
+
+
+function allowDrop(ev) {
 
     ev.preventDefault();
 }

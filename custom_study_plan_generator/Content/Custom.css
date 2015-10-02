@@ -18,7 +18,7 @@ html body {
 .pagewideFont {
     font-family: Arial sans-serif;
     color: #242424;
-   text-align: center;
+    text-align: center;
 }
 
 .rightAlign {
@@ -85,7 +85,6 @@ html body {
     margin-right: auto;
     padding: 20px;
     background-color: white;
-    min-height: 600px;
 }
 
 .backerEdit {
@@ -94,7 +93,6 @@ html body {
     margin-right: auto;
     padding: 20px;
     background-color: white;
-    min-height: 1000px;
 }
 
 .textLogin {
@@ -123,7 +121,6 @@ html body {
 
 .textCP {
     width: calc(100% - 40px);
-    min-height: calc(600px - 60px);
     background-color: #F6F6F4;
     padding: 20px;
     padding-top: 40px;
@@ -135,7 +132,6 @@ html body {
 
 .textEdit {
     width: calc(100% - 40px);
-    min-height: calc(600px - 60px);
     background-color: #F6F6F4;
     padding: 20px;
     padding-top: 40px;
@@ -178,7 +174,7 @@ html body {
     font-weight: bold;
     font-size: 1.25vw;
     width: 40%;
-    height: 50px;
+    height: 7vh;
     cursor: pointer;
     text-align: center;
 }
@@ -187,7 +183,7 @@ html body {
     font-weight: bold;
     font-size: 1.25vw;
     width: 68%;
-    height: 50px;
+    height: 7vh;
     cursor: pointer;
     text-align: center;
 }
@@ -253,11 +249,6 @@ html body {
     font-weight: bold;
 }
 
-.subHeadingCP {
-    font-size: 1.5vw;
-    font-weight: bold;
-}
-
 .CPcol1 {
     width: 33%;
     position: relative;
@@ -304,22 +295,29 @@ html body {
 
 .CPButton {
     font-size: .7em;
-    width: 150px;
-    height: 30px;
+    width: 60%;
+    height: 5vh;
     cursor: pointer;
     margin-top: 20px;
 }
 
 .CPButton2 {
     font-size: .7em;
-    width: 150px;
-    height: 30px;
+    width: 60%;
+    height: 5vh;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.modifyButton {
+    font-size: .7em;
+    width: 15%;
+    height: 5vh;
     cursor: pointer;
     margin-top: 5px;
 }
 
 .planTable {
-    padding-top: 50px;
     text-align: center;
 }
 
@@ -334,12 +332,14 @@ html body {
 
 .cell {
     width: 16%;
-    height: 82px;
+    /*height: 82px;*/
+    height: 12vh;
 }
 
 .innerCell {
     width: 90%;
-    height: 70px;
+    /*height: 70px;*/
+    height: 10vh;
     margin-top: 5px;
     margin-left: 5%;
     -moz-border-radius: 10px;
@@ -442,13 +442,20 @@ html body {
 
 /* *************** MODIFY/EDIT PAGES ******************** */
 
-.swapSpace {
-    margin-top: 20px;
+.modifyAddUnit {
+    text-align: right;
 }
 
-.modifyAddUnit {
-    position: relative;
-    top: -20px;
+.swapSpaceHeader {
+    text-align: center;
+    font-size: 1.5vw;
+    font-weight: bold;
+    padding-top: 2%;
+}
+
+.swapSpaceHolder {
+    text-align: right;
+    padding-bottom: 2%;
 }
 
 
