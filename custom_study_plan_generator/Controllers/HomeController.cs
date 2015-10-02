@@ -148,5 +148,12 @@ namespace custom_study_plan_generator.Controllers
 
             return View();
         }
+
+
+        public ActionResult SubmitPlan()
+        {
+
+            return View();
+        }
     }
 }

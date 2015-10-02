@@ -62,11 +62,11 @@ namespace custom_study_plan_generator
             //   appId: "",
             //   appSecret: "");
 
-           // app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-           // {
-            //    ClientId = "623863401464-a141i4uk8boeu1bt0v2bjhmbkat6914l.apps.googleusercontent.com",
-           //     ClientSecret = "M9VrJ6WN9s_9FXLFfpgttwuO"
-           // });
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+           {
+                ClientId = "623863401464-a141i4uk8boeu1bt0v2bjhmbkat6914l.apps.googleusercontent.com",
+               ClientSecret = "M9VrJ6WN9s_9FXLFfpgttwuO"
+           });
 
             CasAuthenticationOptions casOptions = new CasAuthenticationOptions()
             {
