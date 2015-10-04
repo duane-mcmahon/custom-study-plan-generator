@@ -1,0 +1,615 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="custom_study_plan_generatorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="course_code" />
+          </Key>
+          <Property Name="course_code" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="num_units" Type="int" Nullable="false" />
+          <Property Name="duration" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DefaultPlan">
+          <Key>
+            <PropertyRef Name="course_code" />
+            <PropertyRef Name="unit_code" />
+          </Key>
+          <Property Name="course_code" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="unit_code" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="semester" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="student_id" />
+          </Key>
+          <Property Name="student_id" Type="int" Nullable="false" />
+          <Property Name="firstname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="lastname" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StudentExemptions">
+          <Key>
+            <PropertyRef Name="student_id" />
+            <PropertyRef Name="unit_code" />
+          </Key>
+          <Property Name="student_id" Type="int" Nullable="false" />
+          <Property Name="unit_code" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="exempt" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="StudentPlan">
+          <Key>
+            <PropertyRef Name="plan_id" />
+          </Key>
+          <Property Name="plan_id" Type="int" Nullable="false" />
+          <Property Name="student_id" Type="int" Nullable="false" />
+          <Property Name="course_code" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="start_semester" Type="int" />
+        </EntityType>
+        <EntityType Name="StudentPlanUnits">
+          <Key>
+            <PropertyRef Name="plan_id" />
+            <PropertyRef Name="unit_code" />
+          </Key>
+          <Property Name="plan_id" Type="int" Nullable="false" />
+          <Property Name="unit_code" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="semester" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="unit_code" />
+          </Key>
+          <Property Name="unit_code" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="type_code" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="semester1" Type="bit" Nullable="false" />
+          <Property Name="semester2" Type="bit" Nullable="false" />
+          <Property Name="preferred_year" Type="int" />
+        </EntityType>
+        <EntityType Name="UnitPrerequisites">
+          <Key>
+            <PropertyRef Name="unit_code" />
+            <PropertyRef Name="prereq_code" />
+          </Key>
+          <Property Name="unit_code" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="prereq_code" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="mutiple_required" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UnitType">
+          <Key>
+            <PropertyRef Name="type_code" />
+          </Key>
+          <Property Name="type_code" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__DefaultPl__cours__2F10007B">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="DefaultPlan" Type="Self.DefaultPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="course_code" />
+            </Principal>
+            <Dependent Role="DefaultPlan">
+              <PropertyRef Name="course_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DefaultPl__unit___300424B4">
+          <End Role="Unit" Type="Self.Unit" Multiplicity="1" />
+          <End Role="DefaultPlan" Type="Self.DefaultPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="unit_code" />
+            </Principal>
+            <Dependent Role="DefaultPlan">
+              <PropertyRef Name="unit_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentEx__stude__30F848ED">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="StudentExemptions" Type="Self.StudentExemptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="student_id" />
+            </Principal>
+            <Dependent Role="StudentExemptions">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentEx__unit___31EC6D26">
+          <End Role="Unit" Type="Self.Unit" Multiplicity="1" />
+          <End Role="StudentExemptions" Type="Self.StudentExemptions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="unit_code" />
+            </Principal>
+            <Dependent Role="StudentExemptions">
+              <PropertyRef Name="unit_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentPl__cours__32E0915F">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="StudentPlan" Type="Self.StudentPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="course_code" />
+            </Principal>
+            <Dependent Role="StudentPlan">
+              <PropertyRef Name="course_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentPl__plan___34C8D9D1">
+          <End Role="StudentPlan" Type="Self.StudentPlan" Multiplicity="1" />
+          <End Role="StudentPlanUnits" Type="Self.StudentPlanUnits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentPlan">
+              <PropertyRef Name="plan_id" />
+            </Principal>
+            <Dependent Role="StudentPlanUnits">
+              <PropertyRef Name="plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentPl__stude__33D4B598">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="StudentPlan" Type="Self.StudentPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="student_id" />
+            </Principal>
+            <Dependent Role="StudentPlan">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentPl__unit___35BCFE0A">
+          <End Role="Unit" Type="Self.Unit" Multiplicity="1" />
+          <End Role="StudentPlanUnits" Type="Self.StudentPlanUnits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="unit_code" />
+            </Principal>
+            <Dependent Role="StudentPlanUnits">
+              <PropertyRef Name="unit_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Unit__type_code__36B12243">
+          <End Role="UnitType" Type="Self.UnitType" Multiplicity="1" />
+          <End Role="Unit" Type="Self.Unit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnitType">
+              <PropertyRef Name="type_code" />
+            </Principal>
+            <Dependent Role="Unit">
+              <PropertyRef Name="type_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="custom_study_plan_generatorModelStoreContainer">
+          <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DefaultPlan" EntityType="Self.DefaultPlan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentExemptions" EntityType="Self.StudentExemptions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentPlan" EntityType="Self.StudentPlan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StudentPlanUnits" EntityType="Self.StudentPlanUnits" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Unit" EntityType="Self.Unit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UnitPrerequisites" EntityType="Self.UnitPrerequisites" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UnitType" EntityType="Self.UnitType" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__DefaultPl__cours__2F10007B" Association="Self.FK__DefaultPl__cours__2F10007B">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="DefaultPlan" EntitySet="DefaultPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DefaultPl__unit___300424B4" Association="Self.FK__DefaultPl__unit___300424B4">
+            <End Role="Unit" EntitySet="Unit" />
+            <End Role="DefaultPlan" EntitySet="DefaultPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentEx__stude__30F848ED" Association="Self.FK__StudentEx__stude__30F848ED">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="StudentExemptions" EntitySet="StudentExemptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentEx__unit___31EC6D26" Association="Self.FK__StudentEx__unit___31EC6D26">
+            <End Role="Unit" EntitySet="Unit" />
+            <End Role="StudentExemptions" EntitySet="StudentExemptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentPl__cours__32E0915F" Association="Self.FK__StudentPl__cours__32E0915F">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="StudentPlan" EntitySet="StudentPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentPl__plan___34C8D9D1" Association="Self.FK__StudentPl__plan___34C8D9D1">
+            <End Role="StudentPlan" EntitySet="StudentPlan" />
+            <End Role="StudentPlanUnits" EntitySet="StudentPlanUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentPl__stude__33D4B598" Association="Self.FK__StudentPl__stude__33D4B598">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="StudentPlan" EntitySet="StudentPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentPl__unit___35BCFE0A" Association="Self.FK__StudentPl__unit___35BCFE0A">
+            <End Role="Unit" EntitySet="Unit" />
+            <End Role="StudentPlanUnits" EntitySet="StudentPlanUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Unit__type_code__36B12243" Association="Self.FK__Unit__type_code__36B12243">
+            <End Role="UnitType" EntitySet="UnitType" />
+            <End Role="Unit" EntitySet="Unit" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="custom_study_plan_generatorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="course_code" />
+          </Key>
+          <Property Name="course_code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="num_units" Type="Int32" Nullable="false" />
+          <Property Name="duration" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DefaultPlans" Relationship="Self.FK__DefaultPl__cours__2F10007B" FromRole="Course" ToRole="DefaultPlan" />
+          <NavigationProperty Name="StudentPlans" Relationship="Self.FK__StudentPl__cours__32E0915F" FromRole="Course" ToRole="StudentPlan" />
+        </EntityType>
+        <EntityType Name="DefaultPlan">
+          <Key>
+            <PropertyRef Name="course_code" />
+            <PropertyRef Name="unit_code" />
+          </Key>
+          <Property Name="course_code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="unit_code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="semester" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Course" Relationship="Self.FK__DefaultPl__cours__2F10007B" FromRole="DefaultPlan" ToRole="Course" />
+          <NavigationProperty Name="Unit" Relationship="Self.FK__DefaultPl__unit___300424B4" FromRole="DefaultPlan" ToRole="Unit" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="student_id" />
+          </Key>
+          <Property Name="student_id" Type="Int32" Nullable="false" />
+          <Property Name="firstname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="StudentExemptions" Relationship="Self.FK__StudentEx__stude__30F848ED" FromRole="Student" ToRole="StudentExemptions" />
+          <NavigationProperty Name="StudentPlans" Relationship="Self.FK__StudentPl__stude__33D4B598" FromRole="Student" ToRole="StudentPlan" />
+        </EntityType>
+        <EntityType Name="StudentExemption">
+          <Key>
+            <PropertyRef Name="student_id" />
+            <PropertyRef Name="unit_code" />
+          </Key>
+          <Property Name="student_id" Type="Int32" Nullable="false" />
+          <Property Name="unit_code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="exempt" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Student" Relationship="Self.FK__StudentEx__stude__30F848ED" FromRole="StudentExemptions" ToRole="Student" />
+          <NavigationProperty Name="Unit" Relationship="Self.FK__StudentEx__unit___31EC6D26" FromRole="StudentExemptions" ToRole="Unit" />
+        </EntityType>
+        <EntityType Name="StudentPlan">
+          <Key>
+            <PropertyRef Name="plan_id" />
+          </Key>
+          <Property Name="plan_id" Type="Int32" Nullable="false" />
+          <Property Name="student_id" Type="Int32" Nullable="false" />
+          <Property Name="course_code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="start_semester" Type="Int32" />
+          <NavigationProperty Name="Course" Relationship="Self.FK__StudentPl__cours__32E0915F" FromRole="StudentPlan" ToRole="Course" />
+          <NavigationProperty Name="Student" Relationship="Self.FK__StudentPl__stude__33D4B598" FromRole="StudentPlan" ToRole="Student" />
+          <NavigationProperty Name="StudentPlanUnits" Relationship="Self.FK__StudentPl__plan___34C8D9D1" FromRole="StudentPlan" ToRole="StudentPlanUnits" />
+        </EntityType>
+        <EntityType Name="StudentPlanUnit">
+          <Key>
+            <PropertyRef Name="plan_id" />
+            <PropertyRef Name="unit_code" />
+          </Key>
+          <Property Name="plan_id" Type="Int32" Nullable="false" />
+          <Property Name="unit_code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="semester" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="StudentPlan" Relationship="Self.FK__StudentPl__plan___34C8D9D1" FromRole="StudentPlanUnits" ToRole="StudentPlan" />
+          <NavigationProperty Name="Unit" Relationship="Self.FK__StudentPl__unit___35BCFE0A" FromRole="StudentPlanUnits" ToRole="Unit" />
+        </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="unit_code" />
+          </Key>
+          <Property Name="unit_code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="80" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="type_code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="semester1" Type="Boolean" Nullable="false" />
+          <Property Name="semester2" Type="Boolean" Nullable="false" />
+          <Property Name="preferred_year" Type="Int32" />
+          <NavigationProperty Name="DefaultPlans" Relationship="Self.FK__DefaultPl__unit___300424B4" FromRole="Unit" ToRole="DefaultPlan" />
+          <NavigationProperty Name="StudentExemptions" Relationship="Self.FK__StudentEx__unit___31EC6D26" FromRole="Unit" ToRole="StudentExemptions" />
+          <NavigationProperty Name="StudentPlanUnits" Relationship="Self.FK__StudentPl__unit___35BCFE0A" FromRole="Unit" ToRole="StudentPlanUnits" />
+          <NavigationProperty Name="UnitType" Relationship="Self.FK__Unit__type_code__36B12243" FromRole="Unit" ToRole="UnitType" />
+        </EntityType>
+        <EntityType Name="UnitPrerequisite">
+          <Key>
+            <PropertyRef Name="unit_code" />
+            <PropertyRef Name="prereq_code" />
+          </Key>
+          <Property Name="unit_code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="prereq_code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="mutiple_required" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UnitType">
+          <Key>
+            <PropertyRef Name="type_code" />
+          </Key>
+          <Property Name="type_code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Units" Relationship="Self.FK__Unit__type_code__36B12243" FromRole="UnitType" ToRole="Unit" />
+        </EntityType>
+        <Association Name="FK__DefaultPl__cours__2F10007B">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="DefaultPlan" Type="Self.DefaultPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="course_code" />
+            </Principal>
+            <Dependent Role="DefaultPlan">
+              <PropertyRef Name="course_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentPl__cours__32E0915F">
+          <End Role="Course" Type="Self.Course" Multiplicity="1" />
+          <End Role="StudentPlan" Type="Self.StudentPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="course_code" />
+            </Principal>
+            <Dependent Role="StudentPlan">
+              <PropertyRef Name="course_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DefaultPl__unit___300424B4">
+          <End Role="Unit" Type="Self.Unit" Multiplicity="1" />
+          <End Role="DefaultPlan" Type="Self.DefaultPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="unit_code" />
+            </Principal>
+            <Dependent Role="DefaultPlan">
+              <PropertyRef Name="unit_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentEx__stude__30F848ED">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="StudentExemptions" Type="Self.StudentExemption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="student_id" />
+            </Principal>
+            <Dependent Role="StudentExemptions">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentPl__stude__33D4B598">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="StudentPlan" Type="Self.StudentPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="student_id" />
+            </Principal>
+            <Dependent Role="StudentPlan">
+              <PropertyRef Name="student_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentEx__unit___31EC6D26">
+          <End Role="Unit" Type="Self.Unit" Multiplicity="1" />
+          <End Role="StudentExemptions" Type="Self.StudentExemption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="unit_code" />
+            </Principal>
+            <Dependent Role="StudentExemptions">
+              <PropertyRef Name="unit_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentPl__plan___34C8D9D1">
+          <End Role="StudentPlan" Type="Self.StudentPlan" Multiplicity="1" />
+          <End Role="StudentPlanUnits" Type="Self.StudentPlanUnit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StudentPlan">
+              <PropertyRef Name="plan_id" />
+            </Principal>
+            <Dependent Role="StudentPlanUnits">
+              <PropertyRef Name="plan_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__StudentPl__unit___35BCFE0A">
+          <End Role="Unit" Type="Self.Unit" Multiplicity="1" />
+          <End Role="StudentPlanUnits" Type="Self.StudentPlanUnit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="unit_code" />
+            </Principal>
+            <Dependent Role="StudentPlanUnits">
+              <PropertyRef Name="unit_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Unit__type_code__36B12243">
+          <End Role="UnitType" Type="Self.UnitType" Multiplicity="1" />
+          <End Role="Unit" Type="Self.Unit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UnitType">
+              <PropertyRef Name="type_code" />
+            </Principal>
+            <Dependent Role="Unit">
+              <PropertyRef Name="type_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="custom_study_plan_generatorEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Courses" EntityType="Self.Course" />
+          <EntitySet Name="DefaultPlans" EntityType="Self.DefaultPlan" />
+          <EntitySet Name="Students" EntityType="Self.Student" />
+          <EntitySet Name="StudentExemptions" EntityType="Self.StudentExemption" />
+          <EntitySet Name="StudentPlans" EntityType="Self.StudentPlan" />
+          <EntitySet Name="StudentPlanUnits" EntityType="Self.StudentPlanUnit" />
+          <EntitySet Name="Units" EntityType="Self.Unit" />
+          <EntitySet Name="UnitPrerequisites" EntityType="Self.UnitPrerequisite" />
+          <EntitySet Name="UnitTypes" EntityType="Self.UnitType" />
+          <AssociationSet Name="FK__DefaultPl__cours__2F10007B" Association="Self.FK__DefaultPl__cours__2F10007B">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="DefaultPlan" EntitySet="DefaultPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentPl__cours__32E0915F" Association="Self.FK__StudentPl__cours__32E0915F">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="StudentPlan" EntitySet="StudentPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DefaultPl__unit___300424B4" Association="Self.FK__DefaultPl__unit___300424B4">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="DefaultPlan" EntitySet="DefaultPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentEx__stude__30F848ED" Association="Self.FK__StudentEx__stude__30F848ED">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="StudentExemptions" EntitySet="StudentExemptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentPl__stude__33D4B598" Association="Self.FK__StudentPl__stude__33D4B598">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="StudentPlan" EntitySet="StudentPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentEx__unit___31EC6D26" Association="Self.FK__StudentEx__unit___31EC6D26">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="StudentExemptions" EntitySet="StudentExemptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentPl__plan___34C8D9D1" Association="Self.FK__StudentPl__plan___34C8D9D1">
+            <End Role="StudentPlan" EntitySet="StudentPlans" />
+            <End Role="StudentPlanUnits" EntitySet="StudentPlanUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK__StudentPl__unit___35BCFE0A" Association="Self.FK__StudentPl__unit___35BCFE0A">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="StudentPlanUnits" EntitySet="StudentPlanUnits" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Unit__type_code__36B12243" Association="Self.FK__Unit__type_code__36B12243">
+            <End Role="UnitType" EntitySet="UnitTypes" />
+            <End Role="Unit" EntitySet="Units" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="custom_study_plan_generatorModelStoreContainer" CdmEntityContainer="custom_study_plan_generatorEntities">
+          <EntitySetMapping Name="Courses">
+            <EntityTypeMapping TypeName="custom_study_plan_generatorModel.Course">
+              <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="course_code" ColumnName="course_code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="num_units" ColumnName="num_units" />
+                <ScalarProperty Name="duration" ColumnName="duration" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DefaultPlans">
+            <EntityTypeMapping TypeName="custom_study_plan_generatorModel.DefaultPlan">
+              <MappingFragment StoreEntitySet="DefaultPlan">
+                <ScalarProperty Name="course_code" ColumnName="course_code" />
+                <ScalarProperty Name="unit_code" ColumnName="unit_code" />
+                <ScalarProperty Name="semester" ColumnName="semester" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="custom_study_plan_generatorModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="student_id" ColumnName="student_id" />
+                <ScalarProperty Name="firstname" ColumnName="firstname" />
+                <ScalarProperty Name="lastname" ColumnName="lastname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentExemptions">
+            <EntityTypeMapping TypeName="custom_study_plan_generatorModel.StudentExemption">
+              <MappingFragment StoreEntitySet="StudentExemptions">
+                <ScalarProperty Name="student_id" ColumnName="student_id" />
+                <ScalarProperty Name="unit_code" ColumnName="unit_code" />
+                <ScalarProperty Name="exempt" ColumnName="exempt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentPlans">
+            <EntityTypeMapping TypeName="custom_study_plan_generatorModel.StudentPlan">
+              <MappingFragment StoreEntitySet="StudentPlan">
+                <ScalarProperty Name="plan_id" ColumnName="plan_id" />
+                <ScalarProperty Name="student_id" ColumnName="student_id" />
+                <ScalarProperty Name="course_code" ColumnName="course_code" />
+                <ScalarProperty Name="start_semester" ColumnName="start_semester" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StudentPlanUnits">
+            <EntityTypeMapping TypeName="custom_study_plan_generatorModel.StudentPlanUnit">
+              <MappingFragment StoreEntitySet="StudentPlanUnits">
+                <ScalarProperty Name="plan_id" ColumnName="plan_id" />
+                <ScalarProperty Name="unit_code" ColumnName="unit_code" />
+                <ScalarProperty Name="semester" ColumnName="semester" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Units">
+            <EntityTypeMapping TypeName="custom_study_plan_generatorModel.Unit">
+              <MappingFragment StoreEntitySet="Unit">
+                <ScalarProperty Name="unit_code" ColumnName="unit_code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="type_code" ColumnName="type_code" />
+                <ScalarProperty Name="semester1" ColumnName="semester1" />
+                <ScalarProperty Name="semester2" ColumnName="semester2" />
+                <ScalarProperty Name="preferred_year" ColumnName="preferred_year" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UnitPrerequisites">
+            <EntityTypeMapping TypeName="custom_study_plan_generatorModel.UnitPrerequisite">
+              <MappingFragment StoreEntitySet="UnitPrerequisites">
+                <ScalarProperty Name="unit_code" ColumnName="unit_code" />
+                <ScalarProperty Name="prereq_code" ColumnName="prereq_code" />
+                <ScalarProperty Name="mutiple_required" ColumnName="mutiple_required" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UnitTypes">
+            <EntityTypeMapping TypeName="custom_study_plan_generatorModel.UnitType">
+              <MappingFragment StoreEntitySet="UnitType">
+                <ScalarProperty Name="type_code" ColumnName="type_code" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

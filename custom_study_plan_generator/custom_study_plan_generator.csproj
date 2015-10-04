@@ -47,9 +47,11 @@
     </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Google.Apis">
       <HintPath>..\packages\Google.Apis.1.9.2\lib\net40\Google.Apis.dll</HintPath>
@@ -158,6 +160,8 @@
       <HintPath>..\packages\Microsoft.Net.Http.2.2.29\lib\net45\System.Net.Http.Primitives.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -233,9 +237,51 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Course.cs">
+      <DependentUpon>CPT331.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CPT331.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CPT331.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CPT331.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CPT331.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CPT331.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CPT331.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DefaultPlan.cs">
+      <DependentUpon>CPT331.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Student.cs">
+      <DependentUpon>CPT331.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StudentExemption.cs">
+      <DependentUpon>CPT331.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StudentPlan.cs">
+      <DependentUpon>CPT331.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StudentPlanUnit.cs">
+      <DependentUpon>CPT331.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\StudyPlanModel.cs" />
+    <Compile Include="Models\Unit.cs">
+      <DependentUpon>CPT331.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UnitPrerequisite.cs">
+      <DependentUpon>CPT331.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UnitType.cs">
+      <DependentUpon>CPT331.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -256,6 +302,23 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\Fonts\Museo-300.ttf" />
+    <EntityDeploy Include="Models\CPT331.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CPT331.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\CPT331.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CPT331.edmx</DependentUpon>
+      <LastGenOutput>CPT331.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\CPT331.edmx.diagram">
+      <DependentUpon>CPT331.edmx</DependentUpon>
+    </Content>
+    <Content Include="Models\CPT331.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CPT331.edmx</DependentUpon>
+      <LastGenOutput>CPT331.cs</LastGenOutput>
+    </Content>
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -315,6 +378,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
