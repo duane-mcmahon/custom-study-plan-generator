@@ -1,0 +1,67 @@
+﻿@model custom_study_plan_generator.Models.Unit
+
+<div class="CRUDHeadingHolder">
+
+    <h2>Unit Details</h2>
+
+    <div>
+        <h4>Unit</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            
+            <dt>
+                @Html.DisplayNameFor(model => model.unit_code)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.unit_code)
+            </dd>
+            
+            <dt>
+                @Html.DisplayNameFor(model => model.name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.semester1)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.semester1)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.semester2)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.semester2)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.preferred_year)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.preferred_year)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.UnitType.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.UnitType.Description)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.unit_code }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
+</div>

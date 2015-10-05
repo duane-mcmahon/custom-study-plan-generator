@@ -1,0 +1,50 @@
+﻿@model custom_study_plan_generator.Models.UnitPrerequisite
+
+<div class="CRUDHeadingHolder">
+
+    <h2>Delete Prerequisite</h2>
+
+    <h3>Are you sure you want to delete this?</h3>
+    <div>
+        <h4>UnitPrerequisite</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            
+            <dt>
+                @Html.DisplayNameFor(model => model.unit_code)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.unit_code)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.prereq_code)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.prereq_code)
+            </dd>
+            
+            <dt>
+                @Html.DisplayNameFor(model => model.mutiple_required)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.mutiple_required)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }
+    </div>
+
+</div>

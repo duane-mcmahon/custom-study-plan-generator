@@ -188,6 +188,16 @@ html body {
     text-align: center;
 }
 
+.homeButton3 {
+    font-weight: bold;
+    font-size: 1.25vw;
+    width: 68%;
+    height: 7vh;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 2%;
+}
+
 .logoutButton {
     font-size: .8em;
     width: 80px;
@@ -456,6 +466,22 @@ html body {
 .swapSpaceHolder {
     text-align: right;
     padding-bottom: 2%;
+}
+
+/* ********** CRUD Pages ********** */
+
+.table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.CRUDHeadingHolder {
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+th {
+    text-align: left;
 }
 
 

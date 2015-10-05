@@ -1,0 +1,49 @@
+﻿@Scripts.Render("~/Scripts/CRUD.js")
+@model IEnumerable<custom_study_plan_generator.Models.UnitPrerequisite>
+
+<div id="CRUDMain">
+    <div id="CRUDHeadingHolder">
+
+        <h2>Edit Prerequisites</h2>
+
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+    </div>
+    <table id="table" class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.unit_code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.prereq_code)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.mutiple_required)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.unit_code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.prereq_code)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.mutiple_required)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { unit=item.unit_code, prereq=item.prereq_code }) |
+                    @Html.ActionLink("Details", "Details", new { unit = item.unit_code, prereq = item.prereq_code }) |
+                    @Html.ActionLink("Delete", "Delete", new { unit = item.unit_code, prereq = item.prereq_code })
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</div>

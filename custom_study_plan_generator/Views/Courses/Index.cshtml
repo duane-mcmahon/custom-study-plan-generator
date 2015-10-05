@@ -1,0 +1,47 @@
+﻿@Scripts.Render("~/Scripts/CRUD.js")
+@model IEnumerable<custom_study_plan_generator.Models.Course>
+
+<div id="CRUDMain">
+    <div id="CRUDHeadingHolder">
+
+        <h2>Edit Courses</h2>
+
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+    </div>
+    <table id ="table" class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.num_units)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.duration)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.num_units)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.duration)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.course_code }) |
+                @Html.ActionLink("Details", "Details", new { id=item.course_code }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.course_code })
+            </td>
+        </tr>
+    }
+
+    </table>
+</div>

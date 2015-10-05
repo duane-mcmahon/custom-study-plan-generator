@@ -1,0 +1,40 @@
+﻿@model custom_study_plan_generator.Models.UnitPrerequisite
+
+<div class="CRUDHeadingHolder">
+
+    <h2>Prerequsite Details</h2>
+
+    <div>
+        <h4>UnitPrerequisite</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.unit_code)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.unit_code)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.prereq_code)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.prereq_code)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.mutiple_required)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.mutiple_required)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+
+</div>
