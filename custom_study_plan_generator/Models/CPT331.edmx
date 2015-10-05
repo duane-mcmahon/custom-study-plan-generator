@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="custom_study_plan_generatorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="custom_study_plan_generatorModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Course">
           <Key>
             <PropertyRef Name="course_code" />
@@ -193,6 +193,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__UnitPrere__prere__38996AB5">
+          <End Role="Unit" Type="Self.Unit" Multiplicity="1" />
+          <End Role="UnitPrerequisites" Type="Self.UnitPrerequisites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="unit_code" />
+            </Principal>
+            <Dependent Role="UnitPrerequisites">
+              <PropertyRef Name="prereq_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UnitPrere__unit___37A5467C">
+          <End Role="Unit" Type="Self.Unit" Multiplicity="1" />
+          <End Role="UnitPrerequisites" Type="Self.UnitPrerequisites" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="unit_code" />
+            </Principal>
+            <Dependent Role="UnitPrerequisites">
+              <PropertyRef Name="unit_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="custom_study_plan_generatorModelStoreContainer">
           <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DefaultPlan" EntityType="Self.DefaultPlan" Schema="dbo" store:Type="Tables" />
@@ -239,9 +263,16 @@
             <End Role="UnitType" EntitySet="UnitType" />
             <End Role="Unit" EntitySet="Unit" />
           </AssociationSet>
+          <AssociationSet Name="FK__UnitPrere__prere__38996AB5" Association="Self.FK__UnitPrere__prere__38996AB5">
+            <End Role="Unit" EntitySet="Unit" />
+            <End Role="UnitPrerequisites" EntitySet="UnitPrerequisites" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UnitPrere__unit___37A5467C" Association="Self.FK__UnitPrere__unit___37A5467C">
+            <End Role="Unit" EntitySet="Unit" />
+            <End Role="UnitPrerequisites" EntitySet="UnitPrerequisites" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="custom_study_plan_generatorModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -325,6 +356,8 @@
           <NavigationProperty Name="StudentExemptions" Relationship="Self.FK__StudentEx__unit___31EC6D26" FromRole="Unit" ToRole="StudentExemptions" />
           <NavigationProperty Name="StudentPlanUnits" Relationship="Self.FK__StudentPl__unit___35BCFE0A" FromRole="Unit" ToRole="StudentPlanUnits" />
           <NavigationProperty Name="UnitType" Relationship="Self.FK__Unit__type_code__36B12243" FromRole="Unit" ToRole="UnitType" />
+          <NavigationProperty Name="UnitPrerequisites" Relationship="custom_study_plan_generatorModel.FK__UnitPrere__prere__38996AB5" FromRole="Unit" ToRole="UnitPrerequisite" />
+          <NavigationProperty Name="UnitPrerequisites1" Relationship="custom_study_plan_generatorModel.FK__UnitPrere__unit___37A5467C" FromRole="Unit" ToRole="UnitPrerequisite" />
         </EntityType>
         <EntityType Name="UnitPrerequisite">
           <Key>
@@ -334,6 +367,8 @@
           <Property Name="unit_code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="prereq_code" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="mutiple_required" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Unit" Relationship="custom_study_plan_generatorModel.FK__UnitPrere__prere__38996AB5" FromRole="UnitPrerequisite" ToRole="Unit" />
+          <NavigationProperty Name="Unit1" Relationship="custom_study_plan_generatorModel.FK__UnitPrere__unit___37A5467C" FromRole="UnitPrerequisite" ToRole="Unit" />
         </EntityType>
         <EntityType Name="UnitType">
           <Key>
@@ -497,7 +532,39 @@
             <End Role="UnitType" EntitySet="UnitTypes" />
             <End Role="Unit" EntitySet="Units" />
           </AssociationSet>
+          <AssociationSet Name="FK__UnitPrere__prere__38996AB5" Association="custom_study_plan_generatorModel.FK__UnitPrere__prere__38996AB5">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="UnitPrerequisite" EntitySet="UnitPrerequisites" />
+          </AssociationSet>
+          <AssociationSet Name="FK__UnitPrere__unit___37A5467C" Association="custom_study_plan_generatorModel.FK__UnitPrere__unit___37A5467C">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="UnitPrerequisite" EntitySet="UnitPrerequisites" />
+          </AssociationSet>
         </EntityContainer>
+        <Association Name="FK__UnitPrere__prere__38996AB5">
+          <End Type="custom_study_plan_generatorModel.Unit" Role="Unit" Multiplicity="1" />
+          <End Type="custom_study_plan_generatorModel.UnitPrerequisite" Role="UnitPrerequisite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="unit_code" />
+            </Principal>
+            <Dependent Role="UnitPrerequisite">
+              <PropertyRef Name="prereq_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__UnitPrere__unit___37A5467C">
+          <End Type="custom_study_plan_generatorModel.Unit" Role="Unit" Multiplicity="1" />
+          <End Type="custom_study_plan_generatorModel.UnitPrerequisite" Role="UnitPrerequisite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="unit_code" />
+            </Principal>
+            <Dependent Role="UnitPrerequisite">
+              <PropertyRef Name="unit_code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

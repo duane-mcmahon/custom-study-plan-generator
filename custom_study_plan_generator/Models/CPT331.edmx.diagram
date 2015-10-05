@@ -23,6 +23,8 @@
         <AssociationConnector Association="custom_study_plan_generatorModel.FK__StudentPl__plan___34C8D9D1" ManuallyRouted="false" />
         <AssociationConnector Association="custom_study_plan_generatorModel.FK__StudentPl__unit___35BCFE0A" ManuallyRouted="false" />
         <AssociationConnector Association="custom_study_plan_generatorModel.FK__Unit__type_code__36B12243" ManuallyRouted="false" />
+        <AssociationConnector Association="custom_study_plan_generatorModel.FK__UnitPrere__prere__38996AB5" />
+        <AssociationConnector Association="custom_study_plan_generatorModel.FK__UnitPrere__unit___37A5467C" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

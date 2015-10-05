@@ -19,6 +19,8 @@ namespace custom_study_plan_generator.Models
             this.DefaultPlans = new HashSet<DefaultPlan>();
             this.StudentExemptions = new HashSet<StudentExemption>();
             this.StudentPlanUnits = new HashSet<StudentPlanUnit>();
+            this.UnitPrerequisites = new HashSet<UnitPrerequisite>();
+            this.UnitPrerequisites1 = new HashSet<UnitPrerequisite>();
         }
     
         public string unit_code { get; set; }
@@ -32,5 +34,7 @@ namespace custom_study_plan_generator.Models
         public virtual ICollection<StudentExemption> StudentExemptions { get; set; }
         public virtual ICollection<StudentPlanUnit> StudentPlanUnits { get; set; }
         public virtual UnitType UnitType { get; set; }
+        public virtual ICollection<UnitPrerequisite> UnitPrerequisites { get; set; }
+        public virtual ICollection<UnitPrerequisite> UnitPrerequisites1 { get; set; }
     }
 }

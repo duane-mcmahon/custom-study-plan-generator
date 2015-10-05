@@ -188,6 +188,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__UnitPrere__prere__38996AB5">
+    <End Role="Unit" Type="Self.Unit" Multiplicity="1" />
+    <End Role="UnitPrerequisites" Type="Self.UnitPrerequisites" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Unit">
+        <PropertyRef Name="unit_code" />
+      </Principal>
+      <Dependent Role="UnitPrerequisites">
+        <PropertyRef Name="prereq_code" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UnitPrere__unit___37A5467C">
+    <End Role="Unit" Type="Self.Unit" Multiplicity="1" />
+    <End Role="UnitPrerequisites" Type="Self.UnitPrerequisites" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Unit">
+        <PropertyRef Name="unit_code" />
+      </Principal>
+      <Dependent Role="UnitPrerequisites">
+        <PropertyRef Name="unit_code" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="custom_study_plan_generatorModelStoreContainer">
     <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DefaultPlan" EntityType="Self.DefaultPlan" Schema="dbo" store:Type="Tables" />
@@ -233,6 +257,14 @@
     <AssociationSet Name="FK__Unit__type_code__36B12243" Association="Self.FK__Unit__type_code__36B12243">
       <End Role="UnitType" EntitySet="UnitType" />
       <End Role="Unit" EntitySet="Unit" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UnitPrere__prere__38996AB5" Association="Self.FK__UnitPrere__prere__38996AB5">
+      <End Role="Unit" EntitySet="Unit" />
+      <End Role="UnitPrerequisites" EntitySet="UnitPrerequisites" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UnitPrere__unit___37A5467C" Association="Self.FK__UnitPrere__unit___37A5467C">
+      <End Role="Unit" EntitySet="Unit" />
+      <End Role="UnitPrerequisites" EntitySet="UnitPrerequisites" />
     </AssociationSet>
   </EntityContainer>
 </Schema>

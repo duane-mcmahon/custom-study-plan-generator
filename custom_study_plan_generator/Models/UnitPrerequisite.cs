@@ -17,5 +17,8 @@ namespace custom_study_plan_generator.Models
         public string unit_code { get; set; }
         public string prereq_code { get; set; }
         public bool mutiple_required { get; set; }
+    
+        public virtual Unit Unit { get; set; }
+        public virtual Unit Unit1 { get; set; }
     }
 }

@@ -38,6 +38,9 @@ namespace custom_study_plan_generator.Controllers
         // GET: UnitPrerequisites/Create
         public ActionResult Create()
         {
+            ViewBag.unit_code = new SelectList(db.Units.OrderBy(x => x.name), "unit_code", "name");
+            ViewBag.prereq_code = new SelectList(db.Units.OrderBy(x => x.name), "unit_code", "name");
+            
             return View();
         }
 
