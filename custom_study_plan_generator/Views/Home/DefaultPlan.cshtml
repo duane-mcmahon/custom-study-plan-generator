@@ -1,0 +1,309 @@
+﻿
+@Scripts.Render("~/Scripts/DefaultPlan.js")
+
+<div class="body">
+    <div id="backerDefault" class="backerCP">
+        <div id="textDefault" class="textCP">
+            <div class="CPcol1 inline">
+                <div class="inline">
+                    <!-- Available location - top left-->
+                </div>
+                <div class="inline">
+                    <!-- Avaliable location - top left -->
+                </div>
+            </div>
+
+            <div class="headingCP pagewideFont inline CPcol2">
+                Default Plan
+            </div>
+
+            <div class="CPcol3 inline">
+                <div class="inline">
+                    <!-- Available location - top right -->
+                </div>
+                <div class="inline">
+                    <!-- Available location - top right -->
+                </div>
+            </div>
+            <div class="inline CPcol1desc">
+
+            </div>
+            <div class="pagewideFont CPcol2desc inline">
+                Create or edit the default plan/path for a course. This plan will reflect the units avaialable for any given course.
+            </div>
+            <div class="inline CPcol3desc">
+                @using (Html.BeginForm("DefaultPlan", "Home", FormMethod.Get))
+                {
+                    @Html.DropDownList("courseSelect", (string)ViewBag.listValue);
+                    <input type="submit" value="Select" />
+                }
+            </div>
+
+            <div id="planTable" class="planTable">
+                <div class="row1">
+                    <div id="topCell" class="inlineGrid planHeader header1">
+                        Sem 1
+                    </div>
+                    <div class="inlineGrid planHeader header2">
+                        Sem 2
+                    </div>
+                    <div class="inlineGrid planHeader header3">
+                        Sem 3
+                    </div>
+                    <div class="inlineGrid planHeader header4">
+                        Sem 4
+                    </div>
+                    <div class="inlineGrid planHeader header5">
+                        Sem 5
+                    </div>
+                    <div class="inlineGrid planHeader header6">
+                        Sem 6
+                    </div>
+                </div>
+                @if (ViewBag.courseSelected == true) { 
+                    
+                    var count = 1;
+                    var countRow = 2;
+                    var countCell = 1;
+                    var countCol = 1;
+                    string rowClass = "";
+                    string idCell = "";
+                    string idCont = "";
+                    string col = "";
+                    foreach (var item in ViewBag.unitListSelected) {
+                                               
+                        rowClass = "row" + countRow;
+                        idCell = countCell.ToString();
+                        idCont = "p" + countCell;
+                        
+                        
+                            if (count == 1 || count == 7 || count == 13 || count == 19) {
+                                @:<div class="@rowClass">
+                                countCol = 1;    
+                            }
+
+                            col = "col" + countCol;
+
+                                    if(count == 24) {  
+                                        <div id="@idCont" class="inlineGrid @col cell  lastRow">
+                                            <div id="@idCell" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+                                                @item
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div id="@idCont" class="inlineGrid @col cell  lastRow">
+                                            <div id="@idCell" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+                                                @item
+                                            </div>
+                                        </div>
+                                    }
+                            if (count == 6 || count == 12 || count == 18 || count == 24) {
+                                @:</div>
+                            }
+
+                        count++;
+                        countRow++;
+                        countCell++;
+                        countCol++;
+                    }
+                }
+
+                else
+                {
+                    <div class="row2">
+                        <div id ="p1" class="inlineGrid col1 cell">
+                            <div id="1" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p5" class="inlineGrid col2 cell">
+                            <div id="5" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p9" class="inlineGrid col3 cell">
+                            <div id="9" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p13" class="inlineGrid col4 cell">
+                            <div id="13" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p17" class="inlineGrid col5 cell">
+                            <div id="17" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p21" class="inlineGrid col6 cell">
+                            <div id="21" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row3">
+                        <div id="p2" class="inlineGrid col1 cell">
+                            <div id="2" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p6" class="inlineGrid col2 cell">
+                            <div id="6" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p10" class="inlineGrid col3 cell">
+                            <div id="10" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p14" class="inlineGrid col4 cell">
+                            <div id="14" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p18" class="inlineGrid col5 cell">
+                            <div id="18" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p22" class="inlineGrid col6 cell">
+                            <div id="22" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row4">
+                        <div id="p3" class="inlineGrid col1 cell">
+                            <div id="3" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p7" class="inlineGrid col2 cell">
+                            <div id="7" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id ="p11" class="inlineGrid col3 cell">
+                            <div id="11" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p15" class="inlineGrid col4 cell">
+                            <div id="15" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p19" class="inlineGrid col5 cell">
+                            <div id="19" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p23" class="inlineGrid col6 cell">
+                            <div id="23" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row5">
+                        <div id="p4" class="inlineGrid col1 cell lastRow">
+                            <div id="4" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p8" class="inlineGrid col2 cell lastRow">
+                            <div id="8" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p12" class="inlineGrid col3 cell lastRow">
+                            <div id="12" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p16" class="inlineGrid col4 cell lastRow">
+                            <div id="16" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p20" class="inlineGrid col5 cell lastRow">
+                            <div id="20" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                        <div id="p24" class="inlineGrid col6 cell lastRow">
+                            <div id="24" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
+
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+
+
+            <div class="swapSpaceHeader pagewideFont">
+                Unit Swap Space
+            </div>
+            <div class="swapSpaceHolder">
+                <div>
+                    @Html.DropDownList("List", ViewBag.unitList as MultiSelectList, new { style = "width: 15%; font-size: 1vw" })
+                </div>
+                <div>
+                    <button type="button" class="modifyButton" name="addUnit" value="addUnit" title="Add a Unit">AddUnit</button><br />
+                </div>
+            </div>
+
+
+
+            <div class="planTable">
+                <div class="row1">
+                    <div class="inlineGrid col1 cell target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                    </div>
+                    <div class="inlineGrid col2 cell target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                    </div>
+                    <div class="inlineGrid col3 cell target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                    </div>
+                    <div class="inlineGrid col4 cell target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                    </div>
+                    <div class="inlineGrid col5 cell target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                    </div>
+                    <div class="inlineGrid col6 cell target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                    </div>
+
+                </div>
+                <div class="row2">
+                    <div class="inlineGrid col1 cell lastRow target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                    </div>
+                    <div class="inlineGrid col2 cell lastRow target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                    </div>
+                    <div class="inlineGrid col3 cell lastRow target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                    </div>
+                    <div class="inlineGrid col4 cell lastRow target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                    </div>
+                    <div class="inlineGrid col5 cell lastRow target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                    </div>
+                    <div class="inlineGrid col6 cell lastRow target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

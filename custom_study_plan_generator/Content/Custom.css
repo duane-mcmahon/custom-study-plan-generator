@@ -359,6 +359,7 @@ html body {
     border-bottom: 1px solid #797979;
     border-left: 1px solid #797979;
     border-right: 1px solid #797979;
+    font-size: .8vw;
 
     /* disable blue border caused by element click */
     -webkit-touch-callout: none;

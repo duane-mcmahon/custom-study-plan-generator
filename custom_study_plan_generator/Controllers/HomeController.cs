@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using custom_study_plan_generator.Models;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using System.Data.Entity;
+using custom_study_plan_generator.MetaObjects;
+using System.Diagnostics;
 
 namespace custom_study_plan_generator.Controllers
 {
@@ -20,6 +24,101 @@ namespace custom_study_plan_generator.Controllers
             Session["dummy"] = "dummy";
 
             return View();
+        }
+
+        public ActionResult DefaultPlan(string courseSelect)
+        {
+ 
+            /* open database so that it will be autmoatically disposed */
+            using (custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities())
+            {
+                /* Set the default blank course option on page load */
+                ViewBag.listValue = "Select Course";
+                
+                /* Set the list of course units to be blank (will be tailored to a course when course is selected in view */
+                ViewBag.unitListSelected = "";
+                
+                /* Initialise the courses list */
+                var courseList = new List<string>();
+                
+                /* Query the course names from the database */
+                var courseQry = from d in db.Courses
+                                orderby d.name
+                                select d.name;
+
+                /* Add distinct courses to the course list */
+                courseList.AddRange(courseQry.Distinct());
+
+                /* Supply the list of courses to the view (to be used in the drop down list) */
+                ViewBag.courseSelect = new SelectList(courseList);
+
+                /* Get all available plans */
+                var plans = from p in db.DefaultPlans
+                            select p;
+
+                /* Get all available units */
+                var units = from u in db.Units
+                            select u;   
+
+                /* If there has been a course selected and submitted in the drop down list */
+                if (!String.IsNullOrEmpty(courseSelect))
+                {
+                    /* Get the martching course and put it into a meta object */
+                    var course = (from c in db.Courses
+                                 where c.name == courseSelect
+                                 select new CourseDTO
+                                 {
+                                     course_code = c.course_code,
+                                     duration = c.duration,
+                                     name = c.name,
+                                     num_units = c.num_units
+                                 }).FirstOrDefault();
+
+                    /* Select the plan that matches the meta course */
+                    plans = plans.Where(u => u.course_code == course.course_code);
+
+                    /* Select units from the complete units list where codes match those in the selected plan */
+                    units = units.Where(u => plans.Any(p => p.unit_code == u.unit_code));
+
+                    /* Convert the matched units to only represent unit names */
+                    var unitNamesFiltered = from u in units
+                                    select u.name;
+                    
+                    /* Convert the list of unit names to a seperate list which is usable by eager loading
+                     * (This step is needed for when the database is disposed of */
+                    var selectedList = new List<string>(unitNamesFiltered);
+                    
+                    /* Pass the unit list to the view */
+                    ViewBag.unitListSelected = selectedList;
+                    /* Alert the view that a course has been selected, otherwise a blank page will be loaded */
+                    ViewBag.courseSelected = true;
+                    
+                }
+
+                else
+                {
+                    /* No course is selected, load a blank page */
+                    ViewBag.courseSelected = false;
+                }
+
+                /* Create a list of all availabe units (at the moment this is aesthetic,
+                   this list may actually be hidden from view, but this will prevent an error
+                   on selecting no course. This may also be required if a new or incomplete course is loaded 
+                   into the view */
+                var unitNames = from u in units
+                            select u.name;
+
+                /* Convert the unit names to a list, usable by eager loading */
+                var list = new List<string>(unitNames);
+                /* Sort the list alphabetically */
+                list.Sort();
+                /* Pass the list to the view */
+                ViewBag.unitList = new SelectList(list);
+
+                return View();
+            }
+
+            
         }
 
         public ActionResult CreateEdit(string create)
