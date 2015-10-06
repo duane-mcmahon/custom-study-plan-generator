@@ -19,7 +19,7 @@
             @Html.AntiForgeryToken()
             foreach (AuthenticationDescription p in loginProviders)
             {
-                <button type="submit" class="loginButton" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">CAS Login</button>
+                <button type="submit" class="loginButton" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">@p.Caption Login</button>
             }
         }
     }
