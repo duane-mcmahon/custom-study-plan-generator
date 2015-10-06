@@ -12,14 +12,33 @@
 
 </head>
 <body>
-   
-    <header id="header" class="header">
-        <div class="pageTitle">
-            Custom Study Plan Generator
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Drive", "DriveAsync", "Home")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
         </div>
-    </header>
-    @if (@User.Identity.IsAuthenticated) 
-    {
+    </div>
+
+<header id="header" class="header">
+    <div class="pageTitle">
+        Custom Study Plan Generator
+    </div>
+</header>
+@if (@User.Identity.IsAuthenticated)
+{
     <nav class="logoutForm">
         <span id="userName">@User.Identity.GetUserName()</span>
         <form method="post" action="../Account/LogOff">
@@ -27,11 +46,11 @@
             <button id="logoffButton" class="logoutButton" type="submit" value="Log Out" name="LogOff">LogOff </button>
         </form>
     </nav>
-    }
-    
-    @RenderBody()
-    <footer id ="footer" class="footer">
-        <div>&copy; @DateTime.Now.Year - Custom Study Plan Generator</div>
-    </footer>
+}
+
+@RenderBody()
+<footer id="footer" class="footer">
+    <div>&copy; @DateTime.Now.Year - Custom Study Plan Generator</div>
+</footer>
 </body>
 </html>
