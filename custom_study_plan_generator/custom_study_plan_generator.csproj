@@ -272,6 +272,7 @@
     <Compile Include="Models\DefaultPlan.cs">
       <DependentUpon>CPT331.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FileModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Student.cs">
@@ -377,6 +378,7 @@
     <Content Include="Views\Courses\Edit.cshtml" />
     <Content Include="Views\Courses\Index.cshtml" />
     <Content Include="Views\Home\DefaultPlan.cshtml" />
+    <Content Include="Views\Home\DriveAsync.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml.old" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
