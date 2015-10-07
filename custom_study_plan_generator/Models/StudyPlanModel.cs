@@ -52,10 +52,10 @@ namespace custom_study_plan_generator.Models
 
         public static void generateGoogleSpreadSheet(DriveService service, string StudentID)
         {
-            String ApplicationName = "RMIT Custom Study Plan Generator";
+           
             var file = new File();
             file.Title = StudentID;
-            file.Description = string.Format("Created via {0} at {1}", ApplicationName, DateTime.Now.ToString());
+            file.Description = string.Format("Created via {0} at {1}", service.ApplicationName, DateTime.Now.ToString());
             file.MimeType = "application/vnd.google-apps.spreadsheet";
 
             var request = service.Files.Insert(file);

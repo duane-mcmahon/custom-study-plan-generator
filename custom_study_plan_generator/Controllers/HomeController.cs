@@ -304,7 +304,7 @@ namespace custom_study_plan_generator.Controllers
             var driveService = new DriveService(new BaseClientService.Initializer
             {
                 HttpClientInitializer = result.Credential,
-                ApplicationName = "ASP.NET Google APIs MVC Sample"
+                ApplicationName = "Custom Study Plan Generator"
             });
 
             var listReq = driveService.Files.List();

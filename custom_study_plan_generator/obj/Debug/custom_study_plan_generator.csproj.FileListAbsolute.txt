@@ -382,3 +382,4 @@ C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Zlib.Portable.xml
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.dll
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.pdb
+C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csprojResolveAssemblyReference.cache
