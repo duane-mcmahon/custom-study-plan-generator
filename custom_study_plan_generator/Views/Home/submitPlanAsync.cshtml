@@ -1,0 +1,21 @@
+﻿@model custom_study_plan_generator.Models.FileModel
+
+
+@{
+    ViewBag.Title = "submitPlanAsync";
+}
+
+<h2>Plan Submitted</h2>
+
+<table>
+    <tr>
+        <td>
+            @Html.ActionLink("Download", "DownloadAsync", new
+                     {
+                         title = model.title,
+                         downloadUrl = model.DownloadUrl
+                     })
+        </td>
+    </tr>
+
+</table>
