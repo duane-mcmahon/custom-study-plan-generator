@@ -12,16 +12,10 @@ using System.Data.Entity;
 using custom_study_plan_generator.MetaObjects;
 using System.Diagnostics;
 
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
-using System.Collections.Generic;
 using custom_study_plan_generator.App_Start;
 using Google.Apis.Auth.OAuth2.Mvc;
 using Google.Apis.Download;
@@ -46,19 +40,19 @@ namespace custom_study_plan_generator.Controllers
 
         public ActionResult DefaultPlan(string courseSelect)
         {
- 
+
             /* open database so that it will be autmoatically disposed */
             using (custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities())
             {
                 /* Set the default blank course option on page load */
                 ViewBag.listValue = "Select Course";
-                
+
                 /* Set the list of course units to be blank (will be tailored to a course when course is selected in view */
                 ViewBag.unitListSelected = "";
-                
+
                 /* Initialise the courses list */
                 var courseList = new List<string>();
-                
+
                 /* Query the course names from the database */
                 var courseQry = from d in db.Courses
                                 orderby d.name
@@ -76,41 +70,52 @@ namespace custom_study_plan_generator.Controllers
 
                 /* Get all available units */
                 var units = from u in db.Units
-                            select u;   
+                            select u;
+
+                ViewBag.numUnits = 24;
 
                 /* If there has been a course selected and submitted in the drop down list */
                 if (!String.IsNullOrEmpty(courseSelect))
                 {
                     /* Get the martching course and put it into a meta object */
                     var course = (from c in db.Courses
-                                 where c.name == courseSelect
-                                 select new CourseDTO
-                                 {
-                                     course_code = c.course_code,
-                                     duration = c.duration,
-                                     name = c.name,
-                                     num_units = c.num_units
-                                 }).FirstOrDefault();
+                                  where c.name == courseSelect
+                                  select new CourseDTO
+                                  {
+                                      course_code = c.course_code,
+                                      duration = c.duration,
+                                      name = c.name,
+                                      num_units = c.num_units
+                                  }).FirstOrDefault();
+
+                    /* Send the number of units to the view for correct table size generation */
+                    ViewBag.numUnits = course.num_units;
 
                     /* Select the plan that matches the meta course */
-                    plans = plans.Where(u => u.course_code == course.course_code);
+                    plans = plans.Where(u => u.course_code == course.course_code).OrderBy(u => u.semester);
 
                     /* Select units from the complete units list where codes match those in the selected plan */
-                    units = units.Where(u => plans.Any(p => p.unit_code == u.unit_code));
+                    //units = units.Where(u => plans.Any(p => p.unit_code == u.unit_code));
+
+                    /* join the units and plans tables to make them sortable by semester */
+                    var query = db.Units.Join(plans, u => u.unit_code, p => p.unit_code, (order, plan) => new { plan.semester, order.name });
+
+                    /* sort the query by semester */
+                    query = query.OrderBy(u => u.semester);
 
                     /* Convert the matched units to only represent unit names */
-                    var unitNamesFiltered = from u in units
-                                    select u.name;
-                    
+                    var unitNamesFiltered = from u in query
+                                            select u.name;
+
                     /* Convert the list of unit names to a seperate list which is usable by eager loading
                      * (This step is needed for when the database is disposed of */
                     var selectedList = new List<string>(unitNamesFiltered);
-                    
+
                     /* Pass the unit list to the view */
                     ViewBag.unitListSelected = selectedList;
                     /* Alert the view that a course has been selected, otherwise a blank page will be loaded */
                     ViewBag.courseSelected = true;
-                    
+
                 }
 
                 else
@@ -124,7 +129,7 @@ namespace custom_study_plan_generator.Controllers
                    on selecting no course. This may also be required if a new or incomplete course is loaded 
                    into the view */
                 var unitNames = from u in units
-                            select u.name;
+                                select u.name;
 
                 /* Convert the unit names to a list, usable by eager loading */
                 var list = new List<string>(unitNames);
@@ -136,7 +141,7 @@ namespace custom_study_plan_generator.Controllers
                 return View();
             }
 
-            
+
         }
 
         public ActionResult CreateEdit(string create)

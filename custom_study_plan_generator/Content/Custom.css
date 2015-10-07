@@ -407,6 +407,18 @@ html body {
     border-right: 1px solid #797979;
 }
 
+.header7 {
+    border-top: 1px solid #797979;
+    border-left: 1px solid #797979;
+    border-right: 1px solid #797979;
+}
+
+.header8 {
+    border-top: 1px solid #797979;
+    border-left: 1px solid #797979;
+    border-right: 1px solid #797979;
+}
+
 .col1 {
     border-top: 1px solid #797979;
     border-left: 1px solid #797979;
@@ -439,11 +451,36 @@ html body {
     border-right: 1px solid #797979;
 }
 
+.col7 {
+    border-top: 1px solid #797979;
+    border-left: 1px solid #797979;
+    border-right: 1px solid #797979;
+}
+
+.col8 {
+    border-top: 1px solid #797979;
+    border-left: 1px solid #797979;
+    border-right: 1px solid #797979;
+}
+
 .row2 {
     clear: both;
 }
 
+.row3 {
+    clear: both;
+}
+
+.row4 {
+    clear: both;
+}
+
+.row5 {
+    clear: both;
+}
+
 .lastRow {
+
     border-bottom: 1px solid #797979;
 }
 
