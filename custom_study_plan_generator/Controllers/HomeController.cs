@@ -318,10 +318,12 @@ namespace custom_study_plan_generator.Controllers
 
             for (var i = 0; i < list.Items.Count; i++)
             {
-                if (list.Items[i].Title == "StudentStudyPlans")
+                if (list.Items[i].Title == "RMITStudentStudyPlans")
                 {
 
                     folder_exists = true;
+
+                    StudyPlanModel.generateGoogleSpreadSheet(driveService, step1.Title, list.Items[i].Id);
 
                 }
 
@@ -332,18 +334,33 @@ namespace custom_study_plan_generator.Controllers
                 var folder = StudyPlanModel.createDirectory(driveService, "StudentStudyPlans", "RMIT", "root");
             }
 
-            
+            listReq = driveService.Files.List();
+            listReq.Fields = "items/title,items/id";
+            list = await listReq.ExecuteAsync();
 
-            StudyPlanModel.generateGoogleSpreadSheet(driveService, step1.Title);
+            for (var i = 0; i < list.Items.Count; i++)
+            {
+                if (list.Items[i].Title == "StudentStudyPlans")
+                {
+
+                    folder_exists = true;
+
+                    StudyPlanModel.generateGoogleSpreadSheet(driveService, step1.Title, list.Items[i].Id);
+
+                }
+
+            }
+
+
 
 
             //todo...
 
-        
+
             return View(step1);
 
         }
-
+		
 
         [Authorize]
         public async Task<ActionResult> DriveAsync(CancellationToken cancellationToken)

@@ -1,4 +1,4 @@
-﻿using System;
+﻿		using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -32,12 +32,15 @@ namespace custom_study_plan_generator.Models
             body.Title = _title;
             body.Description = _description;
             body.MimeType = "application/vnd.google-apps.folder";
-            body.Parents = new List<ParentReference>() { new ParentReference() { Id = _parent } };
+            body.Parents = new List<ParentReference>() {new ParentReference() {Id = _parent}};
+            //this may or may not require the try/catch idiom. 
+
             try
             {
                 FilesResource.InsertRequest request = service.Files.Insert(body);
                 NewDirectory = request.Execute();
             }
+
             catch (Exception e)
             {
                 return null;
@@ -50,59 +53,32 @@ namespace custom_study_plan_generator.Models
 
         //generate a google spread sheet from model data in sql database
 
-        public static void generateGoogleSpreadSheet(DriveService service, string StudentID)
+        public static void generateGoogleSpreadSheet(DriveService service, string StudentID, string fileID)
         {
-           
+
             var file = new File();
             file.Title = StudentID;
             file.Description = string.Format("Created via {0} at {1}", service.ApplicationName, DateTime.Now.ToString());
             file.MimeType = "application/vnd.google-apps.spreadsheet";
-
-            var request = service.Files.Insert(file);
-            var result = request.Execute();  //.Fetch() in example
-            var spreadsheetLink = "https://spreadsheets.google.com/feeds/spreadsheets/" + result.Id;
-        }
-
-        public static File uploadFile(DriveService service, String title, String description, String parentId, String mimeType, String filename)
-        {
-            // File's metadata.
-            File body = new File();
-            body.Title = title;
-            body.Description = description;
-            body.MimeType = mimeType;
-
             // Set the parent folder.
-            if (!String.IsNullOrEmpty(parentId))
+            if (!String.IsNullOrEmpty(fileID))
             {
-                body.Parents = new List<ParentReference>() { new ParentReference() { Id = parentId } };
+                file.Parents = new List<ParentReference>() {new ParentReference() {Id = fileID}};
             }
+            var request = service.Files.Insert(file);
+            var result = request.Execute(); //.Fetch() in example
 
-            // File's content.
-            byte[] byteArray = System.IO.File.ReadAllBytes(filename);
-            MemoryStream stream = new MemoryStream(byteArray);
-
-            try
-            {
-                FilesResource.InsertMediaUpload request = service.Files.Insert(body, stream, mimeType);
-                request.Upload();
-
-                File file = request.ResponseBody;
-
-
-                return file;
-            }
-            catch (Exception e)
-            {
-                
-                return null;
-            }
         }
 
-  
- 
+
+        public static void populateGoogleSpreadSheet()
+        {
+
+        }
+
+
+
     }
-
-
 
 
 }
