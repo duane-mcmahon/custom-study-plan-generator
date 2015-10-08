@@ -17,6 +17,7 @@ namespace custom_study_plan_generator.Models
         public string course_code { get; set; }
         public string unit_code { get; set; }
         public int semester { get; set; }
+        public int unit_no { get; set; }
     
         public virtual Course Course { get; set; }
         public virtual Unit Unit { get; set; }

@@ -18,6 +18,7 @@ namespace custom_study_plan_generator.Models
         {
             this.DefaultPlans = new HashSet<DefaultPlan>();
             this.StudentPlans = new HashSet<StudentPlan>();
+            this.UnitPrerequisites = new HashSet<UnitPrerequisite>();
         }
     
         public string course_code { get; set; }
@@ -27,5 +28,6 @@ namespace custom_study_plan_generator.Models
     
         public virtual ICollection<DefaultPlan> DefaultPlans { get; set; }
         public virtual ICollection<StudentPlan> StudentPlans { get; set; }
+        public virtual ICollection<UnitPrerequisite> UnitPrerequisites { get; set; }
     }
 }
