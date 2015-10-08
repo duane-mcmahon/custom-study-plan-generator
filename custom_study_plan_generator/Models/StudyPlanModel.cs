@@ -12,7 +12,6 @@ namespace custom_study_plan_generator.Models
     public class StudyPlanModel
     {
 
-
         // Create a new Directory. This has been tested and works (by Duane) (will be called in Submit Study Plan process)
         // Documentation: https://developers.google.com/drive/v2/reference/files/insert
         // <param name="_service">a Valid authenticated DriveService</param>
@@ -52,23 +51,33 @@ namespace custom_study_plan_generator.Models
 
 
         //generate a google spread sheet from model data in sql database
-
-        public static void generateGoogleSpreadSheet(DriveService service, string StudentID, string fileID)
+        //returns the uploaded File result
+        public static File generateGoogleSpreadSheet(DriveService service, string studentID, string fileID)
         {
 
             var file = new File();
-            file.Title = StudentID;
+            file.Title = studentID;
             file.Description = string.Format("Created via {0} at {1}", service.ApplicationName, DateTime.Now.ToString());
             file.MimeType = "application/vnd.google-apps.spreadsheet";
+            
             // Set the parent folder.
             if (!String.IsNullOrEmpty(fileID))
             {
                 file.Parents = new List<ParentReference>() {new ParentReference() {Id = fileID}};
             }
+
             var request = service.Files.Insert(file);
             var result = request.Execute(); //.Fetch() in example
-
+            return result;
         }
+
+        // Adds a permission to a file. i.e. Allows sharing
+        public static void addPermission(DriveService service, string fileID, string value, string type, string role)
+        {
+            Permission permission = new Permission { Value = value, Type = type, Role = role };
+            service.Permissions.Insert(permission, fileID).Execute();
+        }
+
 
 
         public static void populateGoogleSpreadSheet()

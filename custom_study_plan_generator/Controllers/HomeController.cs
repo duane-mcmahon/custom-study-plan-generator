@@ -316,6 +316,8 @@ namespace custom_study_plan_generator.Controllers
             listReq.Fields = "items/title,items/id";
             var list = await listReq.ExecuteAsync();
 
+            File returnedFile = null;
+
             for (var i = 0; i < list.Items.Count; i++)
             {
                 if (list.Items[i].Title == "RMITStudentStudyPlans")
@@ -323,26 +325,26 @@ namespace custom_study_plan_generator.Controllers
 
                     folder_exists = true;
 
-                    StudyPlanModel.generateGoogleSpreadSheet(driveService, step1.Title, list.Items[i].Id);
+                    returnedFile = StudyPlanModel.generateGoogleSpreadSheet(driveService, step1.Title, list.Items[i].Id);
 
                 }
 
             }
 
 
-        if (folder_exists == false)
-                {
+            if (folder_exists == false)
+            {
 
                
-                    var folder = StudyPlanModel.createDirectory(driveService, "RMITStudentStudyPlans", "RMIT", "root");
+                var folder = StudyPlanModel.createDirectory(driveService, "RMITStudentStudyPlans", "RMIT", "root");
                     
-                    StudyPlanModel.generateGoogleSpreadSheet(driveService, step1.Title, folder.Id);
+                returnedFile = StudyPlanModel.generateGoogleSpreadSheet(driveService, step1.Title, folder.Id);
 
                   
 
-                }
-
-                    
+            }
+            // Permission args are currently hardcoded. Uncomment and replace STUDENTNUMBER to enable sharing of the file.
+            //StudyPlanModel.addPermission(driveService, returnedFile.Id, STUDENTNUMBER + "@student.rmit.edu.au", "user", "reader");
 
 
             //todo...
