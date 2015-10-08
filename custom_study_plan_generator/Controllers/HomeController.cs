@@ -326,38 +326,23 @@ namespace custom_study_plan_generator.Controllers
                     StudyPlanModel.generateGoogleSpreadSheet(driveService, step1.Title, list.Items[i].Id);
 
                 }
-                else
-                {
-
-                    if (folder_exists == false)
-                    {
-                        var folder = StudyPlanModel.createDirectory(driveService, "StudentStudyPlans", "RMIT", "root");
-                    }
-
-                    listReq = driveService.Files.List();
-                    listReq.Fields = "items/title,items/id";
-                    list = await listReq.ExecuteAsync();
-
-                    for (var i = 0; i < list.Items.Count; i++)
-                    {
-                        if (list.Items[i].Title == "StudentStudyPlans")
-                        {
-
-                            folder_exists = true;
-
-                            StudyPlanModel.generateGoogleSpreadSheet(driveService, step1.Title, list.Items[i].Id);
-
-                        }
-
-                    }
-                    
-                }
 
             }
 
-         
 
+        if (folder_exists == false)
+                {
 
+               
+                    var folder = StudyPlanModel.createDirectory(driveService, "StudentStudyPlans", "RMIT", "root");
+                    
+                    StudyPlanModel.generateGoogleSpreadSheet(driveService, step1.Title, folder.Id);
+
+                  
+
+                }
+
+                    
 
 
             //todo...
