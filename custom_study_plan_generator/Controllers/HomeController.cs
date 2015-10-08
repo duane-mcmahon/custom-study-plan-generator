@@ -334,7 +334,7 @@ namespace custom_study_plan_generator.Controllers
                 {
 
                
-                    var folder = StudyPlanModel.createDirectory(driveService, "StudentStudyPlans", "RMIT", "root");
+                    var folder = StudyPlanModel.createDirectory(driveService, "RMITStudentStudyPlans", "RMIT", "root");
                     
                     StudyPlanModel.generateGoogleSpreadSheet(driveService, step1.Title, folder.Id);
 
