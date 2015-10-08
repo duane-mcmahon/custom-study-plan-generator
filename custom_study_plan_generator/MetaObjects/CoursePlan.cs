@@ -12,6 +12,7 @@ namespace custom_study_plan_generator.MetaObjects
 
         }
 
+        public int position { get; set; }
         public int semester { get; set; }
         public string unit_code { get; set; }
         public string name { get; set; }

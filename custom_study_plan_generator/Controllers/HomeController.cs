@@ -238,7 +238,7 @@ namespace custom_study_plan_generator.Controllers
                     /* The list will be in order, and accessible by element number */
                     /* The list can be used to track changes to the unit position */
 
-                    var sessionQuery = db.Units.Join(plans, u => u.unit_code, p => p.unit_code, (order, plan) => new CoursePlan { semester = plan.semester, unit_code = order.unit_code, name = order.name, type_code = order.type_code, semester1 = order.semester1, semester2 = order.semester2, preferred_year = order.preferred_year });
+                    var sessionQuery = db.Units.Join(plans, u => u.unit_code, p => p.unit_code, (order, plan) => new CoursePlan { position = plan.unit_no, semester = plan.semester, unit_code = order.unit_code, name = order.name, type_code = order.type_code, semester1 = order.semester1, semester2 = order.semester2, preferred_year = order.preferred_year });
 
                     sessionQuery = sessionQuery.OrderBy(u => u.semester);
 
