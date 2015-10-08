@@ -158,53 +158,120 @@ namespace custom_study_plan_generator.Controllers
 
         }
 
-        public ActionResult CreatePlan(string loadDefault, string next)
+        public ActionResult CreatePlan(string courseSelect)
         {
 
-            /* Test databse connection, pulling connection string from web.config in the project root */
-            
-            /*System.Configuration.Configuration rootWebConfig = System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration("/custom_study_plan_generator");
-            System.Configuration.ConnectionStringSettings connString;
-            connString = rootWebConfig.ConnectionStrings.ConnectionStrings["CPT331"];
-            
-            using (var con = new SqlConnection(connString.ToString()))
+            /* open database so that it will be autmoatically disposed */
+            using (custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities())
             {
+                /* Set the default blank course option on page load */
+                ViewBag.listValue = "Select Course";
 
-                con.Open();
-            }*/
+                /* Set the list of course units to be blank (will be tailored to a course when course is selected in view */
+                ViewBag.unitListSelected = "";
 
-            /* ************** END TEST DATABASE *************** */
+                /* Initialise the courses list */
+                var courseList = new List<string>();
 
-            /* Create a list to send to default plan - Temporary list*/
-            List<string> Courses = new List<string>()
-            {
-                "Course 1",
-                "Course 2",
-                "Course 3"
+                /* Query the course names from the database */
+                var courseQry = from d in db.Courses
+                                orderby d.name
+                                select d.name;
 
-            };
+                /* Add distinct courses to the course list */
+                courseList.AddRange(courseQry.Distinct());
 
-            MultiSelectList CourseList = new MultiSelectList(Courses);
+                /* Supply the list of courses to the view (to be used in the drop down list) */
+                ViewBag.courseSelect = new SelectList(courseList);
 
-            ViewBag.courseList = CourseList;
+                /* Get all available plans */
+                var plans = from p in db.DefaultPlans
+                            select p;
 
-            /* If "loadDefault" button is pressed, return the list of units to the view */
-            if (!string.IsNullOrEmpty(loadDefault))
-            {
-               
+                /* Get all available units */
+                var units = from u in db.Units
+                            select u;
+
+                ViewBag.numUnits = 24;
+
+                /* If there has been a course selected and submitted in the drop down list */
+                if (!String.IsNullOrEmpty(courseSelect))
+                {
+                    /* Get the martching course and put it into a meta object */
+                    var course = (from c in db.Courses
+                                  where c.name == courseSelect
+                                  select new CourseDTO
+                                  {
+                                      course_code = c.course_code,
+                                      duration = c.duration,
+                                      name = c.name,
+                                      num_units = c.num_units
+                                  }).FirstOrDefault();
+
+                    /* Send the number of units to the view for correct table size generation */
+                    ViewBag.numUnits = course.num_units;
+                    Session["numUnits"] = course.num_units;
+
+                    /* Select the plan that matches the meta course */
+                    plans = plans.Where(u => u.course_code == course.course_code).OrderBy(u => u.semester);
+
+                    /* join the units and plans tables to make them sortable by semester */
+                    var query = db.Units.Join(plans, u => u.unit_code, p => p.unit_code, (order, plan) => new { plan.semester, order.name });
+
+                    /* sort the query by semester */
+                    query = query.OrderBy(u => u.semester);
+
+                    /* Convert the matched units to only represent unit names */
+                    var unitNamesFiltered = from u in query
+                                            select u.name;
+
+                    /* Convert the list of unit names to a seperate list which is usable by eager loading
+                     * (This step is needed for when the database is disposed of */
+                    var selectedList = new List<string>(unitNamesFiltered);
+
+                    /* Pass the unit list to the view */
+                    ViewBag.unitListSelected = selectedList;
+                    /* Alert the view that a course has been selected, otherwise a blank page will be loaded */
+                    ViewBag.courseSelected = true;
+
+                    /* Create a list of combined unit/default plan (CoursePlan type) objects and add them to a session variable */
+                    /* The list will be in order, and accessible by element number */
+                    /* The list can be used to track changes to the unit position */
+
+                    var sessionQuery = db.Units.Join(plans, u => u.unit_code, p => p.unit_code, (order, plan) => new CoursePlan { semester = plan.semester, unit_code = order.unit_code, name = order.name, type_code = order.type_code, semester1 = order.semester1, semester2 = order.semester2, preferred_year = order.preferred_year });
+
+                    sessionQuery = sessionQuery.OrderBy(u => u.semester);
+
+                    List<CoursePlan> sessionList = sessionQuery.ToList();
+
+                    Session["StudentPlan"] = sessionList;
+
+                }
+
+                else
+                {
+                    /* No course is selected, load a blank page */
+                    ViewBag.courseSelected = false;
+                }
+
+                /* Create a list of all availabe units (at the moment this is aesthetic,
+                   this list may actually be hidden from view, but this will prevent an error
+                   on selecting no course. This may also be required if a new or incomplete course is loaded 
+                   into the view */
+                var unitNames = from u in units
+                                select u.name;
+
+                /* Convert the unit names to a list, usable by eager loading */
+                var list = new List<string>(unitNames);
+                /* Sort the list alphabetically */
+                list.Sort();
+                /* Pass the list to the view */
+                ViewBag.unitList = new SelectList(list);
 
                 return View();
             }
 
-            /* If "next" button is pressed, go to the next step in create plan (Exemptions) */
-            else if (!string.IsNullOrEmpty(next))
-            {
-                return RedirectToAction("Exemptions", "Home");
-            }
 
-            return View();
-
-            
         }
 
         public ActionResult Exemptions(string removeExemptions, string next)

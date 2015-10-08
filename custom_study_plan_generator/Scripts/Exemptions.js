@@ -9,6 +9,18 @@
     var heightTopCell = $('#topCell').height();
     var heightp1 = $('#p1').height();
 
+    if (numUnits == 32) {
+        $('.cell').css("width", "12%");
+        $('.planHeader').css("width", "12%")
+    }
+
+    var count = 1;
+    converted.forEach(function (entry) {
+        var id = "#" + count;
+        $(id).html(entry.name);
+        count++
+    });
+
 
     /* Mark and unmark exempt units */
     $(".innerCell").click(function () {
