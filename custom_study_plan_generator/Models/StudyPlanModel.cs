@@ -6,6 +6,7 @@ using System.Web;
 using Google.Apis.Drive.v2;
 using Google.Apis.Drive.v2.Data;
 using File = Google.Apis.Drive.v2.Data.File;
+using System.Diagnostics;
 
 namespace custom_study_plan_generator.Models
 {
@@ -42,6 +43,9 @@ namespace custom_study_plan_generator.Models
 
             catch (Exception e)
             {
+
+                Debug.WriteLine(e.Message);
+
                 return null;
             }
 

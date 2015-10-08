@@ -11,15 +11,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="DefaultPlans">
-      <EntityTypeMapping TypeName="custom_study_plan_generatorModel.DefaultPlan">
-        <MappingFragment StoreEntitySet="DefaultPlan">
-          <ScalarProperty Name="course_code" ColumnName="course_code" />
-          <ScalarProperty Name="unit_code" ColumnName="unit_code" />
-          <ScalarProperty Name="semester" ColumnName="semester" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Students">
       <EntityTypeMapping TypeName="custom_study_plan_generatorModel.Student">
         <MappingFragment StoreEntitySet="Student">
@@ -48,15 +39,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="StudentPlanUnits">
-      <EntityTypeMapping TypeName="custom_study_plan_generatorModel.StudentPlanUnit">
-        <MappingFragment StoreEntitySet="StudentPlanUnits">
-          <ScalarProperty Name="plan_id" ColumnName="plan_id" />
-          <ScalarProperty Name="unit_code" ColumnName="unit_code" />
-          <ScalarProperty Name="semester" ColumnName="semester" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Units">
       <EntityTypeMapping TypeName="custom_study_plan_generatorModel.Unit">
         <MappingFragment StoreEntitySet="Unit">
@@ -72,6 +54,7 @@
     <EntitySetMapping Name="UnitPrerequisites">
       <EntityTypeMapping TypeName="custom_study_plan_generatorModel.UnitPrerequisite">
         <MappingFragment StoreEntitySet="UnitPrerequisites">
+          <ScalarProperty Name="course_code" ColumnName="course_code" />
           <ScalarProperty Name="unit_code" ColumnName="unit_code" />
           <ScalarProperty Name="prereq_code" ColumnName="prereq_code" />
           <ScalarProperty Name="mutiple_required" ColumnName="mutiple_required" />
@@ -83,6 +66,26 @@
         <MappingFragment StoreEntitySet="UnitType">
           <ScalarProperty Name="type_code" ColumnName="type_code" />
           <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DefaultPlans">
+      <EntityTypeMapping TypeName="custom_study_plan_generatorModel.DefaultPlan">
+        <MappingFragment StoreEntitySet="DefaultPlan">
+          <ScalarProperty Name="semester" ColumnName="semester" />
+          <ScalarProperty Name="unit_code" ColumnName="unit_code" />
+          <ScalarProperty Name="unit_no" ColumnName="unit_no" />
+          <ScalarProperty Name="course_code" ColumnName="course_code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StudentPlanUnits">
+      <EntityTypeMapping TypeName="custom_study_plan_generatorModel.StudentPlanUnit">
+        <MappingFragment StoreEntitySet="StudentPlanUnits">
+          <ScalarProperty Name="semester" ColumnName="semester" />
+          <ScalarProperty Name="unit_code" ColumnName="unit_code" />
+          <ScalarProperty Name="unit_no" ColumnName="unit_no" />
+          <ScalarProperty Name="plan_id" ColumnName="plan_id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

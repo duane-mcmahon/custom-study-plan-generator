@@ -12,9 +12,10 @@
   <EntityType Name="DefaultPlan">
     <Key>
       <PropertyRef Name="course_code" />
-      <PropertyRef Name="unit_code" />
+      <PropertyRef Name="unit_no" />
     </Key>
     <Property Name="course_code" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="unit_no" Type="int" Nullable="false" />
     <Property Name="unit_code" Type="nvarchar" MaxLength="10" Nullable="false" />
     <Property Name="semester" Type="int" Nullable="false" />
   </EntityType>
@@ -47,9 +48,10 @@
   <EntityType Name="StudentPlanUnits">
     <Key>
       <PropertyRef Name="plan_id" />
-      <PropertyRef Name="unit_code" />
+      <PropertyRef Name="unit_no" />
     </Key>
     <Property Name="plan_id" Type="int" Nullable="false" />
+    <Property Name="unit_no" Type="int" Nullable="false" />
     <Property Name="unit_code" Type="nvarchar" MaxLength="10" Nullable="false" />
     <Property Name="semester" Type="int" Nullable="false" />
   </EntityType>
@@ -66,9 +68,11 @@
   </EntityType>
   <EntityType Name="UnitPrerequisites">
     <Key>
+      <PropertyRef Name="course_code" />
       <PropertyRef Name="unit_code" />
       <PropertyRef Name="prereq_code" />
     </Key>
+    <Property Name="course_code" Type="nvarchar" MaxLength="10" Nullable="false" />
     <Property Name="unit_code" Type="nvarchar" MaxLength="10" Nullable="false" />
     <Property Name="prereq_code" Type="nvarchar" MaxLength="10" Nullable="false" />
     <Property Name="mutiple_required" Type="bit" Nullable="false" />
@@ -80,7 +84,7 @@
     <Property Name="type_code" Type="nvarchar" MaxLength="10" Nullable="false" />
     <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
   </EntityType>
-  <Association Name="FK__DefaultPl__cours__2F10007B">
+  <Association Name="FK__DefaultPl__cours__3B75D760">
     <End Role="Course" Type="Self.Course" Multiplicity="1" />
     <End Role="DefaultPlan" Type="Self.DefaultPlan" Multiplicity="*" />
     <ReferentialConstraint>
@@ -92,7 +96,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DefaultPl__unit___300424B4">
+  <Association Name="FK__DefaultPl__unit___3C69FB99">
     <End Role="Unit" Type="Self.Unit" Multiplicity="1" />
     <End Role="DefaultPlan" Type="Self.DefaultPlan" Multiplicity="*" />
     <ReferentialConstraint>
@@ -140,7 +144,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__StudentPl__plan___34C8D9D1">
+  <Association Name="FK__StudentPl__plan___3F466844">
     <End Role="StudentPlan" Type="Self.StudentPlan" Multiplicity="1" />
     <End Role="StudentPlanUnits" Type="Self.StudentPlanUnits" Multiplicity="*" />
     <ReferentialConstraint>
@@ -164,7 +168,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__StudentPl__unit___35BCFE0A">
+  <Association Name="FK__StudentPl__unit___403A8C7D">
     <End Role="Unit" Type="Self.Unit" Multiplicity="1" />
     <End Role="StudentPlanUnits" Type="Self.StudentPlanUnits" Multiplicity="*" />
     <ReferentialConstraint>
@@ -188,7 +192,19 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__UnitPrere__prere__38996AB5">
+  <Association Name="FK__UnitPrere__cours__4316F928">
+    <End Role="Course" Type="Self.Course" Multiplicity="1" />
+    <End Role="UnitPrerequisites" Type="Self.UnitPrerequisites" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="course_code" />
+      </Principal>
+      <Dependent Role="UnitPrerequisites">
+        <PropertyRef Name="course_code" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UnitPrere__prere__44FF419A">
     <End Role="Unit" Type="Self.Unit" Multiplicity="1" />
     <End Role="UnitPrerequisites" Type="Self.UnitPrerequisites" Multiplicity="*" />
     <ReferentialConstraint>
@@ -200,7 +216,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__UnitPrere__unit___37A5467C">
+  <Association Name="FK__UnitPrere__unit___440B1D61">
     <End Role="Unit" Type="Self.Unit" Multiplicity="1" />
     <End Role="UnitPrerequisites" Type="Self.UnitPrerequisites" Multiplicity="*" />
     <ReferentialConstraint>
@@ -222,11 +238,11 @@
     <EntitySet Name="Unit" EntityType="Self.Unit" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UnitPrerequisites" EntityType="Self.UnitPrerequisites" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="UnitType" EntityType="Self.UnitType" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__DefaultPl__cours__2F10007B" Association="Self.FK__DefaultPl__cours__2F10007B">
+    <AssociationSet Name="FK__DefaultPl__cours__3B75D760" Association="Self.FK__DefaultPl__cours__3B75D760">
       <End Role="Course" EntitySet="Course" />
       <End Role="DefaultPlan" EntitySet="DefaultPlan" />
     </AssociationSet>
-    <AssociationSet Name="FK__DefaultPl__unit___300424B4" Association="Self.FK__DefaultPl__unit___300424B4">
+    <AssociationSet Name="FK__DefaultPl__unit___3C69FB99" Association="Self.FK__DefaultPl__unit___3C69FB99">
       <End Role="Unit" EntitySet="Unit" />
       <End Role="DefaultPlan" EntitySet="DefaultPlan" />
     </AssociationSet>
@@ -242,7 +258,7 @@
       <End Role="Course" EntitySet="Course" />
       <End Role="StudentPlan" EntitySet="StudentPlan" />
     </AssociationSet>
-    <AssociationSet Name="FK__StudentPl__plan___34C8D9D1" Association="Self.FK__StudentPl__plan___34C8D9D1">
+    <AssociationSet Name="FK__StudentPl__plan___3F466844" Association="Self.FK__StudentPl__plan___3F466844">
       <End Role="StudentPlan" EntitySet="StudentPlan" />
       <End Role="StudentPlanUnits" EntitySet="StudentPlanUnits" />
     </AssociationSet>
@@ -250,7 +266,7 @@
       <End Role="Student" EntitySet="Student" />
       <End Role="StudentPlan" EntitySet="StudentPlan" />
     </AssociationSet>
-    <AssociationSet Name="FK__StudentPl__unit___35BCFE0A" Association="Self.FK__StudentPl__unit___35BCFE0A">
+    <AssociationSet Name="FK__StudentPl__unit___403A8C7D" Association="Self.FK__StudentPl__unit___403A8C7D">
       <End Role="Unit" EntitySet="Unit" />
       <End Role="StudentPlanUnits" EntitySet="StudentPlanUnits" />
     </AssociationSet>
@@ -258,11 +274,15 @@
       <End Role="UnitType" EntitySet="UnitType" />
       <End Role="Unit" EntitySet="Unit" />
     </AssociationSet>
-    <AssociationSet Name="FK__UnitPrere__prere__38996AB5" Association="Self.FK__UnitPrere__prere__38996AB5">
+    <AssociationSet Name="FK__UnitPrere__cours__4316F928" Association="Self.FK__UnitPrere__cours__4316F928">
+      <End Role="Course" EntitySet="Course" />
+      <End Role="UnitPrerequisites" EntitySet="UnitPrerequisites" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UnitPrere__prere__44FF419A" Association="Self.FK__UnitPrere__prere__44FF419A">
       <End Role="Unit" EntitySet="Unit" />
       <End Role="UnitPrerequisites" EntitySet="UnitPrerequisites" />
     </AssociationSet>
-    <AssociationSet Name="FK__UnitPrere__unit___37A5467C" Association="Self.FK__UnitPrere__unit___37A5467C">
+    <AssociationSet Name="FK__UnitPrere__unit___440B1D61" Association="Self.FK__UnitPrere__unit___440B1D61">
       <End Role="Unit" EntitySet="Unit" />
       <End Role="UnitPrerequisites" EntitySet="UnitPrerequisites" />
     </AssociationSet>

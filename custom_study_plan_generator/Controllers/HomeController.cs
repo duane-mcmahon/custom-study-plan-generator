@@ -92,16 +92,16 @@ namespace custom_study_plan_generator.Controllers
                     ViewBag.numUnits = course.num_units;
 
                     /* Select the plan that matches the meta course */
-                    plans = plans.Where(u => u.course_code == course.course_code).OrderBy(u => u.semester);
+                    plans = plans.Where(u => u.course_code == course.course_code).OrderBy(u => u.unit_no);
 
                     /* Select units from the complete units list where codes match those in the selected plan */
                     //units = units.Where(u => plans.Any(p => p.unit_code == u.unit_code));
 
                     /* join the units and plans tables to make them sortable by semester */
-                    var query = db.Units.Join(plans, u => u.unit_code, p => p.unit_code, (order, plan) => new { plan.semester, order.name });
+                    var query = db.Units.Join(plans, u => u.unit_code, p => p.unit_code, (order, plan) => new { plan.unit_no, order.name });
 
                     /* sort the query by semester */
-                    query = query.OrderBy(u => u.semester);
+                    query = query.OrderBy(u => u.unit_no);
 
                     /* Convert the matched units to only represent unit names */
                     var unitNamesFiltered = from u in query
@@ -213,13 +213,13 @@ namespace custom_study_plan_generator.Controllers
                     Session["numUnits"] = course.num_units;
 
                     /* Select the plan that matches the meta course */
-                    plans = plans.Where(u => u.course_code == course.course_code).OrderBy(u => u.semester);
+                    plans = plans.Where(u => u.course_code == course.course_code).OrderBy(u => u.unit_no);
 
                     /* join the units and plans tables to make them sortable by semester */
-                    var query = db.Units.Join(plans, u => u.unit_code, p => p.unit_code, (order, plan) => new { plan.semester, order.name });
+                    var query = db.Units.Join(plans, u => u.unit_code, p => p.unit_code, (order, plan) => new { plan.unit_no, order.name });
 
                     /* sort the query by semester */
-                    query = query.OrderBy(u => u.semester);
+                    query = query.OrderBy(u => u.unit_no);
 
                     /* Convert the matched units to only represent unit names */
                     var unitNamesFiltered = from u in query
