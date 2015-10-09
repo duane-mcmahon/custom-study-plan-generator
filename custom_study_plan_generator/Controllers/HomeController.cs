@@ -348,6 +348,7 @@ namespace custom_study_plan_generator.Controllers
         [HttpPost]
         public ActionResult submitPlan(FileModel model)
         {
+
             if (ModelState.IsValid)
             {
                 Session["Step1"] = model;
@@ -416,7 +417,9 @@ namespace custom_study_plan_generator.Controllers
 
             //todo...
 
-
+            // For javascript sharing popup
+            ViewBag.UserAccessToken = result.Credential.Token.AccessToken;
+            ViewBag.FileId = returnedFile.Id;
             return View(step1);
 
         }
@@ -429,7 +432,7 @@ namespace custom_study_plan_generator.Controllers
 
             var result = await new AuthorizationCodeMvcApp(this, new AppAuthFlowMetadata()).
                     AuthorizeAsync(cancellationToken);
-
+            
             if (result.Credential == null)
                 return new RedirectResult(result.RedirectUri);
 

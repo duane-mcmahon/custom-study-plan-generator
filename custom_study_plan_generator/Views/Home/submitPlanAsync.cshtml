@@ -4,7 +4,21 @@
 @{
     ViewBag.Title = "submitPlanAsync";
 }
-
+@section Scripts
+{
+    <!-- Code from https://developers.google.com/drive/web/manage-sharing -->
+<script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
+<script type="text/javascript">
+    init = function() {
+        s = new gapi.drive.share.ShareClient("274813241895-m1ldekhlilojq1an4tm1qfqvgcno2j8m.apps.googleusercontent.com");
+        s.setOAuthToken("@ViewBag.UserAccessToken");
+        s.setItemIds(["@ViewBag.FileId"]);
+    }
+    window.onload = function() {
+        gapi.load('drive-share', init);
+    }
+</script>
+}
 <h2>Plan Submitted</h2>
 
 <table>
@@ -15,6 +29,9 @@
                          title = Model.Title,
                          downloadUrl = Model.DownloadUrl
                      })
+        </td>
+        <td>
+            <button onclick="s.showSettingsDialog()">Share</button>
         </td>
     </tr>
 
