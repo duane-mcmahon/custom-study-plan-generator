@@ -26,13 +26,13 @@ namespace custom_study_plan_generator.Models
         }
     
         public virtual DbSet<Course> Courses { get; set; }
-        public virtual DbSet<DefaultPlan> DefaultPlans { get; set; }
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<StudentExemption> StudentExemptions { get; set; }
         public virtual DbSet<StudentPlan> StudentPlans { get; set; }
-        public virtual DbSet<StudentPlanUnit> StudentPlanUnits { get; set; }
         public virtual DbSet<Unit> Units { get; set; }
         public virtual DbSet<UnitPrerequisite> UnitPrerequisites { get; set; }
         public virtual DbSet<UnitType> UnitTypes { get; set; }
+        public virtual DbSet<DefaultPlan> DefaultPlans { get; set; }
+        public virtual DbSet<StudentPlanUnit> StudentPlanUnits { get; set; }
     }
 }

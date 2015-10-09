@@ -15,6 +15,7 @@ namespace custom_study_plan_generator.Models
     public partial class DefaultPlan
     {
         public string course_code { get; set; }
+        public int unit_no { get; set; }
         public string unit_code { get; set; }
         public int semester { get; set; }
     

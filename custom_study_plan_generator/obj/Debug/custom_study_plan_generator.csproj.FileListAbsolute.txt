@@ -286,7 +286,16 @@ D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_s
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Zlib.Portable.xml
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csproj.App.config
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csprojResolveAssemblyReference.cache
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\BouncyCastle.Crypto.dll
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.dll
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.Mvc4.dll
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.PlatformServices.dll
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Core.dll
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\BouncyCastle.Crypto.pdb
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.Mvc4.pdb
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.Mvc4.xml
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csproj.App.config
+C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csprojResolveAssemblyReference.cache
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\custom_study_plan_generator.dll.config
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\custom_study_plan_generator.dll
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\custom_study_plan_generator.pdb
@@ -371,20 +380,11 @@ C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Net.Http.Primitives.xml
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Helpers.xml
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Mvc.xml
+C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Optimization.xml
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Razor.xml
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.WebPages.xml
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.WebPages.Deployment.xml
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.WebPages.Razor.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Optimization.xml
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Zlib.Portable.xml
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.dll
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csprojResolveAssemblyReference.cache
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\BouncyCastle.Crypto.dll
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.dll
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.Mvc4.dll
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.PlatformServices.dll
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Core.dll
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\BouncyCastle.Crypto.pdb
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.Mvc4.pdb
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.Mvc4.xml
