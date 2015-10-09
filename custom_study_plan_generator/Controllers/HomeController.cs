@@ -392,7 +392,7 @@ namespace custom_study_plan_generator.Controllers
 
                     folder_exists = true;
 
-                    returnedFile = StudyPlanModel.generateGoogleSpreadSheet(driveService, step1.Title, list.Items[i].Id);
+                    returnedFile = StudyPlanModel.generateGoogleSpreadSheet(driveService, step1.Title, list.Items[i].Id, list);
 
                 }
 
