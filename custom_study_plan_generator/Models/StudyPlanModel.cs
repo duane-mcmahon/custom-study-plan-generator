@@ -76,7 +76,7 @@ namespace custom_study_plan_generator.Models
             {
                 for (var i = 0; i < list.Items.Count; i++)
                 {
-                    if (list.Items[i].Title == studentID)
+                    if ((list.Items[i].Parents.Any(p => p.Id == fileID)) || (list.Items[i].Title == studentID) )
                     {
                         // File exists in the drive already!
                         // Yes... overwrite the file
