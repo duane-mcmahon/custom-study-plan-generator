@@ -76,7 +76,7 @@ namespace custom_study_plan_generator.Models
                 if (list.Items[i].Parents != null)
                 {
 
-                    if (list.Items[i].Parents == file.Parents && list.Items[i].Title == studentID)
+                    if (list.Items[i].Parents.Equals(file.Parents) && list.Items[i].Title == studentID)
                     {
 
                         // File exists in the drive already!
