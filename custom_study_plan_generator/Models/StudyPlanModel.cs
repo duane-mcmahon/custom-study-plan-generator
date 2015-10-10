@@ -28,7 +28,7 @@ namespace custom_study_plan_generator.Models
             body.Title = _title;
             body.Description = _description;
             body.MimeType = "application/vnd.google-apps.folder";
-            body.Parents = new List<ParentReference>() {new ParentReference() {Id = _parent}};
+            body.Parents = new List<ParentReference>() { new ParentReference() { Id = _parent } };
             //this may or may not require the try/catch idiom. 
 
             try
@@ -53,31 +53,32 @@ namespace custom_study_plan_generator.Models
         //generate a google spread sheet from model data in sql database
         //returns the uploaded File result
         public static File generateGoogleSpreadSheet(DriveService service, string studentID, string fileID,
-            FileList list = null)
+            FileList list)
         {
 
             var file = new File();
             file.Title = studentID;
             file.Description = string.Format("Created via {0} at {1}", service.ApplicationName, DateTime.Now.ToString());
             file.MimeType = "application/vnd.google-apps.spreadsheet";
+            File result = null;
             Boolean file_exists = false;
             // Set the parent folder.
-            if (!String.IsNullOrEmpty(fileID))
-            {
-                file.Parents = new List<ParentReference>() {new ParentReference() {Id = fileID}};
-            }
+
+            file.Parents = new List<ParentReference>() { new ParentReference() { Id = fileID } };
 
 
-            File result = null;
 
             //check if file with same title exists - it does update, otherwise insert.
             //sample code (untested):
-            if (list != null)
+
+            for (var i = 0; i < list.Items.Count; i++)
             {
-                for (var i = 0; i < list.Items.Count; i++)
+                if (list.Items[i].Parents != null)
                 {
-                    if ((list.Items[i].Parents.Any(p => p.Id == fileID)) & (list.Items[i].Title == studentID) )
+
+                    if (list.Items[i].Parents.Any(p => p.Id == fileID) && list.Items[i].Title == studentID)
                     {
+
                         // File exists in the drive already!
                         // Yes... overwrite the file
 
@@ -107,10 +108,42 @@ namespace custom_study_plan_generator.Models
 
         }
 
+        //generate a google spread sheet from model data in sql database
+        //returns the uploaded File result
+        public static File generateGoogleSpreadSheet(DriveService service, string studentID, string fileID)
+        {
+
+            var file = new File();
+            file.Title = studentID;
+            file.Description = string.Format("Created via {0} at {1}", service.ApplicationName, DateTime.Now.ToString());
+            file.MimeType = "application/vnd.google-apps.spreadsheet";
+
+            // Set the parent folder.
+            if (!String.IsNullOrEmpty(fileID))
+            {
+                file.Parents = new List<ParentReference>() { new ParentReference() { Id = fileID } };
+            }
+
+
+
+
+
+
+            var request = service.Files.Insert(file);
+
+            var result = request.Execute();
+
+
+
+
+            return result;
+
+        }
+
         // Adds a permission to a file. i.e. Allows sharing
         public static void addPermission(DriveService service, string fileID, string value, string type, string role)
         {
-            Permission permission = new Permission {Value = value, Type = type, Role = role};
+            Permission permission = new Permission { Value = value, Type = type, Role = role };
             service.Permissions.Insert(permission, fileID).Execute();
         }
 

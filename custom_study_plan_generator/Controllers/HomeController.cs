@@ -359,7 +359,6 @@ namespace custom_study_plan_generator.Controllers
             // errors
             return View(model);
         }
-
         [Authorize]
         public async Task<ActionResult> submitPlanAsync(CancellationToken cancellationToken)
         {
@@ -383,7 +382,7 @@ namespace custom_study_plan_generator.Controllers
 
             var listReq = driveService.Files.List();
             listReq.Fields = "items/title,items/id";
-            var list = await listReq.ExecuteAsync();
+            FileList list = await listReq.ExecuteAsync();
 
             File returnedFile = null;
 
@@ -404,12 +403,12 @@ namespace custom_study_plan_generator.Controllers
             if (folder_exists == false)
             {
 
-               
+
                 var folder = StudyPlanModel.createDirectory(driveService, "RMITStudentStudyPlans", "RMIT", "root");
-                    
+
                 returnedFile = StudyPlanModel.generateGoogleSpreadSheet(driveService, step1.Title, folder.Id);
 
-                  
+
 
             }
             // Permission args are currently hardcoded. Uncomment and replace STUDENTNUMBER to enable sharing of the file.
@@ -424,7 +423,7 @@ namespace custom_study_plan_generator.Controllers
             return View(step1);
 
         }
-		
+
 
         [Authorize]
         public async Task<ActionResult> DriveAsync(CancellationToken cancellationToken)
@@ -433,14 +432,14 @@ namespace custom_study_plan_generator.Controllers
 
             var result = await new AuthorizationCodeMvcApp(this, new AppAuthFlowMetadata()).
                     AuthorizeAsync(cancellationToken);
-            
+
             if (result.Credential == null)
                 return new RedirectResult(result.RedirectUri);
 
             var driveService = new DriveService(new BaseClientService.Initializer
             {
                 HttpClientInitializer = result.Credential,
-                ApplicationName = "ASP.NET Google APIs MVC Sample"
+                ApplicationName = "Custom Study Plan Generator"
             });
 
             var listReq = driveService.Files.List();
@@ -459,7 +458,5 @@ namespace custom_study_plan_generator.Controllers
             return View(items);
         }
     }
-
- 
 
 }
