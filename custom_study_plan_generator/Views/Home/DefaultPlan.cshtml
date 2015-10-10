@@ -1,4 +1,5 @@
 ﻿@Scripts.Render("~/Scripts/DefaultPlan.js")
+@using custom_study_plan_generator.Models
 
 <div class="body">
     <div id="backerDefault" class="backerCP">
@@ -38,10 +39,14 @@
                 }
             </div>
 
+            @{
+                List<string> defaultPlanList = (List<string>)Session["DefaultPlanList"];
+            }
+
             <script>
 
                 var numUnits = '@(ViewBag.numUnits)';
-                var unitListSelected = JSON.parse('@Html.Raw(Json.Encode(ViewBag.unitListSelected))');
+                var unitListSelected = JSON.parse('@Html.Raw(Json.Encode(defaultPlanList))');
             </script>
 
             <div id="planTable" class="planTable">
@@ -92,7 +97,7 @@
                     if (count % semesters == 1)
                     {
                         @:<div class="@rowClass">
-                                countCol = 1;
+                                                              countCol = 1;
                     }
 
                     col = "col";
@@ -101,9 +106,9 @@
                         col = "col" + countCol;
                     }
 
-                    <div id="@idCont" class="inlineGrid @col cell  lastRow">
+                          <div id="@idCont" class="inlineGrid @col cell lastRow target planCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
 
-                    </div>
+                          </div>
 
                     if (count % semesters == 0)
                     {
@@ -262,10 +267,10 @@
                 </div>
                 <div class="swapSpaceHolder">
                     <div>
-                        @Html.DropDownList("List", ViewBag.unitList as MultiSelectList, new { style = "width: 15%; font-size: 1vw" })
+                        @Html.DropDownList("List", ViewBag.unitList as MultiSelectList, new { id = "unitDropDown", style = "width: 15%; font-size: 1vw" })
                     </div>
                     <div>
-                        <button type="button" class="modifyButton" name="addUnit" value="addUnit" title="Add a Unit">AddUnit</button><br />
+                        <button id ="addUnit" type="button" class="modifyButton" name="addUnit" value="addUnit" title="Add a Unit">AddUnit</button><br />
                     </div>
                 </div>
 
@@ -273,47 +278,48 @@
 
                 <div class="planTable">
                     <div class="row1">
-                        <div class="inlineGrid col1 cell target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+                        <div id ="ss1" class="inlineGrid col1 cell target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
 
                         </div>
-                        <div class="inlineGrid col cell target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+                        <div id="ss2" class="inlineGrid col cell target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
 
                         </div>
-                        <div class="inlineGrid col cell target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+                        <div id="ss3" class="inlineGrid col cell target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
 
                         </div>
-                        <div class="inlineGrid col cell target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+                        <div id="ss4" class="inlineGrid col cell target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
 
                         </div>
-                        <div class="inlineGrid col cell target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+                        <div id="ss5" class="inlineGrid col cell targe swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
 
                         </div>
-                        <div class="inlineGrid col cell target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+                        <div id="ss6" class="inlineGrid col cell target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
 
                         </div>
 
                     </div>
                     <div class="row2">
-                        <div class="inlineGrid col1 cell lastRow target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+                        <div id="ss7" class="inlineGrid col1 cell lastRow target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
 
                         </div>
-                        <div class="inlineGrid col cell lastRow target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+                        <div id="ss8" class="inlineGrid col cell lastRow target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
 
                         </div>
-                        <div class="inlineGrid col cell lastRow target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+                        <div id="ss9" class="inlineGrid col cell lastRow target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
 
                         </div>
-                        <div class="inlineGrid col cell lastRow target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+                        <div id="ss10" class="inlineGrid col cell lastRow target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
 
                         </div>
-                        <div class="inlineGrid col cell lastRow target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+                        <div id="ss11" class="inlineGrid col cell lastRow target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
 
                         </div>
-                        <div class="inlineGrid col cell lastRow target" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+                        <div id="ss12" class="inlineGrid col cell lastRow target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
 
                         </div>
 
                     </div>
+                    <div id="errors" class="errors"></div>
                 </div>
 
             </div>

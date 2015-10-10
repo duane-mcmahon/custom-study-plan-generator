@@ -464,4 +464,8 @@ th {
     text-align: left;
 }
 
+.errors {
+    color: red;
+    display: none;
+}
 

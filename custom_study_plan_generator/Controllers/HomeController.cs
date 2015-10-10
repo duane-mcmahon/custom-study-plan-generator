@@ -111,8 +111,8 @@ namespace custom_study_plan_generator.Controllers
                      * (This step is needed for when the database is disposed of */
                     var selectedList = new List<string>(unitNamesFiltered);
 
-                    /* Pass the unit list to the view */
-                    ViewBag.unitListSelected = selectedList;
+                    /* Pass the unit list to a session variable */
+                    Session["DefaultPlanList"] = selectedList;
                     /* Alert the view that a course has been selected, otherwise a blank page will be loaded */
                     ViewBag.courseSelected = true;
 
@@ -122,6 +122,7 @@ namespace custom_study_plan_generator.Controllers
                 {
                     /* No course is selected, load a blank page */
                     ViewBag.courseSelected = false;
+                    Session["DefaultPlanList"] = null;
                 }
 
                 /* Create a list of all availabe units (at the moment this is aesthetic,
