@@ -76,7 +76,7 @@ namespace custom_study_plan_generator.Models
                 if (list.Items[i].Parents != null)
                 {
 
-                    if (list.Items[i].Parents.Any(p => p.Id == fileID) && list.Items[i].Title == studentID)
+                    if (list.Items[i].Parents == file.Parents && list.Items[i].Title == studentID)
                     {
 
                         // File exists in the drive already!
@@ -84,7 +84,7 @@ namespace custom_study_plan_generator.Models
 
                         file_exists = true;
 
-                        var request = service.Files.Update(file, file.Id);
+                        var request = service.Files.Update(file, list.Items[i].Id);
 
                         result = request.Execute();
 
@@ -123,10 +123,6 @@ namespace custom_study_plan_generator.Models
             {
                 file.Parents = new List<ParentReference>() { new ParentReference() { Id = fileID } };
             }
-
-
-
-
 
 
             var request = service.Files.Insert(file);
