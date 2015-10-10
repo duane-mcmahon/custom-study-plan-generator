@@ -11,15 +11,30 @@
 
     $('#planTable').css("height", heightTopCell + (heightp1 * 4));
 
-    if (numUnits == 32) {
-        $('.cell').css("width", "12%");
-        $('.planHeader').css("width", "12%")
+    var semesters = (numUnits / 4) | 0;
+
+    if (semesters > 6) {
+        var percentage = 96 / semesters;
+        var percString = percentage + "%";
+        alert(percString);
+        $('.cell').css("width", percString);
+        $('.planHeader').css("width", percString)
     }
+
 
     var count = 1;
     unitListSelected.forEach(function (entry) {
-        var id = "#" + count;
-        $(id).html(entry);
+        idCont = "#p" + count;
+        jQuery('<div/>', {
+            id: count,
+            class: 'innerCell active',
+            draggable: 'true',
+            ondragstart: 'drag(event)',
+            ondragend: 'dragend(event)',
+            text: entry
+
+        }).appendTo(idCont);
+
         count++
     });
 
