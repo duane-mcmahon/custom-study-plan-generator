@@ -412,8 +412,6 @@ namespace custom_study_plan_generator.Controllers
 
             var step1 = Session["Step1"] as FileModel;
 
-            Boolean folder_exists = false;
-
             var result = await new AuthorizationCodeMvcApp(this, new AppAuthFlowMetadata()).
                     AuthorizeAsync(cancellationToken);
 
@@ -426,35 +424,36 @@ namespace custom_study_plan_generator.Controllers
                 ApplicationName = "Custom Study Plan Generator"
             });
 
-            var listReq = driveService.Files.List();
-            listReq.Fields = "items/title,items/id";
-            FileList list = await listReq.ExecuteAsync();
+            var folderListReq = driveService.Files.List();
+            folderListReq.Fields = "items/title,items/id";
+            // Set query
+            folderListReq.Q = "mimeType = 'application/vnd.google-apps.folder' and title ='" + StudyPlanModel.StudyPlanDirectory + "' and trashed = false";
+            FileList folderList = await folderListReq.ExecuteAsync();
+
 
             File returnedFile = null;
 
-            for (var i = 0; i < list.Items.Count; i++)
+            
+            if (folderList.Items.Count >= 1)
             {
-                if (list.Items[i].Title == "RMITStudentStudyPlans")
-                {
+                // If multiple folders with StudyPlanModel.StudyPlanDirectory title always choose first one
+                File studyPlanFolder = folderList.Items.First();
 
-                    folder_exists = true;
+                // TODO figure out if page token is necessary here
+                var fileListReq = driveService.Files.List();
+                fileListReq.Fields = "items/title,items/id";
+                // Get all spreadsheets in the studyPlanFolder
+                fileListReq.Q = "'" + studyPlanFolder.Id + "' in parents and mimeType = 'application/vnd.google-apps.spreadsheet' and trashed = false";
+                FileList fileList = await fileListReq.ExecuteAsync();
 
-                    returnedFile = StudyPlanModel.generateGoogleSpreadSheet(driveService, step1.Title, list.Items[i].Id, list);
-
-                }
+                returnedFile = StudyPlanModel.generateGoogleSpreadSheet(driveService, step1.Title, studyPlanFolder.Id, fileList);
 
             }
-
-
-            if (folder_exists == false)
+            else 
             {
-
-
-                var folder = StudyPlanModel.createDirectory(driveService, "RMITStudentStudyPlans", "RMIT", "root");
+                var folder = StudyPlanModel.createDirectory(driveService, StudyPlanModel.StudyPlanDirectory, "RMIT", "root");
 
                 returnedFile = StudyPlanModel.generateGoogleSpreadSheet(driveService, step1.Title, folder.Id);
-
-
 
             }
             // Permission args are currently hardcoded. Uncomment and replace STUDENTNUMBER to enable sharing of the file.

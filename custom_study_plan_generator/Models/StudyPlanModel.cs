@@ -12,6 +12,7 @@ namespace custom_study_plan_generator.Models
 {
     public class StudyPlanModel
     {
+        public const string StudyPlanDirectory = "RMITStudentStudyPlans";
 
         // Create a new Directory. This has been tested and works (by Duane) (will be called in Submit Study Plan process)
         // Documentation: https://developers.google.com/drive/v2/reference/files/insert
@@ -60,6 +61,7 @@ namespace custom_study_plan_generator.Models
             file.Title = studentID;
             file.Description = string.Format("Created via {0} at {1}", service.ApplicationName, DateTime.Now.ToString());
             file.MimeType = "application/vnd.google-apps.spreadsheet";
+            
             File result = null;
             Boolean file_exists = false;
             // Set the parent folder.
@@ -73,22 +75,18 @@ namespace custom_study_plan_generator.Models
 
             for (var i = 0; i < list.Items.Count; i++)
             {
-                if (list.Items[i].Parents != null)
+                // Doesn't work for a file titled 'Untitled'
+                if (list.Items[i].Title == studentID)
                 {
 
-                    if (list.Items[i].Parents.Equals(file.Parents) && list.Items[i].Title == studentID)
-                    {
+                    // File exists in the drive already!
+                    // Yes... overwrite the file
 
-                        // File exists in the drive already!
-                        // Yes... overwrite the file
+                    file_exists = true;
 
-                        file_exists = true;
+                    var request = service.Files.Update(file, list.Items[i].Id);
 
-                        var request = service.Files.Update(file, list.Items[i].Id);
-
-                        result = request.Execute();
-
-                    }
+                    result = request.Execute();
 
                 }
 
