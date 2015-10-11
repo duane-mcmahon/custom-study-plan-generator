@@ -292,6 +292,10 @@ namespace custom_study_plan_generator.Controllers
             /* open database so that it will be autmoatically disposed */
             using (custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities())
             {
+                /* Reset any session variables */
+                Session["StudentPlan"] = null;
+                Session["numUnits"] = null;
+
                 /* Set the default blank course option on page load */
                 ViewBag.listValue = "Select Course";
 
