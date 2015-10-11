@@ -18,7 +18,6 @@ $(document).ready(function () {
     if (semesters > 6) {
         var percentage = 96 / semesters;
         var percString = percentage + "%";
-        alert(percString);
         $('.cell').css("width", percString);
         $('.planHeader').css("width", percString)
     }
@@ -108,6 +107,56 @@ $(document).ready(function () {
         }
 
     });
+
+    $('#savePlan').click(function () {
+
+        /* Plan is full */
+        if ($('.planCell').children().length == numUnits) {
+            
+            $('#error2').html("Saving, please wait...");
+            $('#error2').show();
+            $.ajax({
+                url: "../Home/DefaultPlanSave",
+                type: "POST",
+                success: function (data) {   
+                    $('#error2').html("Default plan saved");
+                    $('#error2').delay(5000).fadeOut('slow').css("color", "green");
+                    $('#error2').delay(5000).queue(function (next) {
+                        $(this).css("color", "red");
+                        next();
+                    });
+                },
+                error: function (data) {
+                    alert("Error saving plan" + data.responseText);
+                }
+            });
+        }
+
+        /* Plan is not full */
+        else {
+            $('#error2').html("Error, plan is not full");
+            $('#error2').show();
+            $('#error2').delay(5000).fadeOut('slow');
+        }
+    });
+
+    $('#resetPlan').click(function () {
+
+        /* Plan is full */
+        $.ajax({
+            url: "../Home/DefaultPlanReset",
+            type: "POST",
+            success: function () {
+                location.reload();
+            },
+            error: function (data) {
+                alert("Error saving plan" + data.responseText);
+            }
+        });
+
+    });
+
+           
 
 });
 

@@ -5,8 +5,9 @@
     <div id="backerDefault" class="backerCP">
         <div id="textDefault" class="textCP">
             <div class="CPcol1 inline">
+                
                 <div class="inline">
-                    <!-- Available location - top left-->
+                    
                 </div>
                 <div class="inline">
                     <!-- Avaliable location - top left -->
@@ -19,24 +20,26 @@
 
             <div class="CPcol3 inline">
                 <div class="inline">
-                    <!-- Available location - top right -->
+                    
                 </div>
                 <div class="inline">
                     <!-- Available location - top right -->
                 </div>
             </div>
             <div class="inline CPcol1desc">
-
-            </div>
-            <div class="pagewideFont CPcol2desc inline">
-                Create or edit the default plan/path for a course. This plan will reflect the units avaialable for any given course.
-            </div>
-            <div class="inline CPcol3desc">
                 @using (Html.BeginForm("DefaultPlan", "Home", FormMethod.Get))
                 {
                     @Html.DropDownList("courseSelect", (string)ViewBag.listValue);
                     <input type="submit" value="Select" />
                 }
+            </div>
+            <div class="pagewideFont CPcol2desc inline">
+                Create or edit the default plan/path for a course. This plan will reflect the units avaialable for any given course.
+            </div>
+            <div class="inline CPcol3desc">
+                <button id="savePlan" type="button" class="CPButton" name="savePlan" value="savePlan" title="Save the Plan">Save Plan</button><br />
+                <button id="resetPlan" type="button" class="CPButton2" name="savePlan" value="resetPlan" title="Reset the Plan">Reset Plan</button><br />
+                <div id="error2" class="errors"></div>
             </div>
 
             @{
