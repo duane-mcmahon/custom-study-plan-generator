@@ -467,5 +467,7 @@ th {
 .errors {
     color: red;
     display: none;
+    font-size: 1.2vw;
+    padding-top: 2%;
 }
 

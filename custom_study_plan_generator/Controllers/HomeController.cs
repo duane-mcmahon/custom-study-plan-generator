@@ -42,6 +42,17 @@ namespace custom_study_plan_generator.Controllers
         public ActionResult DefaultPlan(string courseSelect)
         {
 
+            /* Reset the unit list if the course dropdown list changes */
+            if (Session["CurrentCourse"] != null)
+            {
+                if (courseSelect != Session["CurrentCourse"].ToString())
+                {
+                    Session["DefaultPlanList"] = null;
+                }
+            }
+            /* Store the currently selected course */
+            Session["CurrentCourse"] = courseSelect;
+
             /* open database so that it will be autmoatically disposed */
             using (custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities())
             {
@@ -78,9 +89,10 @@ namespace custom_study_plan_generator.Controllers
                 /* If there has been a course selected and submitted in the drop down list */
                 if (!String.IsNullOrEmpty(courseSelect))
                 {
+
+                    Session["CourseSelect"] = courseSelect;
                     
-                    
-                    /* Get the martching course and put it into a meta object */
+                    /* Get the matching course and put it into a meta object */
                     var course = (from c in db.Courses
                                     where c.name == courseSelect
                                     select new CourseDTO
@@ -158,7 +170,7 @@ namespace custom_study_plan_generator.Controllers
         }
 
         [HttpPost]
-        public string DefaultPlanAdd()
+        public void DefaultPlanAdd()
         {
 
             var data = Request["data"].ToString();
@@ -172,11 +184,10 @@ namespace custom_study_plan_generator.Controllers
 
             Session["DefaultPlanList"] = unitList;
             
-            return element.ToString();
         }
 
         [HttpPost]
-        public string DefaultPlanRemove()
+        public void DefaultPlanRemove()
         {
 
             var data = Request["data"].ToString();
@@ -188,7 +199,77 @@ namespace custom_study_plan_generator.Controllers
 
             Session["DefaultPlanList"] = unitList;
 
-            return element.ToString();
+        }
+
+        [HttpPost]
+        public void DefaultPlanReset()
+        {
+
+            Session["DefaultPlanList"] = null;
+
+        }
+
+        [HttpPost]
+        public void DefaultPlanSave()
+        {
+
+            using (custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities())
+            {
+
+                var unitList = Session["DefaultPlanList"] as List<string>;
+                var courseSelect = Session["CourseSelect"].ToString();
+                
+                Dictionary<Int32, string> listOrdered = new Dictionary<Int32, string>();
+                var count = 0;
+                foreach (var item in unitList) 
+                {
+                    listOrdered.Add(count , item);
+                    count++;
+                }
+
+
+                
+                /* Get the matching course and put it into a meta object */
+                var course = from c in db.Courses
+                             where c.name == courseSelect
+                             select c.course_code;
+
+                var units = from a in listOrdered
+                            join u in db.Units
+                            on new { name = a.Value } equals
+                            new { u.name }
+                            orderby a.Key
+                            select u;
+
+                var defaultPlan = from dp in db.DefaultPlans
+                                  where dp.course_code == course.FirstOrDefault()
+                                  select dp;
+
+                foreach (var unit in defaultPlan)
+                {
+                    db.DefaultPlans.Remove(unit);                 
+                }
+
+
+                count = 1;
+                foreach (var u in units)
+                {
+                    DefaultPlan plan = new DefaultPlan();
+                    plan.unit_code = u.unit_code;
+                    plan.course_code = course.FirstOrDefault();
+                    plan.unit_no = count;
+                    plan.semester = (int)Math.Ceiling((double)count/4);
+                    count++;
+                    db.DefaultPlans.Add(plan);
+                }
+
+                db.SaveChanges();
+
+            }
+
+            
+
+            
         }
 
         public ActionResult CreateEdit(string create)
