@@ -63,7 +63,7 @@ namespace custom_study_plan_generator.Models
             file.MimeType = "application/vnd.google-apps.spreadsheet";
             
             File result = null;
-            Boolean file_exists = false;
+           
             // Set the parent folder.
 
             file.Parents = new List<ParentReference>() { new ParentReference() { Id = fileID } };
@@ -82,24 +82,24 @@ namespace custom_study_plan_generator.Models
                     // File exists in the drive already!
                     // Yes... overwrite the file
 
-                    file_exists = true;
+                 
 
-                    var request = service.Files.Update(file, list.Items[i].Id);
+                   // var request = service.Files.Update(file, list.Items[i].Id);
 
-                    result = request.Execute();
+                    var delete_requested = service.Files.Delete(list.Items[i].Id); 
+
+                    delete_requested.Execute();
 
                 }
 
             }
 
-            if (file_exists == false)
-            {
-
+ 
                 var request = service.Files.Insert(file);
 
                 result = request.Execute();
 
-            }
+            
 
 
             return result;

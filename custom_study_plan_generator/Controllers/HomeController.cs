@@ -493,6 +493,8 @@ namespace custom_study_plan_generator.Controllers
 
             var step1 = Session["Step1"] as FileModel;
 
+            Session.Remove("Step1");
+
             var result = await new AuthorizationCodeMvcApp(this, new AppAuthFlowMetadata()).
                     AuthorizeAsync(cancellationToken);
 
