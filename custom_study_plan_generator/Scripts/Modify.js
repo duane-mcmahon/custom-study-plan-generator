@@ -10,6 +10,25 @@
     var heightp1 = $('#p1').height();
 
     $('#planTable').css("height", heightTopCell + (heightp1 * 4));
+
+    var count = 1;
+    if (studentPlan != null) {
+        studentPlan.forEach(function (entry) {
+            if (entry != "") {
+                idCont = "#p" + count;
+                jQuery('<div/>', {
+                    id: count,
+                    class: 'innerCell active',
+                    draggable: 'true',
+                    ondragstart: 'drag(event)',
+                    ondragend: 'dragend(event, this)',
+                    text: entry.name
+
+                }).appendTo(idCont);
+            }
+            count++
+        });
+    }
 });
 
 $(window).on('resize', function () {

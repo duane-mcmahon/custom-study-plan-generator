@@ -43,196 +43,97 @@
             </div>
 
             @{
-                List<CoursePlan> coursePlan = (List<CoursePlan>)Session["StudentPlan"];
+                List<CoursePlan> studentPlan = (List<CoursePlan>)Session["StudentPlan"];
+                Int32 numUnits = (Int32)Session["numUnits"];
             }
 
             <script>
+
                 var numUnits = '@(Session["numUnits"])';
-                var converted = JSON.parse('@Html.Raw(Json.Encode(coursePlan))');
+                if ('@(studentPlan)' != null) {
+                    var studentPlan = JSON.parse('@Html.Raw(Json.Encode(studentPlan))');
+                }
+
             </script>
 
-            @if (Session["numUnits"].ToString() == "24")
-            {
+            <div id="planTable" class="planTable">
+                <div class="row1">
 
-                @:<div id="planTable" class="planTable">
-                    <div class="row1">
-                        <div id="topCell" class="inlineGrid planHeader header1">
-                            Sem 1
-                        </div>
-                        <div class="inlineGrid planHeader header2">
-                            Sem 2
-                        </div>
-                        <div class="inlineGrid planHeader header3">
-                            Sem 3
-                        </div>
-                        <div class="inlineGrid planHeader header4">
-                            Sem 4
-                        </div>
-                        <div class="inlineGrid planHeader header5">
-                            Sem 5
-                        </div>
-                        <div class="inlineGrid planHeader header6">
-                            Sem 6
-                        </div>
-                    </div>
-            }
-
-            else
-            {
-                @:<div id="planTable" class="planTable">
-                    <div class="row1">
-                        <div id="topCell" class="inlineGrid planHeader header1">
-                            Sem 1
-                        </div>
-                        <div class="inlineGrid planHeader header2">
-                            Sem 2
-                        </div>
-                        <div class="inlineGrid planHeader header3">
-                            Sem 3
-                        </div>
-                        <div class="inlineGrid planHeader header4">
-                            Sem 4
-                        </div>
-                        <div class="inlineGrid planHeader header5">
-                            Sem 5
-                        </div>
-                        <div class="inlineGrid planHeader header6">
-                            Sem 6
-                        </div>
-                        <div class="inlineGrid planHeader header6">
-                            Sem 7
-                        </div>
-                        <div class="inlineGrid planHeader header6">
-                            Sem 8
-                        </div>
-                    </div>
-            }
-
-            @if (Session["numUnits"].ToString() == "24")
-            {
-
-
-                var count = 1;
-                var countRow = 2;
-                var countCell = 1;
-                var countCol = 1;
-                string rowClass = "";
-                string idCell = "";
-                string idCont = "";
-                string col = "";
-
-                foreach (var item in coursePlan)
-                {
-
-                    rowClass = "row" + countRow;
-                    idCell = countCell.ToString();
-                    idCont = "p" + countCell;
-
-
-                    if (count % 6 == 1)
-                    {
-                        @:<div class="@rowClass">
-                                    countCol = 1;
-                    }
-
-                    col = "col" + countCol;
-
-                    if (count == 24)
-                    {
-                        <div id="@idCont" class="inlineGrid @col cell  lastRow">
-                            <div id="@idCell" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <div id="@idCont" class="inlineGrid @col cell lastRow">
-                            <div id="@idCell" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                            </div>
-                        </div>
-                    }
-                    if (count % 6 == 0)
-                    {
-                        @:</div>
-                            countCell = countRow;
-                            countRow++;
+                    @{
+                        var semesters = numUnits / 4;
+                        var header = "";
                     }
 
 
-                    if (count % 6 != 0)
+
+                    @for (var h = 1; h <= semesters; h++)
                     {
-                        countCell += 4;
+
+                        header = "headerPlanTable";
+                        if (h == 1)
+                        {
+                            header = "headerPlanTable" + h;
+                        }
+                        <div id="topCell" class="inlineGrid planHeader @header">
+                            Sem @h
+                        </div>
                     }
-                    count++;
-                    countCol++;
+
+                </div>
+
+                @{
+                    var count = 1;
+                    var countRow = 2;
+                    var countCell = 1;
+                    var countCol = 1;
+                    string rowClass = "";
+                    string idCell = "";
+                    string idCont = "";
+                    string col = "";
+
+                    for (var x = 1; x <= numUnits; x++)
+                    {
+
+                        rowClass = "row" + countRow;
+                        idCell = countCell.ToString();
+                        idCont = "p" + countCell;
+
+
+                        if (count % semesters == 1)
+                        {
+                            @:<div class="@rowClass">
+                                                              countCol = 1;
+                        }
+
+                        col = "col";
+                        if (countCol == 1)
+                        {
+                            col = "col" + countCol;
+                        }
+
+                        <div id="@idCont" class="inlineGrid @col cell lastRow target planCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                        </div>
+
+                        if (count % semesters == 0)
+                        {
+                            @:</div>
+                        countCell = countRow;
+                        countRow++;
+                        }
+
+
+                        if (count % semesters != 0)
+                        {
+                            countCell += 4;
+                        }
+                        count++;
+                        countCol++;
+                    }
                 }
-            }
+                
 
-            else
-            {
-                var count = 1;
-                var countRow = 2;
-                var countCell = 1;
-                var countCol = 1;
-                string rowClass = "";
-                string idCell = "";
-                string idCont = "";
-                string col = "";
-
-                foreach (var item in coursePlan)
-                {
-
-                    rowClass = "row" + countRow;
-                    idCell = countCell.ToString();
-                    idCont = "p" + countCell;
-
-
-                    if (count % 8 == 1)
-                    {
-                        @:<div class="@rowClass">
-                                    countCol = 1;
-                    }
-
-                    col = "col" + countCol;
-
-                    if (count == 32)
-                    {
-                        <div id="@idCont" class="inlineGrid @col cell  lastRow">
-                            <div id="@idCell" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        <div id="@idCont" class="inlineGrid @col cell lastRow">
-                            <div id="@idCell" class="innerCell active" draggable="true" ondragstart="drag(event)" ondragend="dragend(event)">
-
-                            </div>
-                        </div>
-                    }
-                    if (count % 8 == 0)
-                    {
-                        @:</div>
-                            countCell = countRow;
-                            countRow++;
-                    }
-
-                    if (count % 8 != 0)
-                    {
-                        countCell += 4;
-                    }
-                    count++;
-                    countCol++;
-                }
-            }
-
-
-
-
-
+            </div>
         </div>
     </div>
 </div>

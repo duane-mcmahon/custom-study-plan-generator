@@ -17,11 +17,24 @@
     }
 
     var count = 1;
-    unitListSelected.forEach(function (entry) {
-        var id = "#" + count;
-        $(id).html(entry);
-        count++
-    });
+    if (studentPlan != null) {
+        studentPlan.forEach(function (entry) {
+            if (entry != "") {
+                idCont = "#p" + count;
+                jQuery('<div/>', {
+                    id: count,
+                    class: 'innerCell active',
+                    draggable: 'true',
+                    ondragstart: 'drag(event)',
+                    ondragend: 'dragend(event, this)',
+                    text: entry.name
+
+                }).appendTo(idCont);
+            }
+            count++
+        });
+    }
+
 });
 
 $(window).on('resize', function () {
