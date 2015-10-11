@@ -30,6 +30,7 @@ namespace custom_study_plan_generator.Controllers
 	[RequireHttps]
     public class HomeController : Controller
     {
+        
         public ActionResult Index()
         {
             /* force ASP.NET session initialsiation, needed for Google OAuth */
@@ -77,25 +78,24 @@ namespace custom_study_plan_generator.Controllers
                 /* If there has been a course selected and submitted in the drop down list */
                 if (!String.IsNullOrEmpty(courseSelect))
                 {
+                    
+                    
                     /* Get the martching course and put it into a meta object */
                     var course = (from c in db.Courses
-                                  where c.name == courseSelect
-                                  select new CourseDTO
-                                  {
-                                      course_code = c.course_code,
-                                      duration = c.duration,
-                                      name = c.name,
-                                      num_units = c.num_units
-                                  }).FirstOrDefault();
+                                    where c.name == courseSelect
+                                    select new CourseDTO
+                                    {
+                                        course_code = c.course_code,
+                                        duration = c.duration,
+                                        name = c.name,
+                                        num_units = c.num_units
+                                    }).FirstOrDefault();
 
                     /* Send the number of units to the view for correct table size generation */
                     ViewBag.numUnits = course.num_units;
 
                     /* Select the plan that matches the meta course */
                     plans = plans.Where(u => u.course_code == course.course_code).OrderBy(u => u.unit_no);
-
-                    /* Select units from the complete units list where codes match those in the selected plan */
-                    //units = units.Where(u => plans.Any(p => p.unit_code == u.unit_code));
 
                     /* join the units and plans tables to make them sortable by semester */
                     var query = db.Units.Join(plans, u => u.unit_code, p => p.unit_code, (order, plan) => new { plan.unit_no, order.name });
@@ -108,11 +108,23 @@ namespace custom_study_plan_generator.Controllers
                                             select u.name;
 
                     /* Convert the list of unit names to a seperate list which is usable by eager loading
-                     * (This step is needed for when the database is disposed of */
+                        * (This step is needed for when the database is disposed of */
                     var selectedList = new List<string>(unitNamesFiltered);
 
-                    /* Pass the unit list to a session variable */
-                    Session["DefaultPlanList"] = selectedList;
+                    for (var x = 0; x < ViewBag.numUnits; x++)
+                    {
+                        if (selectedList.ElementAtOrDefault(x) == null)
+                        {
+                            selectedList.Insert(x, "");
+                        }
+                    }
+
+                    if (Session["DefaultPlanList"] == null)
+                    {
+                        /* Pass the unit list to a session variable */
+                        Session["DefaultPlanList"] = selectedList;
+                    }
+                    
                     /* Alert the view that a course has been selected, otherwise a blank page will be loaded */
                     ViewBag.courseSelected = true;
 
@@ -143,6 +155,40 @@ namespace custom_study_plan_generator.Controllers
             }
 
 
+        }
+
+        [HttpPost]
+        public string DefaultPlanAdd()
+        {
+
+            var data = Request["data"].ToString();
+            string[] values = data.Split(',');
+            var element = Convert.ToInt32(values[0]) - 1;
+            var unitName = values[1].ToString();
+
+            var unitList = Session["DefaultPlanList"] as List<string>;
+
+            unitList[element] = unitName;
+
+            Session["DefaultPlanList"] = unitList;
+            
+            return element.ToString();
+        }
+
+        [HttpPost]
+        public string DefaultPlanRemove()
+        {
+
+            var data = Request["data"].ToString();
+            var element = Convert.ToInt32(data) - 1;
+
+            var unitList = Session["DefaultPlanList"] as List<string>;
+
+            unitList[element] = "";
+
+            Session["DefaultPlanList"] = unitList;
+
+            return element.ToString();
         }
 
         public ActionResult CreateEdit(string create)

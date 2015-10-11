@@ -408,6 +408,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Ajax\" />
     <Folder Include="Views\AuthCallBack\" />
   </ItemGroup>
   <ItemGroup>

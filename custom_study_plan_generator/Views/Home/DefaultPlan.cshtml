@@ -46,7 +46,10 @@
             <script>
 
                 var numUnits = '@(ViewBag.numUnits)';
-                var unitListSelected = JSON.parse('@Html.Raw(Json.Encode(defaultPlanList))');
+                if ('@(defaultPlanList)' != null) {
+                    var unitListSelected = JSON.parse('@Html.Raw(Json.Encode(defaultPlanList))');
+                }
+ 
             </script>
 
             <div id="planTable" class="planTable">
