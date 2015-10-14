@@ -508,7 +508,7 @@ namespace custom_study_plan_generator.Controllers
             var driveService = new DriveService(new BaseClientService.Initializer
             {
                 HttpClientInitializer = result.Credential,
-                ApplicationName = "Custom Study Plan Generator"
+                ApplicationName = "AuthExample"
             });
 
             var folderListReq = driveService.Files.List();
@@ -558,7 +558,7 @@ namespace custom_study_plan_generator.Controllers
 
 
         [Authorize]
-        public async Task<ActionResult> DriveAsync(CancellationToken cancellationToken)
+        public async Task<ActionResult> driveAsync(CancellationToken cancellationToken)
         {
             ViewBag.Message = "Your drive page.";
 
