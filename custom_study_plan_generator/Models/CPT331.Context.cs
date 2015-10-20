@@ -34,5 +34,10 @@ namespace custom_study_plan_generator.Models
         public virtual DbSet<UnitType> UnitTypes { get; set; }
         public virtual DbSet<DefaultPlan> DefaultPlans { get; set; }
         public virtual DbSet<StudentPlanUnit> StudentPlanUnits { get; set; }
+        public virtual DbSet<C__MigrationHistory> C__MigrationHistory { get; set; }
+        public virtual DbSet<AspNetRole> AspNetRoles { get; set; }
+        public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
+        public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
     }
 }

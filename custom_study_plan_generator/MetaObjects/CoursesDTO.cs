@@ -12,6 +12,6 @@ namespace custom_study_plan_generator.MetaObjects
         public string name { get; set; }
         public int num_units { get; set; }
         public int duration { get; set; }
-
+        public int max_credit { get; set; }
     }
 }

@@ -26,6 +26,14 @@
         <EntityTypeShape EntityType="custom_study_plan_generatorModel.StudentPlanUnit" Width="1.75" PointX="7.375" PointY="4.625" />
         <AssociationConnector Association="custom_study_plan_generatorModel.FK__StudentPl__plan___3F466844" />
         <AssociationConnector Association="custom_study_plan_generatorModel.FK__StudentPl__unit___403A8C7D" />
+        <EntityTypeShape EntityType="custom_study_plan_generatorModel.C__MigrationHistory" Width="1.5" PointX="7.75" PointY="7.75" />
+        <EntityTypeShape EntityType="custom_study_plan_generatorModel.AspNetRole" Width="1.5" PointX="0.75" PointY="9.5" />
+        <EntityTypeShape EntityType="custom_study_plan_generatorModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="10.625" />
+        <EntityTypeShape EntityType="custom_study_plan_generatorModel.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="8" />
+        <EntityTypeShape EntityType="custom_study_plan_generatorModel.AspNetUser" Width="1.5" PointX="3" PointY="8.375" />
+        <AssociationConnector Association="custom_study_plan_generatorModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="custom_study_plan_generatorModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
+        <AssociationConnector Association="custom_study_plan_generatorModel.AspNetUserRoles" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

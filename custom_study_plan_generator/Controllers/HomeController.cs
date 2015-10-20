@@ -329,7 +329,7 @@ namespace custom_study_plan_generator.Controllers
                 /* If there has been a course selected and submitted in the drop down list */
                 if (!String.IsNullOrEmpty(courseSelect))
                 {
-                    /* Get the martching course and put it into a meta object */
+                    /* Get the matching course and put it into a meta object */
                     var course = (from c in db.Courses
                                   where c.name == courseSelect
                                   select new CourseDTO
@@ -337,7 +337,8 @@ namespace custom_study_plan_generator.Controllers
                                       course_code = c.course_code,
                                       duration = c.duration,
                                       name = c.name,
-                                      num_units = c.num_units
+                                      num_units = c.num_units,
+                                      max_credit = c.max_credit
                                   }).FirstOrDefault();
 
                     /* Send the number of units to the view for correct table size generation */
