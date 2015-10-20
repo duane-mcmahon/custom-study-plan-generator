@@ -19,6 +19,7 @@ namespace custom_study_plan_generator.MetaObjects
         public string type_code { get; set; }
         public bool semester1 { get; set; }
         public bool semester2 { get; set; }
+        public bool exempt { get; set; }
         public Nullable<int> preferred_year { get; set; }
 
     }

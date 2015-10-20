@@ -370,7 +370,7 @@ namespace custom_study_plan_generator.Controllers
                     /* The list will be in order, and accessible by element number */
                     /* The list can be used to track changes to the unit position */
 
-                    var sessionQuery = db.Units.Join(plans, u => u.unit_code, p => p.unit_code, (order, plan) => new CoursePlan { position = plan.unit_no, semester = plan.semester, unit_code = order.unit_code, name = order.name, type_code = order.type_code, semester1 = order.semester1, semester2 = order.semester2, preferred_year = order.preferred_year });
+                    var sessionQuery = db.Units.Join(plans, u => u.unit_code, p => p.unit_code, (order, plan) => new CoursePlan { position = plan.unit_no, semester = plan.semester, unit_code = order.unit_code, name = order.name, type_code = order.type_code, semester1 = order.semester1, semester2 = order.semester2, exempt = false, preferred_year = order.preferred_year });
 
                     sessionQuery = sessionQuery.OrderBy(u => u.semester);
 
@@ -432,10 +432,28 @@ namespace custom_study_plan_generator.Controllers
         {
             /* Remove exemptions from plan, return true or false */
             /* Receives a string of unit id's to remove from the plan in the format of a string: "1,2,3,4,5" etc */
-            string data = Request["data[]"];
+            var data = Request["data[]"].ToString();
+            string[] exemptions = data.Split(',');
 
+            foreach (string id in exemptions)
+            {
+                /* Convert string to int. */
+                int pos = Convert.ToInt32(id);
 
-
+                /* Mark each selected unit as Exempt in the Plan session variable. */
+                foreach (CoursePlan unit in (List<CoursePlan>)Session["StudentPlan"])
+                {
+                    if (unit.position == pos)
+                    {
+                        unit.exempt = true;
+                        break;
+                    }
+                    else
+                    {
+                        unit.exempt = false;
+                    }
+                }
+            }
         }
 
         public ActionResult Modify()
