@@ -17,7 +17,7 @@
     var count = 1;
     if (studentPlan != null) {
         studentPlan.forEach(function (entry) {
-            if (entry != "") {
+            if (entry != "" && entry.exempt == false) {
                 idCont = "#p" + count;
                 jQuery('<div/>', {
                     id: count,
@@ -32,7 +32,6 @@
             count++
         });
     }
-
 
     /* Mark and unmark exempt units */
     $(".innerCell").click(function () {
@@ -51,6 +50,10 @@
     /* Send an ajax array of selected units to the Home/RemoveExemptions controller */
     $('#removeExemptions').click(function () {
 
+        /* Reset any previous errors/messages. */
+        $('#errors').hide();
+        $('#error2').html("");
+
         var id;
         var array = [];
         var elements = document.getElementsByClassName("marked");
@@ -62,18 +65,20 @@
         $.ajax({
             url: 'RemoveExemptions',
             error: function (data) {
-                alert("Error processing RemoveExcemptions ajax request");
+                alert("Error processing RemoveExemptions ajax request");
             },
             type: "POST",
             data: { data: array },
-            success: function (data) {
+            success: function (response) {
                 $(".marked").remove();
+            },
+            error: function (response) {
+                $('#error2').html(response.responseText);
+                $('#error2').show();
+                $('#error2').delay(5000).fadeOut('slow');
             }
         });
     });
-
-
-
 
 });
 

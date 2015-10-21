@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
+using System.Net.Mime;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
@@ -102,7 +104,8 @@ namespace custom_study_plan_generator.Controllers
                                         course_code = c.course_code,
                                         duration = c.duration,
                                         name = c.name,
-                                        num_units = c.num_units
+                                        num_units = c.num_units,
+                                        max_credit = c.max_credit
                                     }).FirstOrDefault();
 
                     /* Send the number of units to the view for correct table size generation */
@@ -561,6 +564,7 @@ namespace custom_study_plan_generator.Controllers
                     /* Send the number of units to the view for correct table size generation */
                     ViewBag.numUnits = course.num_units;
                     Session["numUnits"] = course.num_units;
+                    Session["Course"] = course;
 
                     /* Select the plan that matches the meta course */
                     plans = plans.Where(u => u.course_code == course.course_code).OrderBy(u => u.unit_no);
@@ -626,52 +630,114 @@ namespace custom_study_plan_generator.Controllers
 
         public ActionResult Exemptions(string removeExemptions, string next)
         {
-
-            /* If "loadDefault" button is pressed, return the list of updated units to the view */
-            if (!string.IsNullOrEmpty(removeExemptions))
+            // Check a valid DefaultPlan is in the Session variable.
+            if (Session["StudentPlan"] == null)
             {
-
-
-                return View();
+                // No Course has been selected - Redirect back to the course selection page.
+                return RedirectToAction("CreatePlan", "Home");
             }
 
+            // If "loadDefault" button is pressed, return the list of updated units to the view.
+            if (!string.IsNullOrEmpty(removeExemptions))
+            {
+                return View();
+            }
             else if (!string.IsNullOrEmpty(next))
             {
-                return RedirectToAction("Modify", "Home");
+                // Check Exemptions have been selected before proceeding.
+                int countExempt = 0;
+
+                // Count Exemptions.
+                foreach (CoursePlan unit in (List<CoursePlan>)Session["StudentPlan"])
+                {
+                    if (unit.exempt == true)
+                    {
+                        countExempt++;
+                    }
+                }
+
+                // Proceed if at least 1 Exemption is selected.
+                if (countExempt > 0)
+                {
+                    return RedirectToAction("Modify", "Home");
+                }
             }
 
             return View();
-
-    
         }
 
         [HttpPost]
-        public void RemoveExemptions()
+        public ActionResult RemoveExemptions()
         {
-            /* Remove exemptions from plan, return true or false */
-            /* Receives a string of unit id's to remove from the plan in the format of a string: "1,2,3,4,5" etc */
-            var data = Request["data[]"].ToString();
-            string[] exemptions = data.Split(',');
-
-            foreach (string id in exemptions)
+            // Remove exemptions from plan, return true or false.
+            // Receives a string of unit id's to remove from the plan in the format of a string: "1,2,3,4,5" etc.
+            // Check if Exemptions selected are valid. 
+            if (!string.IsNullOrEmpty(Request["data[]"]))
             {
-                /* Convert string to int. */
-                int pos = Convert.ToInt32(id);
+                var data = Request["data[]"].ToString();
+                string[] exemptions = data.Split(',');
+                int countExistingExempt = 0;
+                int totalExempt = 0;
 
-                /* Mark each selected unit as Exempt in the Plan session variable. */
+                // Check for previously selected Exemptions removed.
                 foreach (CoursePlan unit in (List<CoursePlan>)Session["StudentPlan"])
                 {
-                    if (unit.position == pos)
+                    if (unit.exempt == true)
                     {
-                        unit.exempt = true;
-                        break;
+                        countExistingExempt++;
                     }
                 }
+
+                // Add total of exemptions in Session variable and newly selected. 
+                totalExempt = countExistingExempt + exemptions.Length;
+
+                // Make sure Exemption Limit has not been reached. 
+                if (totalExempt > 0 && totalExempt <= ((CourseDTO)Session["Course"]).max_credit)
+                {
+                    // Valid number of Exemptions has been selected - mark the Exemptions in the session variable. 
+                    foreach (string id in exemptions)
+                    {
+                        // Convert string to int.
+                        int pos = Convert.ToInt32(id);
+
+                        // Mark each selected unit as Exempt in the Plan session variable.
+                        foreach (CoursePlan unit in (List<CoursePlan>)Session["StudentPlan"])
+                        {
+                            if (unit.position == pos)
+                            {
+                                unit.exempt = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    // Return Success.
+                    return Content("Exemptions successfully removed.", MediaTypeNames.Text.Plain);
+                }
+                else
+                {
+                    // Exemption Limit has been exceeded.
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    return Content("Exemption Limit exceeded: Please select less units.", MediaTypeNames.Text.Plain);
+                }
+            }
+            else
+            {
+                // No Exemptions selected.
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Content("Please select exemptions to remove.", MediaTypeNames.Text.Plain);
             }
         }
 
         public ActionResult Modify()
         {
+            // Check a valid DefaultPlan is in the Session variable.
+            if (Session["StudentPlan"] == null)
+            {
+                // No Course has been selected - Redirect back to the Index page.
+                return RedirectToAction("Index", "Home");
+            }
+
             // Retrieve sessionList of coursePlan (units) from Session variable
             // StudentPlan.
             /*List<CoursePlan> sessionList = (List<CoursePlan>)Session["StudentPlan"];
