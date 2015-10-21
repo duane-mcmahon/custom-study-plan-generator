@@ -24,6 +24,8 @@ using Google.Apis.Drive.v2.Data;
 using Google.Apis.Services;
 using File = Google.Apis.Drive.v2.Data.File;
 
+using custom_study_plan_generator.StudyPlanAlgorithm;
+
 namespace custom_study_plan_generator.Controllers
 {
     [Authorize]
@@ -455,19 +457,15 @@ namespace custom_study_plan_generator.Controllers
 
         public ActionResult Modify()
         {
-
-            /* Create a list of dummy units to send to modify page- Temporary list*/
-            List<string> Units = new List<string>()
-            {
-                "Unit 1",
-                "Unit 2",
-                "Unit 3"
-
-            };
-
-            MultiSelectList UnitList = new MultiSelectList(Units);
-
-            ViewBag.unitList = UnitList;
+            // Retrieve sessionList of coursePlan (units) from Session variable
+            // StudentPlan.
+            /*List<CoursePlan> sessionList = (List<CoursePlan>)Session["StudentPlan"];
+            // Create StudyPlanAlgorithm object;
+            StudyPlanAlgorithm.StudyPlanAlgorithm algorithm = new StudyPlanAlgorithm.StudyPlanAlgorithm();
+            // Update sessionList by passing it to newly create StudyPlanAlgorithm.
+            sessionList = algorithm.RunAlgorithm(sessionList);
+            // Update Session["StudentPlan"]
+            Session["StudentPlan"] = sessionList;*/
 
             return View();
         }
