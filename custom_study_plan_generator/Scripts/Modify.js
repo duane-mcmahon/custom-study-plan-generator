@@ -14,7 +14,7 @@
     var count = 1;
     if (studentPlan != null) {
         studentPlan.forEach(function (entry) {
-            if (entry != "") {
+            if (entry != "" && entry.exempt == false) {
                 idCont = "#p" + count;
                 jQuery('<div/>', {
                     id: count,
