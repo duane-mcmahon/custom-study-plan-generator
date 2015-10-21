@@ -112,13 +112,13 @@ $(document).ready(function () {
 
         /* Plan is full */
         if ($('.planCell').children().length == numUnits) {
-            
+
             $('#error2').html("Saving, please wait...");
             $('#error2').show();
             $.ajax({
                 url: "../Home/DefaultPlanSave",
                 type: "POST",
-                success: function (data) {   
+                success: function (data) {
                     $('#error2').html("Default plan saved");
                     $('#error2').delay(5000).fadeOut('slow').css("color", "green");
                     $('#error2').delay(5000).queue(function (next) {
@@ -132,7 +132,7 @@ $(document).ready(function () {
             });
         }
 
-        /* Plan is not full */
+            /* Plan is not full */
         else {
             $('#error2').html("Error, plan is not full");
             $('#error2').show();
@@ -156,7 +156,7 @@ $(document).ready(function () {
 
     });
 
-           
+
 
 });
 
@@ -234,7 +234,7 @@ function dragend(ev, target) {
 
     /* Drag successful */
     if (ev.dataTransfer.dropEffect !== 'none') {
-        
+
         /* If moved TO the swap space, remove unit from session plan */
         if ($(target).parent().hasClass('swapSpaceCell')) {
 
@@ -242,29 +242,46 @@ function dragend(ev, target) {
             var idString = idRaw.toString();
             var id = idString.substring(1);
 
-            data = id;
+            var unit = $(target).text();
+
+            var dataPrereq = id + "," + unit;
+
+            dataRemove = id;
 
             $.ajax({
                 url: "../Home/DefaultPlanRemove",
                 type: "POST",
-                data: { data: data },
+                data: { data: dataRemove },
                 success: function (data) {
-                    
+
                 },
                 error: function (data) {
                     alert("Error removing unit" + data.responseText);
                 }
             });
+
+            $.ajax({
+                url: "../Home/DefaultPlanCheckPrerequisitesToSwapRelying",
+                type: "POST",
+                data: { data: dataPrereq },
+                success: function (data) {
+                    alert("UnitsReliesOn: " + data);
+                },
+                error: function (data) {
+                    alert("error: " + data.responseText);
+                }
+
+            });
         }
-        /* If moved TO the plan, add unit to session plan */
+            /* If moved TO the plan, add unit to session plan */
 
         else if ($(target).parent().hasClass('planCell')) {
 
             var idRaw = $(target).parent().attr('id');
             var idString = idRaw.toString();
             var id = idString.substring(1);
-      
-            var unit = $(target).html();
+
+            var unit = $(target).text();
 
             var data = id + "," + unit;
 
@@ -273,18 +290,82 @@ function dragend(ev, target) {
                 type: "POST",
                 data: { data: data },
                 success: function (data) {
-                   
+
                 },
                 error: function (data) {
                     alert("Error adding unit");
                 }
             });
+
+            /* If unit has prerequsites that are missing, mark unit as violating prerequisites */
+            $.ajax({
+                url: "../Home/DefaultPlanCheckPrerequisites",
+                type: "POST",
+                data: { data: data },
+                success: function (data) {
+
+                    id = "exclamation" + id;
+                    exclamationId = "#" + id;
+                    if ($(exclamationId).length == 0) {
+                        if (data == "false") {
+
+                            jQuery('<img/>', {
+                                id: id,
+                                class: 'exclamation',
+                                src: '../Content/Images/exclamation.png'
+
+                            }).appendTo(target);
+                        }
+                    }
+                    else {
+
+                        if ($(exclamationId).length > 0) {
+                            $(exclamationId).remove();
+                        }
+                    }
+                },
+                error: function (data) {
+
+                }
+
+            });
+
+            /* If unit is a prerequisite for other units, mark other units as violating prerequisites */
+            $.ajax({
+                url: "../Home/DefaultPlanCheckPrerequisitesRelying",
+                type: "POST",
+                data: { data: data },
+                success: function (data) {
+                    alert("UnitsReliesOn: " + data);
+                },
+                error: function (data) {
+
+                }
+
+            });
+
+            $.ajax({
+                url: "../Home/DefaultPlanCheckPrerequisitesToPlanRelying",
+                type: "POST",
+                data: { data: data },
+                success: function (data) {
+                    alert("UnitsReliesOn: " + data);
+                },
+                error: function (data) {
+                    alert("error: " + data.responseText);
+                }
+
+            });
+
+
         }
+
+
 
     }
         /* Drag failed */
     else {
 
     }
-    
+
 }

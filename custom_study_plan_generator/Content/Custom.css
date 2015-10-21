@@ -347,6 +347,7 @@ html body {
 }
 
 .innerCell {
+    position: relative;
     width: 90%;
     /*height: 70px;*/
     height: 10vh;
@@ -471,3 +472,11 @@ th {
     padding-top: 2%;
 }
 
+/* ********* Exclamation styling - for unit shtat have had prereqs violated ********** */
+
+.exclamation {
+    height: 35%;
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+}
