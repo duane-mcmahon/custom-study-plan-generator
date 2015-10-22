@@ -242,10 +242,6 @@ function dragend(ev, target) {
             var idString = idRaw.toString();
             var id = idString.substring(1);
 
-            var unit = $(target).text();
-
-            var dataPrereq = id + "," + unit;
-
             dataRemove = id;
 
             $.ajax({
@@ -256,25 +252,13 @@ function dragend(ev, target) {
 
                 },
                 error: function (data) {
-                    alert("Error removing unit" + data.responseText);
+                    alert("Error removing unit");
                 }
             });
 
-            $.ajax({
-                url: "../Home/DefaultPlanCheckPrerequisitesToSwapRelying",
-                type: "POST",
-                data: { data: dataPrereq },
-                success: function (data) {
-                    alert("UnitsReliesOn: " + data);
-                },
-                error: function (data) {
-                    alert("error: " + data.responseText);
-                }
-
-            });
         }
-            /* If moved TO the plan, add unit to session plan */
 
+        /* If moved TO the plan, add unit to session plan */
         else if ($(target).parent().hasClass('planCell')) {
 
             var idRaw = $(target).parent().attr('id');
@@ -284,6 +268,7 @@ function dragend(ev, target) {
             var unit = $(target).text();
 
             var data = id + "," + unit;
+
 
             $.ajax({
                 url: "../Home/DefaultPlanAdd",
@@ -296,67 +281,6 @@ function dragend(ev, target) {
                     alert("Error adding unit");
                 }
             });
-
-            /* If unit has prerequsites that are missing, mark unit as violating prerequisites */
-            $.ajax({
-                url: "../Home/DefaultPlanCheckPrerequisites",
-                type: "POST",
-                data: { data: data },
-                success: function (data) {
-
-                    id = "exclamation" + id;
-                    exclamationId = "#" + id;
-                    if ($(exclamationId).length == 0) {
-                        if (data == "false") {
-
-                            jQuery('<img/>', {
-                                id: id,
-                                class: 'exclamation',
-                                src: '../Content/Images/exclamation.png'
-
-                            }).appendTo(target);
-                        }
-                    }
-                    else {
-
-                        if ($(exclamationId).length > 0) {
-                            $(exclamationId).remove();
-                        }
-                    }
-                },
-                error: function (data) {
-
-                }
-
-            });
-
-            /* If unit is a prerequisite for other units, mark other units as violating prerequisites */
-            $.ajax({
-                url: "../Home/DefaultPlanCheckPrerequisitesRelying",
-                type: "POST",
-                data: { data: data },
-                success: function (data) {
-                    alert("UnitsReliesOn: " + data);
-                },
-                error: function (data) {
-
-                }
-
-            });
-
-            $.ajax({
-                url: "../Home/DefaultPlanCheckPrerequisitesToPlanRelying",
-                type: "POST",
-                data: { data: data },
-                success: function (data) {
-                    alert("UnitsReliesOn: " + data);
-                },
-                error: function (data) {
-                    alert("error: " + data.responseText);
-                }
-
-            });
-
 
         }
 
