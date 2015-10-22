@@ -146,6 +146,78 @@ namespace custom_study_plan_generator.Controllers
                     /* Alert the view that a course has been selected, otherwise a blank page will be loaded */
                     ViewBag.courseSelected = true;
 
+                    /* Check if any of the current units in the unit list are missing their prerequisites */
+                    /* ********************************************************************************** */
+
+                    var unitList = Session["DefaultPlanList"] as List<string>;
+                    List<string> violatedList = new List<string>();
+                    List<string> unitsChecked = new List<string>();
+
+                    var courseSelected = Session["CourseSelect"].ToString();
+
+                    var courseCode = from c in db.Courses
+                                     where c.name == courseSelected
+                                     select c.course_code;
+
+                    var count = 1;
+
+                    
+
+                    /*var unitNameToCheck = from u in db.Units
+                                          where u.name == unit
+                                          select u.name;
+
+                    var unitsToCheckAgainst = from u in db.Units
+                                              where unitList.Contains(u.name)
+                                              select u.unit_code;
+
+                    var prereqs = from p in db.UnitPrerequisites
+                                  where unitToCheck.Contains(p.unit_code)
+                                  where courseCode.Contains(p.course_code)
+                                  select p.prereq_code;
+
+                    var prereqNames = from u in db.Units
+                                      where prereqs.Contains(u.unit_code)
+                                      select u.name;*/
+
+                    var preReqFound = 0;
+                    
+                    foreach (var unit in unitList)
+                    {
+
+                        unitsChecked.Add(unit);
+
+                        var unitToCheck = from u in db.Units
+                                          where u.name == unit
+                                          select u.unit_code;
+                        
+                        /* Get list of prereqs of the moved unit */
+                        var prereqs = from p in db.UnitPrerequisites
+                                      where unitToCheck.Contains(p.unit_code)
+                                      where courseCode.Contains(p.course_code)
+                                      select p.prereq_code;
+
+                        var prereqNames = from u in db.Units
+                                          where prereqs.Contains(u.unit_code)
+                                          select u.name;
+                        
+                        /* If the unit has both it's prereqs before it, return true, else retun false and have it marked as violated */
+                        if (prereqNames.Count() > 0)
+                        {
+                            if (!prereqNames.Except(unitsChecked).Any())
+                            {
+
+                            }
+                            else
+                            {
+                                violatedList.Add(unit);
+                            }
+                        }
+
+                        ViewBag.violatedList = violatedList;
+
+                    }
+
                 }
 
                 else

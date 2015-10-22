@@ -44,6 +44,7 @@
 
             @{
                 List<string> defaultPlanList = (List<string>)Session["DefaultPlanList"];
+                List<string> violatedList = (List<string>)ViewBag.violatedList;
             }
 
             <script>
@@ -51,6 +52,9 @@
                 var numUnits = '@(ViewBag.numUnits)';
                 if ('@(defaultPlanList)' != null) {
                     var unitListSelected = JSON.parse('@Html.Raw(Json.Encode(defaultPlanList))');
+                }
+                if ('@(violatedList)' != null) {
+                    var violatedListConverted = JSON.parse('@Html.Raw(Json.Encode(violatedList))');
                 }
  
             </script>
