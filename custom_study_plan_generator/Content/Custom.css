@@ -472,7 +472,7 @@ th {
     padding-top: 2%;
 }
 
-/* ********* Exclamation styling - for unit shtat have had prereqs violated ********** */
+/* ********* Exclamation and Hover styling - for units that have had prereqs violated, and hover for all units ********** */
 
 .exclamation {
     height: 35%;
@@ -481,13 +481,21 @@ th {
     right: 5%;
 }
 
+.hover {
+    height: 25%;
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+}
+
 /* ********* TOOLTIPS ********** */
 
 .tooltip{
     position:absolute;
     z-index:999;
     left:-9999px;
-    background-color:#dedede;
+    color:#fff;
+    background-color:#222;
     padding:5px;
     border:1px solid #fff;
     width:250px;

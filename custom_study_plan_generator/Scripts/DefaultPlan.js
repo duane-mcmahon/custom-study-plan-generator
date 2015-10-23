@@ -26,6 +26,10 @@ $(document).ready(function () {
     var count = 1;
     if (unitListSelected != null) {
         unitListSelected.forEach(function (entry) {
+
+            var innerCellId = "#" + count;
+
+            /* Create inner cell */
             if (entry != "") {
                 idCont = "#p" + count;
                 jQuery('<div/>', {
@@ -37,12 +41,21 @@ $(document).ready(function () {
                     text: entry
 
                 }).appendTo(idCont);
+
+                
+                /* Create hover icon */
+                var hoverId = 'hover' + count;
+                jQuery('<img/>', {
+                    id: hoverId,
+                    class: 'hover',
+                    src: '../Content/Images/hover.png'
+                }).appendTo(innerCellId);
             }
 
+            /* Create prereq violated exclamation mark icon where required */
             for (var x = 0; x < violatedListConverted.length; x++) {
                 if (entry == violatedListConverted[x]) {
-                    innerCellId = "#" + count;
-                    exclamationId = 'exclamation' + count;
+                    var exclamationId = 'exclamation' + count;
                     jQuery('<img/>', {
                         id: exclamationId,
                         class: 'exclamation',
@@ -92,6 +105,7 @@ $(document).ready(function () {
         /* If the unit doesn't exist, cycle through the swap space parent cells and add to the first empty one */
         /* Generate a unique id */
         var id = "id" + Math.random().toString(16).slice(2)
+        var innerCellId = "#" + id;
 
         if (duplicate == false) {
             for (var x = 0; x < elements.length; x++) {
@@ -105,6 +119,18 @@ $(document).ready(function () {
                         text: unit
 
                     }).appendTo(elements[x]);
+
+                    /* Create hover icon */
+                    var hoverId = 'hover' + id;
+                    jQuery('<img/>', {
+                        id: hoverId,
+                        class: 'hover',
+                        src: '../Content/Images/hover.png'
+                    }).appendTo(innerCellId);
+
+                    var jId = "#" + hoverId;
+                    tooltip(jId, "tooltip");
+
                     break;
                 }
                 else {
@@ -170,8 +196,17 @@ $(document).ready(function () {
 
     });
 
+    $('#checkPrereqs').click(function () {
+
+        /* Refresh the page, delay for 3 seconds to allow for ajax calls to finish */
+        setTimeout(function () {
+            window.location.reload();
+        }, 3000);
+
+    });
+
     if (courseSelectedConverted == true) {
-        tooltip(".innerCell", "tooltip");
+        tooltip(".hover", "tooltip");
     }
 
 
@@ -312,35 +347,43 @@ function dragend(ev, target) {
 
 }
 
+/* Tooltip function */
 function tooltip(target, name) {
 
+    /* Loop through all targets */
     $(target).each(function (i) {
         
 
+        /* Create the id and the jquery readable id */
         var id = name + i;
         var jId = '#' + id;
 
+        /* Create the tootlip element */
         $("body").append("<div class='" + name + "' id='" + id + "'><p>" + "Loading..." + "</p></div>");
         var my_tooltip = $("#" + name + i);
 
+        /* Set the mousover/mouseout effects */
         $(this).removeAttr("title").mouseover(function () {
-            my_tooltip.css({ opacity: 0.8, display: "none" }).fadeIn(0);
+            my_tooltip.css({ opacity: 0.8, display: "none" }).fadeIn(400);
         }).mousemove(function (kmouse) {
             my_tooltip.css({ left: kmouse.pageX + 15, top: kmouse.pageY + 15 });
         }).mouseout(function () {
             my_tooltip.fadeOut(0);
         });
 
-        data = $(this).text();
+        /* prepare the unit data to send to ajax */
+        data = $(this).parent().text();
         $.ajax({
             url: "../Home/GetPrerequisites",
             type: "POST",
             data: { data: data },
             success: function (data) {
                 
+                /* If no prereqs */
                 if (data.length == 0) {
                     $(jId).text("Prerequsites: None");
                 }
+                    /* If prereqs */
                 else {
                     $(jId).text("Prerequsites: " + data);
                 }
@@ -348,7 +391,7 @@ function tooltip(target, name) {
 
             },
             error: function (data) {
-                alert(data.responseText);
+            
             }
         });
     
