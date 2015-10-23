@@ -45,6 +45,7 @@
             @{
                 List<string> defaultPlanList = (List<string>)Session["DefaultPlanList"];
                 List<string> violatedList = (List<string>)ViewBag.violatedList;
+                bool courseSelected = ViewBag.courseSelected;
             }
 
             <script>
@@ -56,6 +57,8 @@
                 if ('@(violatedList)' != null) {
                     var violatedListConverted = JSON.parse('@Html.Raw(Json.Encode(violatedList))');
                 }
+
+                var courseSelectedConverted = JSON.parse('@Html.Raw(Json.Encode(courseSelected))');
  
             </script>
 

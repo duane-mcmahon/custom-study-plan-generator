@@ -170,7 +170,9 @@ $(document).ready(function () {
 
     });
 
-    tooltip(".innerCell", "tooltip");
+    if (courseSelectedConverted == true) {
+        tooltip(".innerCell", "tooltip");
+    }
 
 
 
