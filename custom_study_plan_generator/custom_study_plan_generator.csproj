@@ -329,6 +329,7 @@
     <Content Include="Content\Custom.css" />
     <Content Include="Content\Images\background.png" />
     <Content Include="Content\Images\exclamation.png" />
+    <Content Include="Content\Images\hover.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
