@@ -630,13 +630,13 @@ namespace custom_study_plan_generator.Controllers
 
             // Retrieve sessionList of coursePlan (units) from Session variable
             // StudentPlan.
-            /*List<CoursePlan> sessionList = (List<CoursePlan>)Session["StudentPlan"];
+            List<CoursePlan> sessionList = (List<CoursePlan>)Session["StudentPlan"];
             // Create StudyPlanAlgorithm object;
             StudyPlanAlgorithm.StudyPlanAlgorithm algorithm = new StudyPlanAlgorithm.StudyPlanAlgorithm();
-            // Update sessionList by passing it to newly create StudyPlanAlgorithm.
+            // Update sessionList by passing it to newly created StudyPlanAlgorithm.
             sessionList = algorithm.RunAlgorithm(sessionList);
             // Update Session["StudentPlan"]
-            Session["StudentPlan"] = sessionList;*/
+            Session["StudentPlan"] = sessionList;
 
             return View();
         }

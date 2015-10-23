@@ -23,6 +23,7 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
         public List<CoursePlan> RunAlgorithm(List<CoursePlan> sessionList)
         {
             course = new Course(sessionList);
+            
             try
             {
                 // Displays the course structure in the console, prompts
@@ -33,14 +34,14 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
             }
             catch (ArgumentOutOfRangeException outOfRange)
             {
-                // Console.WriteLine("Error: {0}", outOfRange.Message);
+                System.Diagnostics.Debug.WriteLine("Error: {0}", outOfRange.Message);
             }
             catch (IndexOutOfRangeException  outOfRange)
             {
-                // Console.WriteLine("Error: {0}", outOfRange.Message);
+                System.Diagnostics.Debug.WriteLine("Error: {0}", outOfRange.Message);
             }
             // Update Session variable
-            return course.ToList();
+            return course.ToList(course.courseStructure);
         }
         // This method handles the removing of exemptions. Exemptions are 
         // passed from the exemptions page via the session variable studentPlan.
@@ -56,7 +57,7 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
                 var nextNode = node.Next;
                 if (node.Value.Exempt == true)
                 {
-                    // Console.WriteLine("Removing unit: " + node.Value.UnitName.ToString());
+                    System.Diagnostics.Debug.WriteLine("Removing unit: " + node.Value.UnitName.ToString());
                     course.courseStructure.Remove(node);
                     updateSemesterListSize();
                 }
@@ -87,7 +88,7 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
         // in their correct spot
         void CheckCourseIsValid(LinkedList<Unit> courseStruct)
         {
-            // Console.WriteLine("\nOptimising... Please wait\n");
+            System.Diagnostics.Debug.WriteLine("\nOptimising... Please wait\n");
 
             int optimisationCount = 0;
 
@@ -104,11 +105,11 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
                 // This is in the wrong spot, will work on a better breaker
                 // if the algorithm starts looping
                 optimisationCount++;
-                // Console.WriteLine("Optimisation count: " + optimisationCount);
+                System.Diagnostics.Debug.WriteLine("Optimisation count: " + optimisationCount);
 
                 if (optimisationCount == 500)
                 {
-                    // Console.WriteLine("\nOptimal course structure not found\n");
+                    System.Diagnostics.Debug.WriteLine("\nOptimal course structure not found\n");
                     break;
                 }
             }
@@ -117,6 +118,7 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
         // semesester
         bool UnitsInWrongSemester(LinkedList<Unit> courseStruct)
         {
+            System.Diagnostics.Debug.WriteLine("\n UnitsInWrongSemester\n");
             bool unitsInWrongSemester = false;
 
             foreach (Unit unit in courseStruct)
@@ -133,6 +135,7 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
         // so then move them
         void CalculateSemesterAvailability()
         {
+            System.Diagnostics.Debug.WriteLine("\nCalculateSemesterAvailability\n");
             var node = course.courseStructure.First;
             while (node != null)
             {
@@ -174,7 +177,7 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
                         // after, it can safely be moved
                         if (course.courseStructure.ElementAt(index).PreReq != node.Value.UnitCode)
                         {
-                            // Console.WriteLine(node.Value.UnitName + " is in " + GetSemester(getLinkedListIndex(node.Value)) + ", it should be in " + node.Value.Semester + ". Rearranging...");
+                            System.Diagnostics.Debug.WriteLine(node.Value.UnitName + " is in " + GetSemester(getLinkedListIndex(node.Value)) + ", it should be in " + node.Value.Semester + ". Rearranging...");
                             course.courseStructure.AddAfter(course.courseStructure.Find(course.courseStructure.ElementAt(index)), node.Value);
                             course.courseStructure.Remove(node);
                             unitSwapSuccess = true;
@@ -201,7 +204,7 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
                             // after, it can safely be moved
                             if (course.courseStructure.ElementAt(index).PreReq != node.Value.UnitCode)
                             {
-                                // Console.WriteLine(node.Value.UnitName + " is in " + GetSemester(getLinkedListIndex(node.Value)) + ", it should be in " + node.Value.Semester + ". Rearranging...");
+                                System.Diagnostics.Debug.WriteLine(node.Value.UnitName + " is in " + GetSemester(getLinkedListIndex(node.Value)) + ", it should be in " + node.Value.Semester + ". Rearranging...");
                                 course.courseStructure.AddBefore(course.courseStructure.Find(course.courseStructure.ElementAt(index)), node.Value);
                                 course.courseStructure.Remove(node);
                                 unitSwapSuccess = true;
@@ -215,7 +218,7 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
             // an inefficient outcome has been reached
             if (unitSwapSuccess == false)
             {
-                // Console.WriteLine("Inefficient outcome has been reached, " + node.Value.UnitName + " cannot be placed in any other semester as they are full, manual override required.");
+                System.Diagnostics.Debug.WriteLine("Inefficient outcome has been reached, " + node.Value.UnitName + " cannot be placed in any other semester as they are full, manual override required.");
                 // Need to exit out of the algorithm here and take them to a screen which
                 // notifies the user of a non optimal solution
             }
@@ -224,6 +227,7 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
         // order based in the prerequisites
         bool PrerequisitesOutOfOrder(LinkedList<Unit> courseStruct)
         {
+            System.Diagnostics.Debug.WriteLine("\nPrerequisitesOutOfOrder\n");
             bool prerequisitesOutOfOrder = false;
             var node = courseStruct.First;
 
@@ -258,6 +262,7 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
         // Multiple pre-requisites have not been handled yet
         void CalculatePreRequisites()
         {
+            System.Diagnostics.Debug.WriteLine("\n CalculatePreRequisites\n");
             var node = course.courseStructure.First;
             while (node != null)
             {
@@ -281,7 +286,7 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
                         if (node.Value.UnitCode == preReq)
                         {
                             var preReqNode = node;
-                            // Console.WriteLine(node.Value.UnitName + " is after " + hasPrereqNode.Value.UnitName + ", it should be before. Rearranging...");
+                            System.Diagnostics.Debug.WriteLine(node.Value.UnitName + " is after " + hasPrereqNode.Value.UnitName + ", it should be before. Rearranging...");
                             while (node != null)
                             {
                                 var nextNode3 = node.Next;
