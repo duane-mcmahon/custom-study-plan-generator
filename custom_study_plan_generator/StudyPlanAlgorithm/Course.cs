@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data;
+using System.Data.Entity;
+using custom_study_plan_generator.Models;
 
 namespace custom_study_plan_generator.StudyPlanAlgorithm
 {
@@ -19,6 +22,11 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
             // Save sessionList for other methods.
             oldSessionList = _sessionList;
 
+            // Creating EF object.
+            custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities();
+
+
+            // Covert CoursePaln info from sessionList to units for algorithm list.
             foreach (var unit in _sessionList)
             {
                 // Converting properties as necessary to match algorithms needs.
@@ -33,8 +41,19 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
                 string preferredYear = "1"; 
                 if (unit.preferred_year != null)
                     preferredYear = unit.preferred_year.ToString();
-                // Setting preReqs to false for now. XYZ TO DO!!!!!! need to query DB to find array of pre req codes.
+
+                // Just grabbing pre req directly from database for now. XYZ TO DO!!!!!!
+                var preReqs =
+                    from unitPreReqs in db.UnitPrerequisites
+                    where unitPreReqs.unit_code == unit.unit_code
+                    select unitPreReqs.prereq_code;
+
+                // Just grabbing first pre requisite for now if there is one null otherwise.
                 string preReq = null;
+
+                if (preReqs.Any())
+                    preReq = preReqs.First();
+
                 // isPreReq XYZ TO DO!!!!! Appears algorithm doesn't use this.
                 bool isPreReq = false;
 
@@ -45,6 +64,8 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
                 courseStructure.AddLast(tempUnit);
             }
 
+            // Close DB.
+
             /*
              * Left to check against old way of creating units.
              * Unit unit1 = new Unit("Intro to Programming (Python)", "CO101", "c", "Any", "1", null, true, false);
@@ -52,7 +73,7 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
              */
         }
         // Method to return list of coursePlans.
-        internal List<CoursePlan> ToList(LinkedList<Unit> linkedList)
+        internal List<CoursePlan> ToList(LinkedList<Unit> algorithmList)
         {
             System.Diagnostics.Debug.WriteLine("In the ToList method of course object!!!");
             // List for update units.
@@ -72,7 +93,7 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
                 public Nullable<int> preferred_year { get; set; }
              */
             // loop through algorithms linked list to create new session list.
-            foreach (Unit unit in linkedList)
+            foreach (Unit unit in algorithmList)
             {
                 // Find matching CoursePlan object in old session list.
                 CoursePlan tempCoursePlan = oldSessionList.Find(x => x.unit_code.Equals(unit.UnitCode));
