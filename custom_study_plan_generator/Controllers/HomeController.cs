@@ -149,59 +149,43 @@ namespace custom_study_plan_generator.Controllers
                     /* Check if any of the current units in the unit list are missing their prerequisites */
                     /* ********************************************************************************** */
 
+                    /* Get the list of default plan units from session */
                     var unitList = Session["DefaultPlanList"] as List<string>;
+                    
+                    /* Initialise two lists required for checking and returning the problem units */
                     List<string> violatedList = new List<string>();
                     List<string> unitsChecked = new List<string>();
 
+                    /* Get the course code from the session stroed selected course */
                     var courseSelected = Session["CourseSelect"].ToString();
-
                     var courseCode = from c in db.Courses
                                      where c.name == courseSelected
                                      select c.course_code;
-
-                    var count = 1;
-
                     
-
-                    /*var unitNameToCheck = from u in db.Units
-                                          where u.name == unit
-                                          select u.name;
-
-                    var unitsToCheckAgainst = from u in db.Units
-                                              where unitList.Contains(u.name)
-                                              select u.unit_code;
-
-                    var prereqs = from p in db.UnitPrerequisites
-                                  where unitToCheck.Contains(p.unit_code)
-                                  where courseCode.Contains(p.course_code)
-                                  select p.prereq_code;
-
-                    var prereqNames = from u in db.Units
-                                      where prereqs.Contains(u.unit_code)
-                                      select u.name;*/
-
-                    var preReqFound = 0;
-                    
+                    /* Loop through the unit list */
                     foreach (var unit in unitList)
                     {
 
+                        /* Add current unit to the list of units that have been checked for violations */
                         unitsChecked.Add(unit);
 
+                        /* Get the unit code of the unit currently being checked */
                         var unitToCheck = from u in db.Units
                                           where u.name == unit
                                           select u.unit_code;
                         
-                        /* Get list of prereqs of the moved unit */
+                        /* Get the unit prereq codes of the unit being checked (if any) */
                         var prereqs = from p in db.UnitPrerequisites
                                       where unitToCheck.Contains(p.unit_code)
                                       where courseCode.Contains(p.course_code)
                                       select p.prereq_code;
 
+                        /* Convert the prereq codes to unit names */
                         var prereqNames = from u in db.Units
                                           where prereqs.Contains(u.unit_code)
                                           select u.name;
                         
-                        /* If the unit has both it's prereqs before it, return true, else retun false and have it marked as violated */
+                        /* If the unit has both it's prereqs before it, do nothing, else add it to the violated list */
                         if (prereqNames.Count() > 0)
                         {
                             if (!prereqNames.Except(unitsChecked).Any())
@@ -345,6 +329,57 @@ namespace custom_study_plan_generator.Controllers
 
             }
  
+        }
+
+        [HttpPost]
+        public string GetPrerequisites()
+        {
+
+            using (custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities())
+            {
+                    
+                    /* Get unit name from ajax POST */ 
+                    var unit = Request["data"].ToString();
+                
+                    /* Get course code fron name stored in session */
+                    var courseSelected = Session["CourseSelect"].ToString();
+                    var courseCode = from c in db.Courses
+                                     where c.name == courseSelected
+                                     select c.course_code;
+
+                    /* Get the unit code of the unit */
+                    var unitToCheck = from u in db.Units
+                                      where u.name == unit
+                                      select u.unit_code;
+                        
+                    /* Get the unit prereq codes of the unit being checked (if any) */
+                    var prereqs = from p in db.UnitPrerequisites
+                                    where unitToCheck.Contains(p.unit_code)
+                                    where courseCode.Contains(p.course_code)
+                                    select p.prereq_code;
+
+                    /* Convert the prereq codes to unit names */
+                    var prereqNames = from u in db.Units
+                                        where prereqs.Contains(u.unit_code)
+                                        select u.name;
+
+                    var prereqList = "";
+                    var count = 0;
+                    foreach (var prereq in prereqNames) {
+                        if (count == 0) 
+                        {
+                            prereqList += prereq.ToString();
+                        }
+                        if (count > 0)
+                        {
+                            prereqList = prereqList + "," + prereq.ToString();
+                        }
+                        
+                        count++;
+                    }
+
+                    return prereqList;
+                }
         }
 
         public ActionResult CreateEdit(string create)

@@ -38,6 +38,20 @@ $(document).ready(function () {
 
                 }).appendTo(idCont);
             }
+
+            for (var x = 0; x < violatedListConverted.length; x++) {
+                if (entry == violatedListConverted[x]) {
+                    innerCellId = "#" + count;
+                    exclamationId = 'exclamation' + count;
+                    jQuery('<img/>', {
+                        id: exclamationId,
+                        class: 'exclamation',
+                        src: '../Content/Images/exclamation.png'
+
+
+                    }).appendTo(innerCellId);
+                }
+            }
             count++
         });
     }
@@ -155,6 +169,8 @@ $(document).ready(function () {
         });
 
     });
+
+    tooltip(".innerCell", "tooltip");
 
 
 
@@ -292,4 +308,48 @@ function dragend(ev, target) {
 
     }
 
+}
+
+function tooltip(target, name) {
+
+    $(target).each(function (i) {
+        
+
+        var id = name + i;
+        var jId = '#' + id;
+
+        $("body").append("<div class='" + name + "' id='" + id + "'><p>" + "Loading..." + "</p></div>");
+        var my_tooltip = $("#" + name + i);
+
+        $(this).removeAttr("title").mouseover(function () {
+            my_tooltip.css({ opacity: 0.8, display: "none" }).fadeIn(0);
+        }).mousemove(function (kmouse) {
+            my_tooltip.css({ left: kmouse.pageX + 15, top: kmouse.pageY + 15 });
+        }).mouseout(function () {
+            my_tooltip.fadeOut(0);
+        });
+
+        data = $(this).text();
+        $.ajax({
+            url: "../Home/GetPrerequisites",
+            type: "POST",
+            data: { data: data },
+            success: function (data) {
+                
+                if (data.length == 0) {
+                    $(jId).text("Prerequsites: None");
+                }
+                else {
+                    $(jId).text("Prerequsites: " + data);
+                }
+                
+
+            },
+            error: function (data) {
+                alert(data.responseText);
+            }
+        });
+    
+        
+    });
 }
