@@ -486,8 +486,28 @@ namespace custom_study_plan_generator.Controllers
 
                     sessionQuery = sessionQuery.OrderBy(u => u.position);
 
-                    List<CoursePlan> sessionList = sessionQuery.ToList();
+                    /* Convert the query to be stored in the session to a list of CoursePlan objects */
+                    List<CoursePlan> sessionList = new List<CoursePlan>(sessionQuery);
 
+
+                    /* Get a list of prerequisites for each unit and add it to the CoursePlan object */
+                    for (var x = 0; x < sessionList.Count(); x++)
+                    {
+                        var unitCode = sessionList[x].unit_code;
+                        
+                        var prerequisites = from p in db.UnitPrerequisites
+                                            where p.course_code == course.course_code
+                                            where p.unit_code.Equals(unitCode)
+                                            select p.prereq_code;
+
+                        /* ( Convert the prerequisites for this unitCode into as List<string> */
+                        List<string> prereqList = prerequisites.ToList();
+
+                        /* Modiy the original list for the session to include the list of prereqs for this unit */
+                        sessionList[x].prerequisites = new List<string>(prereqList);       
+                    }
+
+                    /* Save the session list to a session variable, ready for use by the view */
                     Session["StudentPlan"] = sessionList;
 
                 }
