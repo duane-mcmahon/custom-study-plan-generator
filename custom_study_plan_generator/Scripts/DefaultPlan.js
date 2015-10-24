@@ -1,4 +1,5 @@
 ﻿var dragParentId;
+var preventProgress = false;
 
 $(document).ready(function () {
 
@@ -190,7 +191,7 @@ $(document).ready(function () {
                 location.reload();
             },
             error: function (data) {
-                alert("Error saving plan" + data.responseText);
+                
             }
         });
 
@@ -198,10 +199,10 @@ $(document).ready(function () {
 
     $('#checkPrereqs').click(function () {
 
-        /* Refresh the page, delay for 3 seconds to allow for ajax calls to finish */
-        setTimeout(function () {
-            window.location.reload();
-        }, 3000);
+        /* Refresh the page after waiting for ajax responses */
+        $('#error2').html("Checking, please wait...");
+        $('#error2').show();
+        setTimeout(checkVariable, 1000);
 
     });
 
@@ -272,7 +273,7 @@ function drop(ev, target) {
     }
 }
 
-/* this function runs after drag completion, wjether it was successful or not */
+/* this function runs after drag completion, whether it was successful or not */
 function dragend(ev, target) {
 
 
@@ -286,7 +287,11 @@ function dragend(ev, target) {
     $('#errors').hide();
 
     /* Drag successful */
-    if (ev.dataTransfer.dropEffect !== 'none') {
+    if (ev.dataTransfer.dropEffect == 'move') {
+
+        $('.innerCell').css("background-color", "rgba(255,0,0,0.2)");
+        $('.innerCell').attr("draggable", "false");
+        preventProgress = true;
 
         /* If moved TO the swap space, remove unit from session plan */
         if ($(target).parent().hasClass('swapSpaceCell')) {
@@ -302,10 +307,12 @@ function dragend(ev, target) {
                 type: "POST",
                 data: { data: dataRemove },
                 success: function (data) {
-
+                    $('.innerCell').attr("draggable", "true");
+                    $('.innerCell').css("background-color", "white");
+                    preventProgress = false;
                 },
                 error: function (data) {
-                    alert("Error removing unit");
+                    alert("Error removing unit, please refresh the page.");
                 }
             });
 
@@ -328,16 +335,18 @@ function dragend(ev, target) {
                 type: "POST",
                 data: { data: data },
                 success: function (data) {
-
+                    $('.innerCell').attr("draggable", "true");
+                    $('.innerCell').css("background-color", "white");
+                    preventProgress = false;
                 },
                 error: function (data) {
-                    alert("Error adding unit");
+                    alert("Error adding unit, please refresh the page.");
                 }
             });
 
         }
 
-
+        
 
     }
         /* Drag failed */
@@ -397,4 +406,12 @@ function tooltip(target, name) {
     
         
     });
+}
+
+/* Timer to wait until ajax has updated before refreshing page */
+function checkVariable() {
+    if (preventProgress == false) {
+        window.location.reload();
+    }
+    else setTimeout(checkVariable, 1000);
 }
