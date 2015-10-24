@@ -150,35 +150,7 @@ $(document).ready(function () {
     });
 
     $('#savePlan').click(function () {
-
-        /* Plan is full */
-        if ($('.planCell').children().length == numUnits) {
-
-            $('#error2').html("Saving, please wait...");
-            $('#error2').show();
-            $.ajax({
-                url: "../Home/DefaultPlanSave",
-                type: "POST",
-                success: function (data) {
-                    $('#error2').html("Default plan saved");
-                    $('#error2').delay(5000).fadeOut('slow').css("color", "green");
-                    $('#error2').delay(5000).queue(function (next) {
-                        $(this).css("color", "red");
-                        next();
-                    });
-                },
-                error: function (data) {
-                    alert("Error saving plan" + data.responseText);
-                }
-            });
-        }
-
-            /* Plan is not full */
-        else {
-            $('#error2').html("Error, plan is not full");
-            $('#error2').show();
-            $('#error2').delay(5000).fadeOut('slow');
-        }
+        savePlan();
     });
 
     $('#resetPlan').click(function () {
@@ -414,4 +386,42 @@ function checkVariable() {
         window.location.reload();
     }
     else setTimeout(checkVariable, 1000);
+}
+
+function savePlan() {
+
+    if (preventProgress == false) {
+
+        /* Plan is full */
+        if ($('.planCell').children().length == numUnits) {
+
+            $('#error2').html("Saving, please wait...");
+            $('#error2').show();
+            $.ajax({
+                url: "../Home/DefaultPlanSave",
+                type: "POST",
+                success: function (data) {
+                    $('#error2').html("Default plan saved");
+                    $('#error2').delay(5000).fadeOut('slow').css("color", "green");
+                    $('#error2').delay(5000).queue(function (next) {
+                        $(this).css("color", "red");
+                        next();
+                    });
+                },
+                error: function (data) {
+                    alert("Error saving plan" + data.responseText);
+                }
+            });
+        }
+
+            /* Plan is not full */
+        else {
+            $('#error2').html("Error, plan is not full");
+            $('#error2').show();
+            $('#error2').delay(5000).fadeOut('slow');
+        }
+
+    }
+
+    else setTimeout(savePlan, 1000);
 }
