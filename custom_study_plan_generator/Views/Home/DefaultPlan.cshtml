@@ -1,4 +1,8 @@
-﻿@Scripts.Render("~/Scripts/DefaultPlan.js")
+﻿@Styles.Render("~/Scripts/jquery-ui-1.11.4.custom/jquery-ui.theme.min.css")
+@Scripts.Render("~/Scripts/DefaultPlan.js")
+@Scripts.Render("//code.jquery.com/ui/1.11.4/jquery-ui.js")
+
+
 @using custom_study_plan_generator.Models
 
 <div class="body">
@@ -339,4 +343,8 @@
 
             </div>
 </div>
+</div>
+
+<div id="dialog-confirm" title="Delete Unit?">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This unit will be deleted from the plan. Are you sure?</p>
 </div>

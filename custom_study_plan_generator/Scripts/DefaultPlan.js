@@ -22,6 +22,7 @@ $(document).ready(function () {
         $('.cell').css("width", percString);
         $('.planHeader').css("width", percString)
     }
+    
 
     /* Create plan table inner divs for list of units received from controller */
     var count = 1;
@@ -29,46 +30,45 @@ $(document).ready(function () {
         unitListSelected.forEach(function (entry) {
 
             var innerCellId = "#" + count;
-
+            
             /* Create inner cell */
             if (entry != "") {
                 idCont = "#p" + count;
-                jQuery('<div/>', {
-                    id: count,
-                    class: 'innerCell active',
-                    draggable: 'true',
-                    ondragstart: 'drag(event)',
-                    ondragend: 'dragend(event, this)',
-                    text: entry
 
-                }).appendTo(idCont);
+                $(idCont).append("<div id = '" + count + "' class = 'innerCell active' draggable = 'true' ondragstart = 'drag(event)' ondragend = 'dragend(event, this)'></div>");
+                $(innerCellId).text(entry);
 
-                
                 /* Create hover icon */
                 var hoverId = 'hover' + count;
-                jQuery('<img/>', {
-                    id: hoverId,
-                    class: 'hover',
-                    src: '../Content/Images/hover.png'
-                }).appendTo(innerCellId);
+                $(innerCellId).append("<img id = '" + hoverId + "' class = 'hover' src = '../Content/Images/hover.png' />");
+
+                /* Create prevent icon */
+                var preventId = 'prevent' + count;
+                $(innerCellId).append("<img id = '" + preventId + "' class = 'prevent' src = '../Content/Images/prevent.png' />");
+
+                /* Create delete icon */
+                var deleteId = 'delete' + count;
+                $(innerCellId).append("<img id = '" + deleteId + "' class = 'delete' src = '../Content/Images/delete.png' />");
+
             }
 
             /* Create prereq violated exclamation mark icon where required */
             for (var x = 0; x < violatedListConverted.length; x++) {
                 if (entry == violatedListConverted[x]) {
                     var exclamationId = 'exclamation' + count;
-                    jQuery('<img/>', {
-                        id: exclamationId,
-                        class: 'exclamation',
-                        src: '../Content/Images/exclamation.png'
-
-
-                    }).appendTo(innerCellId);
+                    $(innerCellId).append("<img id = '" + exclamationId + "' class = 'exclamation' src = '../Content/Images/exclamation.png' />");
                 }
             }
             count++
         });
     }
+
+    /* Delete a unit from the page */
+    $('.delete').click(function () {
+        
+        deleteInnerCell(this);
+
+    });
 
     /* Add a unit to the swap space */
     $('#addUnit').click(function () {
@@ -111,26 +111,19 @@ $(document).ready(function () {
         if (duplicate == false) {
             for (var x = 0; x < elements.length; x++) {
                 if ($(elements[x]).children().length == 0) {
-                    jQuery('<div/>', {
-                        id: id,
-                        class: 'innerCell active',
-                        draggable: 'true',
-                        ondragstart: 'drag(event)',
-                        ondragend: 'dragend(event, this)',
-                        text: unit
 
-                    }).appendTo(elements[x]);
+                    $(elements[x]).append("<div id = '" + id + "' class = 'innerCell active' draggable = 'true' ondragstart = 'drag(event)' ondragend = 'dragend(event, this)'></div>");
+                    $(innerCellId).text(unit);
 
                     /* Create hover icon */
                     var hoverId = 'hover' + id;
-                    jQuery('<img/>', {
-                        id: hoverId,
-                        class: 'hover',
-                        src: '../Content/Images/hover.png'
-                    }).appendTo(innerCellId);
-
+                    $(innerCellId).append("<img id = '" + hoverId + "' class = 'hover' src = '../Content/Images/hover.png' />");
                     var jId = "#" + hoverId;
                     tooltip(jId, "tooltip");
+
+                    /* Create delete icon */
+                    var deleteId = 'delete' + count;
+                    $(innerCellId).append("<img id = '" + deleteId + "' class = 'delete' src = '../Content/Images/delete.png' />");
 
                     break;
                 }
@@ -146,6 +139,13 @@ $(document).ready(function () {
             $('#errors').html("Error, swap space is full. Please clear some space first.");
             $('#errors').show();
         }
+
+        /* Reset the delete cell click functiuon to include this unit */
+        $('.delete').click(function () {
+
+            deleteInnerCell(this);
+
+        });
 
     });
 
@@ -182,8 +182,6 @@ $(document).ready(function () {
         tooltip(".hover", "tooltip");
     }
 
-
-
 });
 
 $(window).on('resize', function () {
@@ -214,6 +212,7 @@ function drag(ev) {
 
     /* Set the global variable dragParentId as the location of where the lement is dragged FROM */
     dragParentId = ev.target.parentElement.id;
+
 }
 
 /* This function runs when the dragged element is dropped */
@@ -243,6 +242,7 @@ function drop(ev, target) {
     else {
 
     }
+
 }
 
 /* this function runs after drag completion, whether it was successful or not */
@@ -251,19 +251,24 @@ function dragend(ev, target) {
 
     /* Remove all previous possible targets */
     var elements = document.getElementsByClassName("possibleTarget");
+
     for (var x = 0; x < elements.length; x++) {
         $(elements[x]).removeClass("possibleTarget");
     }
 
     /* Hide any previous errors */
     $('#errors').hide();
+    
+
 
     /* Drag successful */
     if (ev.dataTransfer.dropEffect == 'move') {
 
-        $('.innerCell').css("background-color", "rgba(255,0,0,0.2)");
+        $('.prevent').css("display", "block");
         $('.innerCell').attr("draggable", "false");
         preventProgress = true;
+
+        
 
         /* If moved TO the swap space, remove unit from session plan */
         if ($(target).parent().hasClass('swapSpaceCell')) {
@@ -280,7 +285,7 @@ function dragend(ev, target) {
                 data: { data: dataRemove },
                 success: function (data) {
                     $('.innerCell').attr("draggable", "true");
-                    $('.innerCell').css("background-color", "white");
+                    $('.prevent').css("display", "none");
                     preventProgress = false;
                 },
                 error: function (data) {
@@ -308,7 +313,7 @@ function dragend(ev, target) {
                 data: { data: data },
                 success: function (data) {
                     $('.innerCell').attr("draggable", "true");
-                    $('.innerCell').css("background-color", "white");
+                    $('.prevent').css("display", "none");
                     preventProgress = false;
                 },
                 error: function (data) {
@@ -424,4 +429,64 @@ function savePlan() {
     }
 
     else setTimeout(savePlan, 1000);
+}
+
+function deleteInnerCell(xThis) {
+    var target = $(xThis).parent().parent();
+    var targetId = $(target).attr("id");
+    var targetActual = $(xThis).parent();
+
+    $(function () {
+        $("#dialog-confirm").dialog({
+            resizable: false,
+            height: 200,
+            modal: true,
+            buttons: {
+                "Delete unit": function () {
+
+                    if ($(target).hasClass("planCell")) {
+                        /* Set the prevent other actions settings to on */
+                        $('.prevent').css("display", "block");
+                        $('.innerCell').attr("draggable", "false");
+                        preventProgress = true;
+
+                        /* convert the id to a number that will match the session plan */
+                        var idString = targetId.toString();
+                        var id = idString.substring(1);
+                        dataRemove = id;
+
+                        /* Delete the unit */
+                        $.ajax({
+                            url: "../Home/DefaultPlanRemove",
+                            type: "POST",
+                            data: { data: dataRemove },
+                            success: function (data) {
+                                $('.innerCell').attr("draggable", "true");
+                                $('.prevent').css("display", "none");
+                                preventProgress = false;
+                                $(targetActual).remove();
+
+                            },
+                            error: function (data) {
+                                alert("Error removing unit, please refresh the page.");
+                            }
+                        });
+
+                        $(this).dialog("close");
+
+                    }
+
+                    else {
+
+                        $(targetActual).remove();
+                        $(this).dialog("close");
+
+                    }
+                },
+                Cancel: function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    });
 }

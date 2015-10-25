@@ -472,7 +472,7 @@ th {
     padding-top: 2%;
 }
 
-/* ********* Exclamation and Hover styling - for units that have had prereqs violated, and hover for all units ********** */
+/* ********* Icon indiciator styling ********** */
 
 .exclamation {
     height: 35%;
@@ -485,7 +485,23 @@ th {
     height: 25%;
     position: absolute;
     bottom: 5%;
+    left: 18%;
+}
+
+.delete {
+    height: 25%;
+    position: absolute;
+    bottom: 5%;
     left: 5%;
+}
+
+.prevent {
+    width: 40%;
+    position: absolute;
+    left: 30%;
+    top: 4%;
+    opacity: 0.75;
+    display: none;
 }
 
 /* ********* TOOLTIPS ********** */
