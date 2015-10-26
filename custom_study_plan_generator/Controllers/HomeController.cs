@@ -378,9 +378,13 @@ namespace custom_study_plan_generator.Controllers
                 }
         }
 
+        [HttpPost]
         public ActionResult CreateEdit(string create)
         {
- 
+
+            var studentID = Request["StudentID"].ToString();
+            Session["StudentID"] = studentID;
+
             if (!string.IsNullOrEmpty(create))
             {
                 return RedirectToAction("CreatePlan", "Home");
