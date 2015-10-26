@@ -488,6 +488,13 @@ th {
     left: 18%;
 }
 
+.hoverModify {
+    height: 25%;
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+}
+
 .delete {
     height: 25%;
     position: absolute;

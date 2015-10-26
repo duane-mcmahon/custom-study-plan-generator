@@ -40,7 +40,7 @@ $(document).ready(function () {
 
                     /* Create hover icon */
                     var hoverId = 'hover' + count;
-                    $(innerCellId).append("<img id = '" + hoverId + "' class = 'hover' src = '../Content/Images/hover.png' />");
+                    $(innerCellId).append("<img id = '" + hoverId + "' class = 'hoverModify' src = '../Content/Images/hover.png' />");
 
                     /* Create prevent icon */
                     var preventId = 'prevent' + count;
