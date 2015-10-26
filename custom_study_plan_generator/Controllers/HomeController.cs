@@ -340,12 +340,8 @@ namespace custom_study_plan_generator.Controllers
                     
                     /* Get unit name from ajax POST */ 
                     var unit = Request["data"].ToString();
-                
-                    /* Get course code fron name stored in session */
-                    var courseSelected = Session["CourseSelect"].ToString();
-                    var courseCode = from c in db.Courses
-                                     where c.name == courseSelected
-                                     select c.course_code;
+
+                    var courseCode = Session["CourseCode"].ToString();
 
                     /* Get the unit code of the unit */
                     var unitToCheck = from u in db.Units
@@ -404,7 +400,10 @@ namespace custom_study_plan_generator.Controllers
             {
                 /* Reset any session variables */
                 Session["StudentPlan"] = null;
+                Session["StudentPlanSwap"] = null;
                 Session["numUnits"] = null;
+                Session["Removed Exemptions"] = null;
+                Session["AlgorithmRun"] = "false";
 
                 /* Set the default blank course option on page load */
                 ViewBag.listValue = "Select Course";
@@ -455,6 +454,7 @@ namespace custom_study_plan_generator.Controllers
                     ViewBag.numUnits = course.num_units;
                     Session["numUnits"] = course.num_units;
                     Session["Course"] = course;
+                    Session["CourseCode"] = course.course_code;
 
                     /* Select the plan that matches the meta course */
                     plans = plans.Where(u => u.course_code == course.course_code).OrderBy(u => u.unit_no);
@@ -552,25 +552,10 @@ namespace custom_study_plan_generator.Controllers
             {
                 return View();
             }
+            /* If "next" button is pressed proceed to "Modify" page */
             else if (!string.IsNullOrEmpty(next))
             {
-                // Check Exemptions have been selected before proceeding.
-                int countExempt = 0;
-
-                // Count Exemptions.
-                foreach (CoursePlan unit in (List<CoursePlan>)Session["StudentPlan"])
-                {
-                    if (unit.exempt == true)
-                    {
-                        countExempt++;
-                    }
-                }
-
-                // Proceed if at least 1 Exemption is selected.
-                if (countExempt > 0)
-                {
-                    return RedirectToAction("Modify", "Home");
-                }
+                return RedirectToAction("Modify", "Home");
             }
 
             return View();
@@ -641,24 +626,163 @@ namespace custom_study_plan_generator.Controllers
 
         public ActionResult Modify()
         {
-            // Check a valid DefaultPlan is in the Session variable.
+            // Check a valid StudentPlan is in the Session variable.
             if (Session["StudentPlan"] == null)
             {
                 // No Course has been selected - Redirect back to the Index page.
                 return RedirectToAction("Index", "Home");
             }
 
+            
             // Retrieve sessionList of coursePlan (units) from Session variable
             // StudentPlan.
             List<CoursePlan> sessionList = (List<CoursePlan>)Session["StudentPlan"];
-            // Create StudyPlanAlgorithm object;
-            StudyPlanAlgorithm.StudyPlanAlgorithm algorithm = new StudyPlanAlgorithm.StudyPlanAlgorithm();
-            // Update sessionList by passing it to newly created StudyPlanAlgorithm.
-            sessionList = algorithm.RunAlgorithm(sessionList);
-            // Update Session["StudentPlan"]
-            Session["StudentPlan"] = sessionList;
+            
+            /* Only run the algorithm if it has nort already been run */
+            if (Session["AlgorithmRun"].ToString() == "false")
+            {
+                
+                // Create StudyPlanAlgorithm object;
+                StudyPlanAlgorithm.StudyPlanAlgorithm algorithm = new StudyPlanAlgorithm.StudyPlanAlgorithm();
+                // Update sessionList by passing it to newly created StudyPlanAlgorithm.
+                sessionList = algorithm.RunAlgorithm(sessionList);
+                // Update Session["StudentPlan"]
+                Session["StudentPlan"] = sessionList;
+
+                Session["AlgorithmRun"] = "true";
+            }
+
+            /* Check if any of the current units in the unit list are missing their prerequisites */
+            /* ********************************************************************************** */
+
+            /* Initialise two lists required for checking and returning the problem units */
+            List<string> violatedList = new List<string>();
+            List<string> unitsChecked = new List<string>();
+
+            using (custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities())
+            {
+                
+                /* Get the course code from the session stroed selected course */
+                var courseCode = Session["CourseCode"].ToString();
+
+                List<string> exemptionsList = (List<string>)Session["RemovedExemptions"];
+                
+                /* If there are any exempt units, add them to list of units that have been checked for violations */
+                foreach (var exemption in exemptionsList)
+                {
+                    Debug.WriteLine("Checking: " + exemption);
+                    unitsChecked.Add(exemption);
+                    
+                }
+
+                
+                /* Loop through the unit list */
+                foreach (var unit in sessionList)
+                {
+
+                    if (unit != null) {
+
+                        
+                        /* Add current unit to the list of units that have been checked for violations */
+                        unitsChecked.Add(unit.name);
+
+                        /* Get the unit code of the unit currently being checked */
+                        var unitToCheck = from u in db.Units
+                                          where u.name == unit.name
+                                          select u.unit_code;
+
+                        /* Get the unit prereq codes of the unit being checked (if any) */
+                        var prereqs = from p in db.UnitPrerequisites
+                                      where unitToCheck.Contains(p.unit_code)
+                                      where p.course_code == courseCode
+                                      select p.prereq_code;
+
+                        /* Convert the prereq codes to unit names */
+                        var prereqNames = from u in db.Units
+                                          where prereqs.Contains(u.unit_code)
+                                          select u.name;
+
+                        /* If the unit has both it's prereqs before it, do nothing, else add it to the violated list */
+                        if (prereqNames.Count() > 0)
+                        {
+                            if (!prereqNames.Except(unitsChecked).Any())
+                            {
+
+                            }
+                            else
+                            {
+                                violatedList.Add(unit.name);
+                            }
+                        }
+
+                        ViewBag.violatedList = violatedList;
+                    }
+
+                }
+            }
 
             return View();
+        }
+
+        [HttpPost]
+        public void ModifyAdd()
+        {
+
+            var data = Request["data"].ToString();
+            var dataSplit = data.Split(',');
+            var from = dataSplit[0];
+            var fromInt = Convert.ToInt32(from) - 1;
+            var to = dataSplit[1];
+            var toInt = Convert.ToInt32(to) - 1;
+
+            Debug.WriteLine("FromInt: " + fromInt);
+            Debug.WriteLine("ToInt: " + toInt);
+
+
+            var unitList = Session["StudentPlan"] as List<CoursePlan>;
+            var unitListSwap = Session["StudentPlanSwap"] as List<CoursePlan>;
+
+            unitList[toInt] = unitListSwap[fromInt];
+            unitListSwap[fromInt] = null;
+
+            Session["StudentPlan"] = unitList;
+            Session["StudentPlanSwap"] = unitListSwap;
+
+        }
+
+        [HttpPost]
+        public void ModifyRemove()
+        {
+
+            var data = Request["data"].ToString();
+            var dataSplit = data.Split(',');
+            var from = dataSplit[0];
+            var fromInt = Convert.ToInt32(from) - 1;
+            var to = dataSplit[1];
+            var toInt = Convert.ToInt32(to) - 1;
+
+            var unitList = Session["StudentPlan"] as List<CoursePlan>;
+            
+            if (Session["StudentPlanSwap"] == null)
+            {
+                List<CoursePlan> studentPlanSwap = new List<CoursePlan>();
+                for (var x = 0; x < 12; x++)
+                {
+                    studentPlanSwap.Add(null);
+                }
+
+                Session["StudentPlanSwap"] = studentPlanSwap;
+            }
+
+            var unitListSwap = Session["StudentPlanSwap"] as List<CoursePlan>;
+
+            unitListSwap[toInt] = unitList[fromInt];
+            unitList[fromInt] = null;
+           
+
+            Session["StudentPlan"] = unitList;
+            Session["StudentPlanSwap"] = unitListSwap;
+
         }
 
         public ActionResult EditPlan()

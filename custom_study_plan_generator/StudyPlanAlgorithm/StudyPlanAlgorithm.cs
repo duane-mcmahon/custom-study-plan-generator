@@ -3,10 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.UI;
 
 namespace custom_study_plan_generator.StudyPlanAlgorithm
 {
-    public class StudyPlanAlgorithm
+    // Have class inherit from 'Page' so that session is available
+    public class StudyPlanAlgorithm : Page
     {
         
         string input;
@@ -48,6 +50,8 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
         void RemoveExemptions(LinkedList<Unit> courseStruct)
         {
             LinkedListNode<Unit> node;
+            // Set up a list of removed exemptions (required for Modify page)
+            List<string> removedExemptions = new List<string>();
 
             // Iterating through the course structure list and removing units
             // if their exemption status is true
@@ -58,11 +62,16 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
                 if (node.Value.Exempt == true)
                 {
                     System.Diagnostics.Debug.WriteLine("Removing unit: " + node.Value.UnitName.ToString());
+                    // Add the exemption unit name to the removed exemptions list
+                    removedExemptions.Add(node.Value.UnitName);
                     course.courseStructure.Remove(node);
                     updateSemesterListSize();
                 }
                 node = nextNode;
             }
+
+            // Save the removed exemptions to a session variable */
+            Session["RemovedExemptions"] = removedExemptions;
         }
         // Updates the july and feb lists when a unit is removed
         void updateSemesterListSize()

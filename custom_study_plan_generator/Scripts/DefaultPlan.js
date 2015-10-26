@@ -206,7 +206,7 @@ function allowDrop(ev) {
 /* This funtions runs when the drag begins */
 function drag(ev) {
 
-    /* Set the element being hovered over as a pssible drag target */
+    /* Set the element being hovered over as a possible drag target */
     ev.dataTransfer.setData("text", ev.target.id);
     $(document.getElementById(ev.target.id).parentElement).addClass("possibleTarget");
 

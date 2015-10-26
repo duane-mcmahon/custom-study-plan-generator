@@ -1,4 +1,6 @@
-﻿@Scripts.Render("~/Scripts/Modify.js")
+﻿@Styles.Render("~/Scripts/jquery-ui-1.11.4.custom/jquery-ui.theme.min.css")
+@Scripts.Render("~/Scripts/Modify.js")
+@Scripts.Render("//code.jquery.com/ui/1.11.4/jquery-ui.js")
 @using custom_study_plan_generator.MetaObjects
 
 <div class="body">
@@ -35,11 +37,15 @@
                     @using (Html.BeginForm("Final", "Home", FormMethod.Post))
                     {
                         <button type="submit" class="CPButton" name="next" value="next" title="Next Step">Next</button><br />
+                        <button id="checkPrereqs" type="button" class="CPButton2" name="checkPrereqs" value="checkPrereqs" title="Check Prerequisites">Check Prerequisites</button><br />
+                        <div id="error2" class="errors"></div>
                     }
                 </div>
 
                 @{
                     List<CoursePlan> studentPlan = (List<CoursePlan>)Session["StudentPlan"];
+                    List<CoursePlan> studentPlanSwap = (List<CoursePlan>)Session["StudentPlanSwap"];
+                    List<string> violatedList = (List<string>)ViewBag.violatedList;
                     Int32 numUnits = (Int32)Session["numUnits"];
                 }
 
@@ -49,7 +55,21 @@
                     if ('@(studentPlan)' != null) {
                         var studentPlan = JSON.parse('@Html.Raw(Json.Encode(studentPlan))');
                     }
+                    if ('@(studentPlanSwap)' != null) {
+                        var studentPlanSwap = JSON.parse('@Html.Raw(Json.Encode(studentPlanSwap))');
+                    }
+                    if ('@(violatedList)' != null) {
+                        var violatedListConverted = JSON.parse('@Html.Raw(Json.Encode(violatedList))');
+                    }
 
+                </script>
+
+                <!-- Prevents users from being able to go back a page, as this will cause problems with the Session variables -->
+                <script type="text/javascript">
+                    history.pushState(null, null, 'Modify');
+                    window.addEventListener('popstate', function (event) {
+                        history.pushState(null, null, 'Modify');
+                    });
                 </script>
 
                 <div id="planTable" class="planTable">
@@ -150,7 +170,7 @@
                         <div id="ss4" class="inlineGrid col cell target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
 
                         </div>
-                        <div id="ss5" class="inlineGrid col cell targe swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+                        <div id="ss5" class="inlineGrid col cell target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
 
                         </div>
                         <div id="ss6" class="inlineGrid col cell target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
