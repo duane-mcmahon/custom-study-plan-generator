@@ -1,4 +1,4 @@
-﻿@model custom_study_plan_generator.MetaObjects.StudentID
+﻿@Scripts.Render("~/Scripts/Index.js")
 
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script> 
@@ -19,19 +19,18 @@
                         @:Student ID
                         @:<br>
                         <div>
-                            @Html.TextBoxFor(model => model.studentID, new { id = "studentIdInput" })
+                            <input type="text" name="studentIdInput" id = "studentIdInput" />
                         </div>
-                        <div>
-                            @Html.ValidationMessageFor(model => model.studentID)
-                        </div>
+                        <input type="hidden" name="formInput" />
+                        <div id="error3" class="error3"></div>
                     @:</div>
                     <div class="inline homeColumn2">
                         <div>
-                            <button type="submit" class="homeButton" name="create" value="create" title="Create Plan">Create</button>
+                            <button id ="createButton" type="button" class="homeButton" name="create" value="create" title="Create Plan">Create</button>
                             Create a new study plan
                         </div>
                         <div class="homeRow2">
-                            <button type="submit" class="homeButton" name="edit" value="edit" title="Edit Plan">Edit</button>
+                            <button id="editButton" type="button" class="homeButton" name="edit" value="edit" title="Edit Plan">Edit</button>
                             Edit an existing study plan
                         </div>
                     </div>

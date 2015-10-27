@@ -6,7 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="f42dd61440304a7581a6ab68d8f9b794" Name="Diagram1">
         <EntityTypeShape EntityType="custom_study_plan_generatorModel.Course" Width="1.5" PointX="11.25" PointY="0.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="custom_study_plan_generatorModel.Student" Width="1.5" PointX="3" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="custom_study_plan_generatorModel.Student" Width="1.5" PointX="2.75" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="custom_study_plan_generatorModel.StudentExemption" Width="1.75" PointX="5.25" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="custom_study_plan_generatorModel.StudentPlan" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="custom_study_plan_generatorModel.Unit" Width="1.5" PointX="7.25" PointY="0.5" IsExpanded="true" />

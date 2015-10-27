@@ -45,6 +45,10 @@
         savePlan();
     });
 
+    $('#home').click(function () {
+        window.location.href = "../Home/Index";
+    });
+
 });
 
 function savePlan() {

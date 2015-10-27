@@ -225,9 +225,10 @@ html body {
     margin-top: 5%;
 }
 
-#studentIdInput-error {
+#error3 {
     color: red;
     font-size: 1vw;
+    display: none;
 }
 
 .modeHolder {
