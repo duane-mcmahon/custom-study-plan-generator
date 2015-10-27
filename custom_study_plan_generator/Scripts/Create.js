@@ -35,10 +35,20 @@
         });
     }
 
+    $('input[name=startSemester]').val("1");
+
+    $('#startSemester').click(function () {
+        if ($('input[name=startSemester]').val() == "1") {
+            $('input[name=startSemester').val("2");
+        }
+        else {
+            $('input[name=startSemester').val("1");
+        }
+    });
+
 });
 
 $(window).on('resize', function () {
-    alert("hello");
     var widthBacker = $('#backerCP').width();
     var widthText = $('#textCP').width();
     $('#backerCP').css("height", widthBacker * .50);

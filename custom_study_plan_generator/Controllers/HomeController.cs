@@ -27,6 +27,7 @@ using Google.Apis.Services;
 using File = Google.Apis.Drive.v2.Data.File;
 
 using custom_study_plan_generator.StudyPlanAlgorithm;
+using custom_study_plan_generator.Models;
 using Microsoft.Ajax.Utilities;
 
 namespace custom_study_plan_generator.Controllers
@@ -406,8 +407,9 @@ namespace custom_study_plan_generator.Controllers
                 Session["StudentPlan"] = null;
                 Session["StudentPlanSwap"] = null;
                 Session["numUnits"] = null;
-                Session["Removed Exemptions"] = null;
+                Session["RemovedExemptions"] = null;
                 Session["AlgorithmRun"] = "false";
+                Session["StartSemester"] = null;
 
                 /* Set the default blank course option on page load */
                 ViewBag.listValue = "Select Course";
@@ -542,6 +544,7 @@ namespace custom_study_plan_generator.Controllers
 
         }
 
+        [HttpPost]
         public ActionResult Exemptions(string removeExemptions, string next)
         {
             // Check a valid DefaultPlan is in the Session variable.
@@ -549,6 +552,14 @@ namespace custom_study_plan_generator.Controllers
             {
                 // No Course has been selected - Redirect back to the course selection page.
                 return RedirectToAction("CreatePlan", "Home");
+            }
+
+            /* Retreive the start semester from the form and put it in a session variable, to be used on the Modify page */
+            if (Session["StartSemester"] == null)
+            {
+                var startSemester = Request["startSemester"];
+                Session["StartSemester"] = startSemester;
+                Debug.WriteLine("SS1: " + Session["StartSemester"]);
             }
 
             // If "loadDefault" button is pressed, return the list of updated units to the view.
@@ -641,6 +652,10 @@ namespace custom_study_plan_generator.Controllers
             // Retrieve sessionList of coursePlan (units) from Session variable
             // StudentPlan.
             List<CoursePlan> sessionList = (List<CoursePlan>)Session["StudentPlan"];
+            // Retreive start semester
+            var startSemester = Convert.ToInt32(Session["StartSemester"]);
+
+            Debug.WriteLine("SS: " + startSemester);
             
             /* Only run the algorithm if it has nort already been run */
             if (Session["AlgorithmRun"].ToString() == "false")
@@ -802,7 +817,44 @@ namespace custom_study_plan_generator.Controllers
             return View();
         }
 
+        public ActionResult Final()
+        {
+
+            
         
+            return View();
+         }
+        public void FinalSave()
+        {
+          
+            // Retrieve sessionList of coursePlan (units) from Session variable
+            // StudentPlan.
+            List<CoursePlan> sessionList = (List<CoursePlan>)Session["StudentPlan"];
+            List<string> RemovedExemptions = (List<string>)Session["RemovedExemptions"];
+            string studentID = Session["StudentID"].ToString();
+
+             using (custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities())
+             {
+
+                 List<ExemptionModel> studentExemptions = (from unit in db.Units
+                                         where RemovedExemptions.Contains(unit.name)
+                                         select new ExemptionModel() { name = unit.name, unit_code = unit.unit_code}).ToList();
+
+                 foreach (var exemption in studentExemptions)
+                 {
+                     StudentExemption se = new StudentExemption();
+                     se.student_id = Convert.ToInt32(studentID.Substring(1, 7));
+                     se.unit_code = exemption.unit_code;
+                     se.exempt = true;
+                     db.StudentExemptions.Add(se);
+                }
+
+                db.SaveChanges();
+               
+             }
+
+        }
+
         public ActionResult submitPlan()
         {
        

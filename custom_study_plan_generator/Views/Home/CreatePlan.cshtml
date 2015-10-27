@@ -6,7 +6,10 @@
         <div id="textDefault" class="textCP">
             <div class="CPcol1 inline">
                 <div class="inline">
-                    <!-- Available location - top left-->
+                    @if (ViewBag.courseSelected == true)
+                    {
+                        <input id ="startSemester" type="checkbox" name="startSemester" value="startSemester" /> @: Mid-Year Intake
+                    }
                 </div>
                 <div class="inline">
                     <!-- Avaliable location - top left -->
@@ -39,7 +42,10 @@
                 }
                 @using (Html.BeginForm("Exemptions", "Home", FormMethod.Post))
                 {
-                    <button type="submit" class="CPButton2" name="exemptions" value="exemptions" title="Next Step">Next</button>
+                    <input type="hidden" name="startSemester" />
+                    <button type="submit" class="CPButton2" name="exemptions" value= "Next" title="Next Step" >Next</button>
+                    
+                
                 }
             </div>
 

@@ -253,6 +253,7 @@
     </Compile>
     <Compile Include="MetaObjects\CoursePlan.cs" />
     <Compile Include="MetaObjects\CoursesDTO.cs" />
+    <Compile Include="Models\ExemptionModel.cs" />
     <Compile Include="MetaObjects\StudentID.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AspNetRole.cs">
@@ -319,7 +320,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="StudyPlanAlgorithm\Course.cs" />
-    <Compile Include="StudyPlanAlgorithm\StudyPlanAlgorithm.cs" />
+    <Compile Include="StudyPlanAlgorithm\StudyPlanAlgorithm.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="StudyPlanAlgorithm\Unit.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -367,6 +370,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
+    <Content Include="Scripts\Final.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -426,6 +430,7 @@
     <Content Include="Views\Home\submitPlanAsync.cshtml" />
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
+    <Content Include="Views\Home\Final.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml.old" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
