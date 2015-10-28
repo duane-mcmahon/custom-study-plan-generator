@@ -149,6 +149,17 @@ $(window).on('resize', function () {
 function allowDrop(ev) {
 
     ev.preventDefault();
+    if ($(ev.target).children().length > 0)
+        ev.dataTransfer.dropEffect = "none"; // dropping is not allowed
+    else if ($(ev.target).hasClass('hover'))
+        ev.dataTransfer.dropEffect = "none"; // dropping is not allowed
+    else if ($(ev.target).hasClass('delete'))
+        ev.dataTransfer.dropEffect = "none"; // dropping is not allowed
+    else if ($(ev.target).hasClass('prevent'))
+        ev.dataTransfer.dropEffect = "none"; // dropping is not allowed
+    else
+        ev.dataTransfer.dropEffect = "all"; // drop
+
 }
 
 function drag(ev) {
