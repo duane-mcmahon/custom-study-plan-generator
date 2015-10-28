@@ -97,7 +97,7 @@ namespace custom_study_plan_generator.Controllers
                 
             }
 
-            return "false";
+            return "Student ID does not exist.";
         }
 
         public ActionResult DefaultPlan(string courseSelect)

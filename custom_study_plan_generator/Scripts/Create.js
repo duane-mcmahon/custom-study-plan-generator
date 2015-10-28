@@ -11,9 +11,13 @@
 
     $('#planTable').css("height", heightTopCell + (heightp1 * 4));
 
-    if (numUnits == 32) {
-        $('.cell').css("width", "12%");
-        $('.planHeader').css("width", "12%")
+    var semesters = (numUnits / 4) | 0;
+
+    if (semesters > 6) {
+        var percentage = 96 / semesters;
+        var percString = percentage + "%";
+        $('.cell').css("width", percString);
+        $('.planHeader').css("width", percString)
     }
 
     var count = 1;
