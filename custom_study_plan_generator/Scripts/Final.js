@@ -67,7 +67,7 @@ function savePlan() {
             });
         },
         error: function (data) {
-            alert("Error saving plan" + data.responseText);
+            alert("Error saving plan");
         }
     });
         

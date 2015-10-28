@@ -1,2 +1,199 @@
-﻿<h2>EditPlan</h2>
+﻿@Styles.Render("~/Scripts/jquery-ui-1.11.4.custom/jquery-ui.theme.min.css")
+@Scripts.Render("~/Scripts/Edit.js")
+@Scripts.Render("//code.jquery.com/ui/1.11.4/jquery-ui.js")
+
+<div class="body">
+    <div id="backerEdit" class="backerEdit">
+        <div id="textEdit" class="textEdit">
+            <div class="CPcol1 inline">
+                <div class="inline">
+                    Student:
+                </div>
+                <div class="inline">
+                    XYZ
+                </div>
+            </div>
+
+            <div class="headingCP pagewideFont inline CPcol2">
+                Create Mode
+            </div>
+
+            <div class="CPcol3 inline">
+                <div class="inline">
+                    Course:
+                </div>
+                <div class="inline">
+                    Course 1
+                </div>
+            </div>
+            <div class="inline CPcol1desc">
+
+            </div>
+            <div class="pagewideFont CPcol2desc inline">
+                Make any manual adjustments using the unit swap space, then click "Next".
+            </div>
+            <div class="inline CPcol3desc">
+                
+                <button id ="resetChanges" type ="button" class="CPButton" name="resetChanges" value="resetChanges" title="Reset Changes">Reset Changes</button><br />
+                <button id="checkPrereqs" type="button" class="CPButton2" name="checkPrereqs" value="checkPrereqs" title="Check Prerequisites">Check Prerequisites</button><br />
+                <button id="savePlan" type="button" class="CPButton2" name="savePlan" value="savePlan" title="Save Plan">Save Plan</button><br />
+                <div id="error2" class="errors"></div>
+               
+            </div>
+
+            @{
+                List<string> studentPlan = (List<string>)Session["StudentPlan"];
+                List<string> studentPlanSwap = (List<string>)Session["StudentPlanSwap"];
+                List<string> violatedList = (List<string>)ViewBag.violatedList;
+                Int32 numUnits = (Int32)Session["numUnits"];
+            }
+
+            <script>
+
+                    var numUnits = '@(Session["numUnits"])';
+                    if ('@(studentPlan)' != null) {
+                        var studentPlan = JSON.parse('@Html.Raw(Json.Encode(studentPlan))');
+                    }
+                    if ('@(studentPlanSwap)' != null) {
+                        var studentPlanSwap = JSON.parse('@Html.Raw(Json.Encode(studentPlanSwap))');
+                    }
+                    if ('@(violatedList)' != null) {
+                        var violatedListConverted = JSON.parse('@Html.Raw(Json.Encode(violatedList))');
+                    }
+
+            </script>
+
+            <div id="planTable" class="planTable">
+                <div class="row1">
+
+                    @{
+                        int semesters = numUnits / 4;
+                        var header = "";
+                    }
+
+
+
+                    @for (var h = 1; h <= semesters; h++)
+                    {
+
+                        header = "headerPlanTable";
+                        if (h == 1)
+                        {
+                            header = "headerPlanTable" + h;
+                        }
+                        <div id="topCell" class="inlineGrid planHeader @header">
+                            Sem @h
+                        </div>
+                    }
+
+                </div>
+
+                @{
+
+                    var count = 1;
+                    var countRow = 2;
+                    var countCell = 1;
+                    var countCol = 1;
+                    string rowClass = "";
+                    string idCell = "";
+                    string idCont = "";
+                    string col = "";
+
+                    for (var x = 1; x <= numUnits; x++)
+                    {
+
+                        rowClass = "row" + countRow;
+                        idCell = countCell.ToString();
+                        idCont = "p" + countCell;
+
+
+                        if (count % semesters == 1)
+                        {
+                            @:<div class="@rowClass">
+                                                              countCol = 1;
+                        }
+
+                        col = "col";
+                        if (countCol == 1)
+                        {
+                            col = "col" + countCol;
+                        }
+
+                        <div id="@idCont" class="inlineGrid @col cell lastRow target planCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                        </div>
+
+                        if (count % semesters == 0)
+                        {
+                            @:</div>
+                                countCell = countRow;
+                                countRow++;
+                        }
+
+
+                        if (count % semesters != 0)
+                        {
+                            countCell += 4;
+                        }
+                        count++;
+                        countCol++;
+                    }
+                }
+            </div>
+
+
+
+            <div class="swapSpaceHeader pagewideFont">
+                Unit Swap Space
+            </div>
+
+            <div class="planTable">
+                <div class="row1">
+                    <div id="ss1" class="inlineGrid col1 cell target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                    </div>
+                    <div id="ss2" class="inlineGrid col cell target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                    </div>
+                    <div id="ss3" class="inlineGrid col cell target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                    </div>
+                    <div id="ss4" class="inlineGrid col cell target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                    </div>
+                    <div id="ss5" class="inlineGrid col cell target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                    </div>
+                    <div id="ss6" class="inlineGrid col cell target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                    </div>
+
+                </div>
+                <div class="row2">
+                    <div id="ss7" class="inlineGrid col1 cell lastRow target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                    </div>
+                    <div id="ss8" class="inlineGrid col cell lastRow target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                    </div>
+                    <div id="ss9" class="inlineGrid col cell lastRow target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                    </div>
+                    <div id="ss10" class="inlineGrid col cell lastRow target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                    </div>
+                    <div id="ss11" class="inlineGrid col cell lastRow target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                    </div>
+                    <div id="ss12" class="inlineGrid col cell lastRow target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+
+                    </div>
+
+                </div>
+                <div id="errors" class="errors"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
 

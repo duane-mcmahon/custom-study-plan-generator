@@ -1,34 +1,22 @@
 ﻿using custom_study_plan_generator.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Mime;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
-using System.Data.Entity;
 using custom_study_plan_generator.MetaObjects;
 using System.Diagnostics;
 
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
 using custom_study_plan_generator.App_Start;
 using Google.Apis.Auth.OAuth2.Mvc;
-using Google.Apis.Download;
 using Google.Apis.Drive.v2;
 using Google.Apis.Drive.v2.Data;
 using Google.Apis.Services;
 using File = Google.Apis.Drive.v2.Data.File;
 
-using custom_study_plan_generator.StudyPlanAlgorithm;
-using custom_study_plan_generator.Models;
-using Microsoft.Ajax.Utilities;
 
 namespace custom_study_plan_generator.Controllers
 {
@@ -48,29 +36,65 @@ namespace custom_study_plan_generator.Controllers
         public string CheckStudentID()
         {
 
-            int id;
-            try
-            {
-                var idRaw = Request["data"].ToString();
-                id = Convert.ToInt32(idRaw.Substring(1, 7));
-                Session["StudentID"] = idRaw;
-            }
-            catch (Exception ex) 
-            {
-                return "false";
-            }
-            
             using (custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities())
             {
 
-                var match = from student in db.Students
-                            where student.student_id == id
-                            select student;
+                
+                var data = Request["data"].ToString();
+                var dataSplit = data.Split(',');
+                var idRaw = dataSplit[0];
+                var type = dataSplit[1];
+                
 
-                if (match.Count() > 0)
+
+                try
                 {
-                    return "true";
+
+                    var id = Convert.ToInt32(idRaw.Substring(1, 7));
+                    
+                    Session["StudentID"] = idRaw;
+
+                    if (type == "create")
+                    {
+                        var match = from student in db.Students
+                                    where student.student_id == id
+                                    select student;
+
+                        if (match.Count() > 0)
+                        {
+                            return "true";
+                        }
+                    }
+
+                    else if (type == "edit")
+                    {
+
+
+                        var studentPlan = from sp in db.StudentPlans
+                                          where sp.student_id == id
+                                          select sp;
+
+                        if (studentPlan.Count() > 0)
+                        {
+                            int highestPlanID = studentPlan.Max(p => p.plan_id);
+                            Session["PlanID"] = highestPlanID;
+                            return "true";
+                        }
+                        else
+                        {
+                            return "Plan for this student does not exist.";
+                        }
+                    }
+                
                 }
+                catch (Exception ex) 
+                {
+                    return "Student ID does not exist.";
+                }
+            
+            
+
+                
             }
 
             return "false";
@@ -421,6 +445,7 @@ namespace custom_study_plan_generator.Controllers
             }
             else
             {
+                Session["FromIndex"] = "true";
                 return RedirectToAction("EditPlan", "Home");
             }
 
@@ -439,7 +464,7 @@ namespace custom_study_plan_generator.Controllers
                 Session["RemovedExemptions"] = null;
                 Session["AlgorithmRun"] = "false";
                 Session["StartSemester"] = null;
-                Session["Coursecode"] = null;
+                Session["CourseCode"] = null;
 
                 /* Set the default blank course option on page load */
                 ViewBag.listValue = "Select Course";
@@ -716,7 +741,6 @@ namespace custom_study_plan_generator.Controllers
                 /* If there are any exempt units, add them to list of units that have been checked for violations */
                 foreach (var exemption in exemptionsList)
                 {
-                    Debug.WriteLine("Checking: " + exemption);
                     unitsChecked.Add(exemption);
                     
                 }
@@ -770,6 +794,7 @@ namespace custom_study_plan_generator.Controllers
             return View();
         }
 
+
         [HttpPost]
         public void ModifyAdd()
         {
@@ -780,10 +805,6 @@ namespace custom_study_plan_generator.Controllers
             var fromInt = Convert.ToInt32(from) - 1;
             var to = dataSplit[1];
             var toInt = Convert.ToInt32(to) - 1;
-
-            Debug.WriteLine("FromInt: " + fromInt);
-            Debug.WriteLine("ToInt: " + toInt);
-
 
             var unitList = Session["StudentPlan"] as List<CoursePlan>;
             var unitListSwap = Session["StudentPlanSwap"] as List<CoursePlan>;
@@ -833,9 +854,317 @@ namespace custom_study_plan_generator.Controllers
 
         public ActionResult EditPlan()
         {
-            
+
+            var fromIndex = Session["FromIndex"].ToString();
+     
+            /* open database so that it will be autmoatically disposed */
+            using (custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities())
+            {
+                /* Reset any session variables if the page is coming from the hompage */
+
+                if (fromIndex == "true")
+                {
+
+                    Session["numUnits"] = null;
+                    Session["RemovedExemptions"] = null;
+                    Session["AlgorithmRun"] = "false";
+                    Session["StartSemester"] = null;
+                    Session["CourseCode"] = null;
+                    Session["StudentPlan"] = null;
+                    Session["StudentPlanSwap"] = null;
+                
+                }
+
+                /* Convert the student ID in session to an int */
+                var studentIDRaw = Session["StudentID"].ToString();
+                var studentID = Convert.ToInt32(studentIDRaw.Substring(1, 7));
+
+                /* Get a list of all the student plans */
+                var plans = from p in db.StudentPlans
+                            where p.student_id == studentID
+                            select p;
+
+                /* Get the id of the most recent plan */
+                var newestPlanId = plans.Max(p => p.plan_id);
+
+                /* Select the plan with the newest id */
+                var plan = (from p in db.StudentPlans
+                            where p.plan_id == newestPlanId
+                            select p).FirstOrDefault();
+
+                /* Get a list of all the units in the students plan */
+                var units = from u in db.StudentPlanUnits
+                            where u.plan_id == plan.plan_id
+                            orderby u.unit_no
+                            select u;
+
+                /* Find the unit names that match the unit code in the list of units in the students plan */
+                var unitNameQuery = db.Units.Join(units, u => u.unit_code, p => p.unit_code, (unitDB, unitP) => new { unitP.unit_no, unitDB.name });
+
+                /* Order the list of unit names by their order number according to the student plan */
+                unitNameQuery = unitNameQuery.OrderBy(un => un.unit_no);
+
+                /* Filter query to consist only of unit names */
+                var unitNamesFiltered = from un in unitNameQuery
+                                        select un.name;
+
+                /* create the unit list */
+                var sessionList = new List<string>(unitNamesFiltered);
+
+                /* Get the course name from course identified in StudentPlan */
+                var courseName = (from c in db.Courses
+                                 where c.course_code == plan.course_code
+                                 select c.name).ToString();
+
+                var numUnits = units.Count();
+                ViewBag.numUnits = numUnits;
+                Session["numUnits"] = numUnits;
+                Session["CourseCode"] = plan.course_code;
+                Session["CourseName"] = courseName;
+                if (fromIndex == "true")
+                {
+                    Session["StudentPlan"] = sessionList;
+                }
+
+                var studentExemptions = from e in db.StudentExemptions
+                                        where e.student_id == studentID
+                                        select e.unit_code;
+
+                List<string> exemptionsList = (from en in db.Units
+                                                     where studentExemptions.Contains(en.unit_code)
+                                                     select en.name).ToList();
+
+                Session["RemovedExemptions"] = exemptionsList;
+
+                /* Check if any of the current units in the unit list are missing their prerequisites */
+                /* ********************************************************************************** */
+
+                /* Initialise two lists required for checking and returning the problem units */
+                List<string> violatedList = new List<string>();
+                List<string> unitsChecked = new List<string>();
+
+                
+
+                /* Get the course code from the session stroed selected course */
+                var courseCode = Session["CourseCode"].ToString();
+
+                /* If there are any exempt units, add them to list of units that have been checked for violations */
+                foreach (var exemption in exemptionsList)
+                {
+                    unitsChecked.Add(exemption);
+                }
+
+                /* Get the updated session list from session */
+                sessionList = (List<string>)Session["StudentPlan"];
+                
+                /* Loop through the unit list */
+                foreach (var unit in sessionList)
+                {
+
+                    if (unit != null)
+                    {
+
+                        /* Add current unit to the list of units that have been checked for violations */
+                        unitsChecked.Add(unit);
+
+                        /* Get the unit code of the unit currently being checked */
+                        var unitToCheck = from u in db.Units
+                                            where u.name == unit
+                                            select u.unit_code;
+
+                        /* Get the unit prereq codes of the unit being checked (if any) */
+                        var prereqs = from p in db.UnitPrerequisites
+                                        where unitToCheck.Contains(p.unit_code)
+                                        where p.course_code == courseCode
+                                        select p.prereq_code;
+
+                        /* Convert the prereq codes to unit names */
+                        var prereqNames = from u in db.Units
+                                            where prereqs.Contains(u.unit_code)
+                                            select u.name;
+
+                        /* If the unit has both it's prereqs before it, do nothing, else add it to the violated list */
+                        if (prereqNames.Count() > 0)
+                        {
+                            if (!prereqNames.Except(unitsChecked).Any())
+                            {
+                 
+                            }
+                            else
+                            {
+                                violatedList.Add(unit);
+                            }
+                        }
+
+                        ViewBag.violatedList = violatedList;
+                    }
+
+                }
+
+            }
+
+            Session["FromIndex"] = "false";
 
             return View();
+        }
+
+        [HttpPost]
+        public void EditAdd()
+        {
+
+            var data = Request["data"].ToString();
+            var dataSplit = data.Split(',');
+            var from = dataSplit[0];
+            var fromInt = Convert.ToInt32(from) - 1;
+            var to = dataSplit[1];
+            var toInt = Convert.ToInt32(to) - 1;
+
+            var unitList = Session["StudentPlan"] as List<string>;
+            var unitListSwap = Session["StudentPlanSwap"] as List<string>;
+
+            unitList[toInt] = unitListSwap[fromInt];
+            unitListSwap[fromInt] = null;
+
+            Session["StudentPlan"] = unitList;
+            Session["StudentPlanSwap"] = unitListSwap;
+
+        }
+
+        [HttpPost]
+        public void EditRemove()
+        {
+
+            var data = Request["data"].ToString();
+            var dataSplit = data.Split(',');
+            var from = dataSplit[0];
+            var fromInt = Convert.ToInt32(from) - 1;
+            var to = dataSplit[1];
+            var toInt = Convert.ToInt32(to) - 1;
+
+            var unitList = Session["StudentPlan"] as List<string>;
+
+            if (Session["StudentPlanSwap"] == null)
+            {
+                List<string> studentPlanSwap = new List<string>();
+                for (var x = 0; x < 12; x++)
+                {
+                    studentPlanSwap.Add(null);
+                }
+
+                Session["StudentPlanSwap"] = studentPlanSwap;
+            }
+
+            var unitListSwap = Session["StudentPlanSwap"] as List<string>;
+
+            unitListSwap[toInt] = unitList[fromInt];
+            unitList[fromInt] = null;
+
+            Session["StudentPlan"] = unitList;
+            Session["StudentPlanSwap"] = unitListSwap;
+
+        }
+
+        [HttpPost]
+        public void EditReset()
+        {
+            Session["FromIndex"] = "true";
+        }
+
+        public void EditSave()
+        {
+
+
+            /* Retreive required variables from session */
+            List<string> sessionList = (List<string>)Session["StudentPlan"];
+            List<string> RemovedExemptions = (List<string>)Session["RemovedExemptions"];
+            string studentIDRaw = Session["StudentID"].ToString();
+            var studentID = Convert.ToInt32(studentIDRaw.Substring(1, 7));
+            var courseCode = Session["CourseCode"].ToString();
+
+
+            using (custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities())
+            {
+
+
+
+                /* Remove all existing exemptions before creating new ones */
+                var currentExemptions = from ce in db.StudentExemptions
+                                        where ce.student_id == studentID
+                                        select ce;
+
+                foreach (var exemption in currentExemptions)
+                {
+                    db.StudentExemptions.Remove(exemption);
+                }
+
+                /* Create a list of the new exemptions */
+                List<ExemptionModel> studentExemptions = (from unit in db.Units
+                                                          where RemovedExemptions.Contains(unit.name)
+                                                          select new ExemptionModel() { name = unit.name, unit_code = unit.unit_code }).ToList();
+            
+                /* Populate the properties of the new exemptions list and add each exemption to the database */
+                foreach (var exemption in studentExemptions)
+                {
+                    StudentExemption se = new StudentExemption();
+                    se.student_id = studentID;
+                    se.unit_code = exemption.unit_code;
+                    se.exempt = true;
+                    db.StudentExemptions.Add(se);
+                }
+
+                /* Select all the student plans */
+                var plans = from plan in db.StudentPlans
+                            select plan;
+
+                /* Select the plan with highest id, extract the id, and increment it */
+                int highestPlanID = plans.Max(p => p.plan_id);
+                var planID = highestPlanID + 1;
+
+                /* Select the plans for current student */
+                var studentPlans = from sps in plans
+                                   where sps.student_id == studentID
+                                   select sps;
+
+                /* select the most recent plan of the plans for the current student */
+                var recentPlan = studentPlans.OrderByDescending(o => o.plan_id).FirstOrDefault();
+
+                /* Create a new plan, populate its properties, and add it to the database */
+                StudentPlan sp = new StudentPlan();
+                sp.plan_id = planID;
+                sp.student_id = studentID;
+                sp.course_code = courseCode;
+                sp.start_semester = recentPlan.start_semester;
+                db.StudentPlans.Add(sp);
+
+                /* Get the default plan for this course */
+                var defaultPlan = from dp in db.DefaultPlans
+                                  where dp.course_code == courseCode
+                                  select dp;
+
+                /* join the units and plans tables to make them sortable by semester */
+                
+                var query = sessionList.Join(db.Units, sl => sl, u => u.name, (unitSL, unitDB) => new { unitDB.unit_code, name = unitSL });
+                Debug.WriteLine("QUERY COUNT: " + query.Count());
+                var query2 = query.Join(defaultPlan, sl => sl.unit_code, u => u.unit_code, (SL, DP) => new { SL.unit_code, SL.name, DP.semester });
+                Debug.WriteLine("QUERY COUNT2: " + query2.Count());
+                /* Create a new unit, populate its properties, and add each new unit to the database */
+                var count = 1;
+                foreach (var unit in query2)
+                {
+                    StudentPlanUnit spu = new StudentPlanUnit();
+                    spu.plan_id = planID;
+                    spu.unit_code = unit.unit_code;
+                    spu.unit_no = count;
+                    spu.semester = unit.semester;
+                    count++;
+                    db.StudentPlanUnits.Add(spu);
+                }
+
+                /* NEED TO ADD A TRY-CATCH */
+                db.SaveChanges();
+
+            }
+
         }
 
         public ActionResult EditCourse()
@@ -868,12 +1197,24 @@ namespace custom_study_plan_generator.Controllers
             using (custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities())
             {
 
-                 
 
+
+                /* Remove all existing exemptions before creating new ones */
+                var currentExemptions = from ce in db.StudentExemptions
+                                        where ce.student_id == studentID
+                                        select ce;
+
+                foreach (var exemption in currentExemptions)
+                {
+                    db.StudentExemptions.Remove(exemption);
+                }
+                
+                /* Create a list of the new exemptions */
                 List<ExemptionModel> studentExemptions = (from unit in db.Units
                                         where RemovedExemptions.Contains(unit.name)
                                         select new ExemptionModel() { name = unit.name, unit_code = unit.unit_code}).ToList();
-
+                
+                /* Populate the properties of the new exemptions list and add each exemption to the database */
                 foreach (var exemption in studentExemptions)
                 {
                     StudentExemption se = new StudentExemption();
@@ -883,12 +1224,15 @@ namespace custom_study_plan_generator.Controllers
                     db.StudentExemptions.Add(se);
                 }
 
+                /* Select all the student plans */
                 var plans = from plan in db.StudentPlans
                             select plan;
 
+                /* Select the plan with highest id, extract the id, and increment it */
                 int highestPlanID = plans.Max(p => p.plan_id);
                 var planID = highestPlanID + 1;
                 
+                /* Create a new plan, populate its properties, and add it to the database */
                 StudentPlan sp = new StudentPlan();
                 sp.plan_id = planID;
                 sp.student_id = studentID;
@@ -896,6 +1240,7 @@ namespace custom_study_plan_generator.Controllers
                 sp.start_semester = startSemester;
                 db.StudentPlans.Add(sp);
 
+                /* Create a new unit, populate its properties, and add each new unit to the database */
                 var count = 1;
                 foreach (var unit in sessionList)
                 {

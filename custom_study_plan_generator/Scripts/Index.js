@@ -3,7 +3,8 @@
     $('#createButton').click(function() {
 
         var data = $('#studentIdInput').val();
-       
+        data += ",create";
+
         $.ajax({
             url: "../Home/CheckStudentID",
             type: "POST",
@@ -14,14 +15,16 @@
                     $('#selectionForm').submit();
                 }
                 else {
-
-                    $('#error3').text("Student ID does not exist.");
+                    if ($('#error3').is(':animated')) {
+                        $('#error3').stop().animate({ opacity: '100' });
+                    }
+                    $('#error3').text(data);
                     $('#error3').show();
-                    $('#error3').fadeOut(2000).delay(2000);
+                    $('#error3').fadeOut(5000);
                 }
             },
             error: function (data) {
-                
+            
             }
         });
 
@@ -30,6 +33,7 @@
     $('#editButton').click(function () {
 
         var data = $('#studentIdInput').val();
+        data += ",edit";
 
         $.ajax({
             url: "../Home/CheckStudentID",
@@ -41,14 +45,16 @@
                     $('#selectionForm').submit();
                 }
                 else {
-
-                    $('#error3').text("Student ID does not exist.");
+                    if ($('#error3').is(':animated')) {
+                        $('#error3').stop().animate({opacity:'100'});
+                    }
+                    $('#error3').text(data);
                     $('#error3').show();
-                    $('#error3').fadeOut(2000).delay(2000);
+                    $('#error3').fadeOut(5000);
                 }
             },
             error: function (data) {
-
+          
             }
         });
 

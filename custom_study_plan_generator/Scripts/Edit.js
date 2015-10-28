@@ -32,11 +32,11 @@ $(document).ready(function () {
                 var innerCellId = "#" + count;
 
                 /* Create inner cell */
-                if (entry != "" && entry.exempt == false) {
+                if (entry != "") {
                     idCont = "#p" + count;
 
                     $(idCont).append("<div id = '" + count + "' class = 'innerCell active' draggable = 'true' ondragstart = 'drag(event)' ondragend = 'dragend(event, this)'></div>");
-                    $(innerCellId).text(entry.name);
+                    $(innerCellId).text(entry);
 
                     /* Create hover icon */
                     var hoverId = 'hover' + count;
@@ -49,7 +49,7 @@ $(document).ready(function () {
 
                 /* Create prereq violated exclamation mark icon where required */
                 for (var x = 0; x < violatedListConverted.length; x++) {
-                    if (entry.name == violatedListConverted[x]) {
+                    if (entry == violatedListConverted[x]) {
                         var exclamationId = 'exclamation' + count;
                         $(innerCellId).append("<img id = '" + exclamationId + "' class = 'exclamation' src = '../Content/Images/exclamation.png' />");
                     }
@@ -69,11 +69,11 @@ $(document).ready(function () {
                 var innerCellId = "#" + id;
 
                 /* Create inner cell */
-                if (entry != "" && entry.exempt == false) {
+                if (entry != "") {
                     idCont = "#ss" + count;
 
                     $(idCont).append("<div id = '" + id + "' class = 'innerCell active' draggable = 'true' ondragstart = 'drag(event)' ondragend = 'dragend(event, this)'></div>");
-                    $(innerCellId).text(entry.name);
+                    $(innerCellId).text(entry);
 
                     /* Create hover icon */
                     var hoverId = 'hover' + count;
@@ -89,7 +89,7 @@ $(document).ready(function () {
 
         });
     }
-    
+
 
     $('#checkPrereqs').click(function () {
 
@@ -98,6 +98,35 @@ $(document).ready(function () {
         $('#error2').show();
         setTimeout(checkVariable, 1000);
 
+    });
+
+    $('#resetChanges').click(function () {
+
+        $('.prevent').css("display", "block");
+        $('.innerCell').attr("draggable", "false");
+        preventProgress = true;
+
+        $('#error2').html("Resetting, please wait...");
+        $('#error2').show();
+        
+
+        $.ajax({
+            url: "../Home/EditReset",
+            type: "POST",
+            success: function (data) {
+                $('.innerCell').attr("draggable", "true");
+                $('.prevent').css("display", "none");
+                preventProgress = false;
+                window.location.reload();
+            },
+            error: function (data) {
+              
+            }
+        });
+    });
+
+    $('#savePlan').click(function () {
+        savePlan();
     });
 
     tooltip(".hoverModify", "tooltip");
@@ -147,11 +176,11 @@ function drop(ev, target) {
             $(elements[x]).attr({ ondragover: "allowDrop(event)", ondrop: "drop(event, this)" });
             $(elements[x]).addClass("target");
         }
-        
+
     }
 
     else {
-      
+
     }
 }
 
@@ -188,9 +217,9 @@ function dragend(ev, target) {
             var idTo = idStringTo.substring(2);
 
             dataRemove += "," + idTo;
-            
+
             $.ajax({
-                url: "../Home/ModifyRemove",
+                url: "../Home/EditRemove",
                 type: "POST",
                 data: { data: dataRemove },
                 success: function (data) {
@@ -221,7 +250,7 @@ function dragend(ev, target) {
             dataAdd += "," + idTo;
 
             $.ajax({
-                url: "../Home/ModifyAdd",
+                url: "../Home/EditAdd",
                 type: "POST",
                 data: { data: dataAdd },
                 success: function (data) {
@@ -302,4 +331,26 @@ function tooltip(target, name) {
 
 
     });
+}
+
+function savePlan() {
+
+    $('#error2').html("Saving, please wait...");
+    $('#error2').show();
+    $.ajax({
+        url: "../Home/EditSave",
+        type: "POST",
+        success: function (data) {
+            $('#error2').html("Plan saved and uploaded");
+            $('#error2').delay(5000).fadeOut('slow').css("color", "green");
+            $('#error2').delay(5000).queue(function (next) {
+                $(this).css("color", "red");
+                next();
+            });
+        },
+        error: function (data) {
+            alert("Error saving plan" + data.responseText);
+        }
+    });
+
 }

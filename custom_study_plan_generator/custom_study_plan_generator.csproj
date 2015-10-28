@@ -363,6 +363,7 @@
     <Content Include="Scripts\Create.js" />
     <Content Include="Scripts\CRUD.js" />
     <Content Include="Scripts\DefaultPlan.js" />
+    <Content Include="Scripts\Edit.js" />
     <Content Include="Scripts\Exemptions.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -465,6 +466,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\Ajax\" />
     <Folder Include="Views\AuthCallBack\" />
+    <Folder Include="Views\Temporary\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
