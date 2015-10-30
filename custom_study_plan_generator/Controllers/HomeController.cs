@@ -709,7 +709,7 @@ namespace custom_study_plan_generator.Controllers
             // Retreive start semester
             var startSemester = Convert.ToInt32(Session["StartSemester"]);
             
-            /* Only run the algorithm if it has nort already been run */
+            /* Only run the algorithm if it has not already been run. */
             if (Session["AlgorithmRun"].ToString() == "false")
             {
                 
@@ -718,6 +718,16 @@ namespace custom_study_plan_generator.Controllers
                 // Update sessionList by passing it to newly created StudyPlanAlgorithm.
                 sessionList = algorithm.RunAlgorithm(sessionList);
                 // Update Session["StudentPlan"]
+               
+                // Initialise empty spaces at the end of the plan so that units can be rearranged to any position.
+                int courseLength = ((CourseDTO)Session["Course"]).num_units;
+                int planLength = sessionList.Count;
+
+                for (int i = planLength; i < courseLength; i++)
+                {
+                    sessionList.Add(null);
+                }
+
                 Session["StudentPlan"] = sessionList;
 
                 Session["AlgorithmRun"] = "true";
@@ -733,7 +743,7 @@ namespace custom_study_plan_generator.Controllers
             using (custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities())
             {
                 
-                /* Get the course code from the session stroed selected course */
+                /* Get the course code from the session stored selected course */
                 var courseCode = Session["CourseCode"].ToString();
 
                 List<string> exemptionsList = (List<string>)Session["RemovedExemptions"];
@@ -807,6 +817,18 @@ namespace custom_study_plan_generator.Controllers
             var toInt = Convert.ToInt32(to) - 1;
 
             var unitList = Session["StudentPlan"] as List<CoursePlan>;
+
+            if (Session["StudentPlanSwap"] == null)
+            {
+                List<CoursePlan> studentPlanSwap = new List<CoursePlan>();
+                for (var x = 0; x < 12; x++)
+                {
+                    studentPlanSwap.Add(null);
+                }
+
+                Session["StudentPlanSwap"] = studentPlanSwap;
+            }
+            
             var unitListSwap = Session["StudentPlanSwap"] as List<CoursePlan>;
 
             unitList[toInt] = unitListSwap[fromInt];
@@ -829,6 +851,7 @@ namespace custom_study_plan_generator.Controllers
             var toInt = Convert.ToInt32(to) - 1;
 
             var unitList = Session["StudentPlan"] as List<CoursePlan>;
+            var courseLength = ((CourseDTO)Session["Course"]).num_units;
             
             if (Session["StudentPlanSwap"] == null)
             {
@@ -851,6 +874,51 @@ namespace custom_study_plan_generator.Controllers
             Session["StudentPlanSwap"] = unitListSwap;
 
         }
+
+
+        [HttpPost]
+        public void ModifyMove()
+        {
+
+            var data = Request["data"].ToString();
+            var dataSplit = data.Split(',');
+            var from = dataSplit[0];
+            var fromInt = Convert.ToInt32(from) - 1;
+            var to = dataSplit[1];
+            var toInt = Convert.ToInt32(to) - 1;
+
+            var unitList = Session["StudentPlan"] as List<CoursePlan>;
+
+            // Move the unit to its new position in the Session plan, mark the old position as null.
+            unitList[toInt] = unitList[fromInt];
+            unitList[fromInt] = null;
+
+            Session["StudentPlan"] = unitList;
+
+        }
+
+
+        [HttpPost]
+        public void ModifySwap()
+        {
+
+            var data = Request["data"].ToString();
+            var dataSplit = data.Split(',');
+            var from = dataSplit[0];
+            var fromInt = Convert.ToInt32(from) - 1;
+            var to = dataSplit[1];
+            var toInt = Convert.ToInt32(to) - 1;
+
+            var unitListSwap = Session["StudentPlanSwap"] as List<CoursePlan>;
+
+            // Move the unit within the Swap Space, mark the old position as null.
+            unitListSwap[toInt] = unitListSwap[fromInt];
+            unitListSwap[fromInt] = null;
+
+            Session["StudentPlanSwap"] = unitListSwap;
+
+        }
+
 
         public ActionResult EditPlan()
         {

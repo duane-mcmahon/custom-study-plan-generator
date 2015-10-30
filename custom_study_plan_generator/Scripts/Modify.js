@@ -185,20 +185,22 @@ function dragend(ev, target) {
         $('.innerCell').attr("draggable", "false");
         preventProgress = true;
 
+        var PLAN_CELL = 'p';
+        var SWAP_CELL = 's';
+
         /* If moved TO the swap space, remove unit from session plan */
-        if ($(target).parent().hasClass('swapSpaceCell')) {
+        if ($(target).parent().hasClass('swapSpaceCell') &&
+             (dragParentId.indexOf(PLAN_CELL) === 0)) {
 
             var idRawFrom = dragParentId;
             var idStringFrom = idRawFrom.toString();
-            var idFrom = idStringFrom.substring(1);
-
-            var dataRemove = idFrom;
+            var idFrom = idStringFrom.replace(/\D/g,'');
 
             var idRawTo = $(target).parent().attr("id");
             var idStringTo = idRawTo.toString();
-            var idTo = idStringTo.substring(2);
+            var idTo = idStringTo.replace(/\D/g, '');
 
-            dataRemove += "," + idTo;
+            dataRemove = idFrom + "," + idTo;
             
             $.ajax({
                 url: "../Home/ModifyRemove",
@@ -216,8 +218,9 @@ function dragend(ev, target) {
 
         }
 
-            /* If moved TO the plan, add unit to session plan */
-        else if ($(target).parent().hasClass('planCell')) {
+        /* If moved TO the plan, add unit to session plan */
+        else if ($(target).parent().hasClass('planCell') && 
+                  (dragParentId.indexOf(SWAP_CELL) === 0)) {
 
             var idRawFrom = dragParentId;
             var idStringFrom = idRawFrom.toString();
@@ -240,6 +243,66 @@ function dragend(ev, target) {
                 },
                 error: function (data) {
                     alert("Error adding unit, please refresh the page.");
+                }
+            });
+
+        }
+
+        /* If moved WITHIN the plan, move the unit to its new position in the session plan */
+        else if ($(target).parent().hasClass('planCell') &&
+                  (dragParentId.indexOf(PLAN_CELL) === 0)) {
+
+            var idRawFrom = dragParentId;
+            var idStringFrom = idRawFrom.toString();
+            var idFrom = idStringFrom.replace(/\D/g, '');
+
+            var idRawTo = $(target).parent().attr('id');
+            var idStringTo = idRawTo.toString();
+            var idTo = idStringTo.replace(/\D/g, '');
+
+            dataAdd = idFrom + "," + idTo;
+
+            $.ajax({
+                url: "../Home/ModifyMove",
+                type: "POST",
+                data: { data: dataAdd },
+                success: function (data) {
+                    $('.innerCell').attr("draggable", "true");
+                    $('.prevent').css("display", "none");
+                    preventProgress = false;
+                },
+                error: function (data) {
+                    alert("Error moving unit, please refresh the page.");
+                }
+            });
+
+        }
+
+        /* If moved WITHIN the swap space, move it to its new position in the session swap list. */
+        else if ($(target).parent().hasClass('swapSpaceCell') &&
+                  (dragParentId.indexOf(SWAP_CELL) === 0)) {
+            
+            var idRawFrom = dragParentId;
+            var idStringFrom = idRawFrom.toString();
+            var idFrom = idStringFrom.replace(/\D/g, '');
+
+            var idRawTo = $(target).parent().attr('id');
+            var idStringTo = idRawTo.toString();
+            var idTo = idStringTo.replace(/\D/g, '');
+
+            dataAdd = idFrom + "," + idTo;
+
+            $.ajax({
+                url: "../Home/ModifySwap",
+                type: "POST",
+                data: { data: dataAdd },
+                success: function (data) {
+                    $('.innerCell').attr("draggable", "true");
+                    $('.prevent').css("display", "none");
+                    preventProgress = false;
+                },
+                error: function (data) {
+                    alert("Error moving unit, please refresh the page.");
                 }
             });
 
