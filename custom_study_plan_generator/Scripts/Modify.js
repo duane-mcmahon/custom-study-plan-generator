@@ -221,15 +221,13 @@ function dragend(ev, target) {
 
             var idRawFrom = dragParentId;
             var idStringFrom = idRawFrom.toString();
-            var idFrom = idStringFrom.substring(2);
-
-            var dataAdd = idFrom;
+            var idFrom = idStringFrom.replace(/\D/g,'');
 
             var idRawTo = $(target).parent().attr('id');
             var idStringTo = idRawTo.toString();
-            var idTo = idStringTo.substring(1);
+            var idTo = idStringTo.replace(/\D/g, '');
 
-            dataAdd += "," + idTo;
+            dataAdd = idFrom + "," + idTo;
 
             $.ajax({
                 url: "../Home/ModifyAdd",
