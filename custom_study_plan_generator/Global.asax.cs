@@ -20,6 +20,11 @@ namespace custom_study_plan_generator
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            //the code below is intended to avoid our occasional requirement to clear cookies after changes to sensitive elements of our app
+            HttpContext.Current.Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            HttpContext.Current.Response.Cache.SetExpires(DateTime.Now);
+            HttpContext.Current.Response.Cache.SetNoServerCaching();
+            HttpContext.Current.Response.Cache.SetNoStore();
         }
     }
 }
