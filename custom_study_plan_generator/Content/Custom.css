@@ -539,3 +539,237 @@ th {
     padding:2px 7px;
 }
 
+/*  styling for global nav bar  */
+
+/* fix for desktop site being unreadable in iphone */
+div.global,  .row{ min-width: 768px; }
+
+/*============================
+Global Header
+============================*/
+.global {
+  /*@include tight;*/
+  z-index: 9999;
+  height: 40px;
+  margin-bottom: 15px;
+  background-color: #333333;
+  color: #dcdcd6;
+  text-transform: uppercase;
+}
+.global a {
+  text-decoration: none;
+  /* reset default link behaviour */
+  color: #dcdcd6;
+  padding-right: 10px;
+  padding-left: 10px;
+}
+.global a:hover {
+  color:#ffffff;
+  text-decoration:underline;
+}
+
+.global li.first > a {
+  padding-left: 0;
+}
+.global li.last > a {
+  padding-right: 0;
+}
+.global nav ul ul {
+  display: none;
+}
+.global nav ul li:hover > ul {
+  display: block;
+}
+.global nav ul {
+  list-style: none;
+  position: relative;
+  display: inline-table;
+  margin: 0;
+  padding: 0;
+}
+.global nav ul:after {
+  content: "";
+  clear: both;
+  display: block;
+}
+.global nav ul li {
+  font-size: 0.8em;
+  font-weight: bold;
+  float: left;
+  height: 35px;
+  padding-top: 6px;
+  margin-top: 5px;
+}
+.global nav ul li li {
+  font-size: 1em;
+  padding-top: 10px;
+  height: 40px;
+  min-width:132px;
+}
+.global nav ul li li a {display:block;}
+
+.global nav ul ul {
+  position: absolute;
+  z-index: 9999;
+  top: 100%;
+  left: 0;
+  background-color: #333333;
+}
+.global nav ul ul li {
+  float: none;
+  position: relative;
+}
+.global nav.user-nav {
+  text-align: right;
+}
+.global .with-divider {
+  border-left: 1px solid #525250;
+}
+
+.global-nav {
+  position: absolute;
+  z-index: 9999;
+}
+.global-nav li.active {
+  background-color: #dcdcd6;
+}
+.global-nav li.active a {
+  color: #242424;
+}
+
+.user-icon-spacer {display: inline-block; width: 5px;}
+
+.header-links a.skip-to-content, .header-links a.skip-to-content:hover, .header-links a.skip-to-content:visited {
+  background-color: #333333;
+  padding: 5px 8px;
+  margin-right: 15px;
+  color: white;
+  position: absolute;
+  left: 0px;
+  top: -500px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.header-links a.skip-to-content:active, .header-links a.skip-to-content:focus {
+  color: white;
+  position: static;
+  width: auto;
+  height: auto;
+}
+
+
+
+
+/* Styles for screens that are atleast 768px; */
+/*@media only screen and (min-width: 48em) {*/
+.row .large-1 {
+  position: relative;
+  width: 8.33333%;
+}
+
+.row .large-2 {
+  position: relative;
+  width: 16.66667%;
+}
+
+.row .large-3 {
+  position: relative;
+  width: 25%;
+}
+
+.row .large-4 {
+  position: relative;
+  width: 33.33333%;
+}
+
+.row .large-5 {
+  position: relative;
+  width: 41.66667%;
+}
+
+.row .large-6 {
+  position: relative;
+  width: 50%;
+}
+
+.row .large-7 {
+  position: relative;
+  width: 58.33333%;
+}
+
+.row .large-8 {
+  position: relative;
+  width: 66.66667%;
+}
+
+.row .large-9 {
+  position: relative;
+  width: 75%;
+}
+
+.row .large-10 {
+  position: relative;
+  width: 83.33333%;
+}
+
+.row .large-11 {
+  position: relative;
+  width: 91.66667%;
+}
+
+.row .large-12 {
+  position: relative;
+  width: 100%;
+}
+
+.row .large-offset-1 {
+  position: relative;
+  margin-left: 8.33333%;
+}
+
+.row .large-offset-2 {
+  position: relative;
+  margin-left: 16.66667%;
+}
+
+.row .large-offset-3 {
+  position: relative;
+  margin-left: 25%;
+}
+
+.row .large-offset-4 {
+  position: relative;
+  margin-left: 33.33333%;
+}
+
+.row .large-offset-5 {
+  position: relative;
+  margin-left: 41.66667%;
+}
+
+.row .large-offset-6 {
+  position: relative;
+  margin-left: 50%;
+}
+
+.row .large-offset-7 {
+  position: relative;
+  margin-left: 58.33333%;
+}
+
+.row .large-offset-8 {
+  position: relative;
+  margin-left: 66.66667%;
+}
+
+.row .large-offset-9 {
+  position: relative;
+  margin-left: 75%;
+}
+
+.row .large-offset-10 {
+  position: relative;
+  margin-left: 83.33333%;
+}
