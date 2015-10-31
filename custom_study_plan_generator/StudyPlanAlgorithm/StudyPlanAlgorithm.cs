@@ -11,8 +11,6 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
     // Have class inherit from 'Page' so that session is available
     public class StudyPlanAlgorithm : Page
     {
-        
-        string input;
 
         // Takes the index of units in July or February intake.
         // Arrays will everntually be dynamically created based on the 
