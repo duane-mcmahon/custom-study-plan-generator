@@ -1368,7 +1368,7 @@ namespace custom_study_plan_generator.Controllers
             var driveService = new DriveService(new BaseClientService.Initializer
             {
                 HttpClientInitializer = result.Credential,
-                ApplicationName = "AuthExample"
+                ApplicationName = "custom-study-plan-generator"
             });
 
             var folderListReq = driveService.Files.List();
@@ -1431,7 +1431,7 @@ namespace custom_study_plan_generator.Controllers
             var driveService = new DriveService(new BaseClientService.Initializer
             {
                 HttpClientInitializer = result.Credential,
-                ApplicationName = "Custom Study Plan Generator"
+                ApplicationName = "custom-study-plan-generator"
             });
 
             var listReq = driveService.Files.List();

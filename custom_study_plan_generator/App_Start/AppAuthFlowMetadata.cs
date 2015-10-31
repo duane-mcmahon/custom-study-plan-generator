@@ -17,11 +17,11 @@ namespace custom_study_plan_generator.App_Start
             {
                 ClientSecrets = new ClientSecrets
                 {
-                    ClientId = "274813241895-m1ldekhlilojq1an4tm1qfqvgcno2j8m.apps.googleusercontent.com",
-                    ClientSecret = "JQDplP8kTCa0h8BJtJmkdTQm"
+                    ClientId = "623863401464-a141i4uk8boeu1bt0v2bjhmbkat6914l.apps.googleusercontent.com",
+                    ClientSecret = "M9VrJ6WN9s_9FXLFfpgttwuO"
                 },
                 Scopes = new[] { DriveService.Scope.Drive },
-                DataStore = new FileDataStore("Google.Apis.Sample.MVC")
+                DataStore = new FileDataStore("Google.Apis.MVC")
             });
 
         public override string GetUserId(Controller controller)
