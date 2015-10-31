@@ -7,7 +7,7 @@
            
                             <li class="first">
                                 <span class="icon user-icon"></span>
-                                @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                                @User.Identity.GetUserName()
                                 <span class="user-icon-spacer"></span>
                             </li>
                 <li class="last"><a class="with-divider" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
