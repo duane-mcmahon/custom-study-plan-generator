@@ -37,16 +37,7 @@
             Custom Study Plan Generator
         </div>
     </header>
-    @if (@User.Identity.IsAuthenticated)
-    {
-        <nav class="logoutForm">
-            <span id="userName">@User.Identity.GetUserName()</span>
-            <form method="post" action="../Account/LogOff">
-                @Html.AntiForgeryToken()
-                <button id="logoffButton" class="logoutButton" type="submit" value="Log Out" name="LogOff">LogOff </button>
-            </form>
-        </nav>
-    }
+
 
     @RenderBody()
     <footer id="footer" class="footer">
