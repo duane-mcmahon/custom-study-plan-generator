@@ -18,13 +18,24 @@
                 <div class="row">
                     <div class="large-6 columns">
                         <nav class="global-nav" role="navigation" aria-label="Global navigation">
-                            <ul>            
-                            
-                                <li class="first">@Html.ActionLink("Home", "Index", "Home")<span class="icon arrow-down-light-grey"></span></li>
-                                <li>@Html.ActionLink("View Drive", "driveAsync", "Home")</li>
-                                <li>@Html.ActionLink("Upload to Drive", "submitPlan", "Home")</li>
-                            </ul>
-                            @Html.Partial("_LoginPartial")
+                            <ul>
+
+                            <li class="first">@Html.ActionLink("Home", "Index", "Home")<span class="icon arrow-down-light-grey"></span></li>
+                            <li>@Html.ActionLink("View Drive", "driveAsync", "Home")</li>
+                            <li>@Html.ActionLink("Upload to Drive", "submitPlan", "Home")</li>
+                                </ul>
+                        
+                        </nav>
+                    </div>
+
+                                
+                                <div class="large-6 columns">
+                                <nav class="user-nav">
+
+                                    <ul>
+                                        @Html.Partial("_LoginPartial")
+                                    </ul>                                                  
+                           
                         </nav>
                     </div>
                 
