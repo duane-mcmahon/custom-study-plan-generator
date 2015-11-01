@@ -1324,8 +1324,12 @@ namespace custom_study_plan_generator.Controllers
 
             /* NEED TO ADD A TRY-CATCH */
             db.SaveChanges();
+
+            uploadPlan(studentExemptions, sessionList, studentID, courseCode, startSemester);
                
             }
+
+            
 
         }
         
@@ -1448,6 +1452,11 @@ namespace custom_study_plan_generator.Controllers
                                                (file.ExportLinks != null ? file.ExportLinks["application/pdf"] : null),
                  }).OrderBy(f => f.Title).ToList();
             return View(items);
+        }
+
+        private void uploadPlan(List<ExemptionModel> studentExemptions, List<CoursePlan> sessionList, int studentID, string courseCode, int startSemester)
+        {
+
         }
     }
 
