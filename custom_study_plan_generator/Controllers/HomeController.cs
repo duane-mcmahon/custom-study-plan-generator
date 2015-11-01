@@ -20,7 +20,7 @@ using File = Google.Apis.Drive.v2.Data.File;
 
 namespace custom_study_plan_generator.Controllers
 {
-    [NoCache]
+   
     [Authorize]
 	[RequireHttps]
     public class HomeController : Controller
@@ -1353,7 +1353,7 @@ namespace custom_study_plan_generator.Controllers
             return View(model);
         }
 
-        [NoCache]
+      
         [Authorize]
         public async Task<ActionResult> submitPlanAsync(CancellationToken cancellationToken)
         {
@@ -1420,7 +1420,7 @@ namespace custom_study_plan_generator.Controllers
 
         }
 
-        [NoCache]
+     
         [Authorize]
         public async Task<ActionResult> driveAsync(CancellationToken cancellationToken)
         {
