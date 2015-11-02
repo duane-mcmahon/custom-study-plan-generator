@@ -1,0 +1,78 @@
+﻿
+@model custom_study_plan_generator.Models.UnitPrerequisite
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>UnitPrerequisite</h4>
+
+        
+
+        
+        @if (Session["prereqExists"] != null)
+        {
+            
+            <div id="prereqExists" class="error3">Error, prerequisite already exists.</div>
+            Session["prereqExists"] = null;
+        }
+        <script>
+                $('#prereqExists').delay(3000).fadeOut(2000);
+        </script>
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.course_code, "Course", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("course_code", null, "-- Select Course --", htmlAttributes: new { @class = "form-control", onchange = "$('#submitSelect').trigger('click')", name = "action:Select" })
+                @Html.ValidationMessageFor(model => model.course_code, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.unit_code, "Unit", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("unit_code", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.unit_code, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.prereq_code, "Prerequisite", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("prereq_code", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.prereq_code, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.mutiple_required, "Mutliple Prerequsistes", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.mutiple_required)
+                    @Html.ValidationMessageFor(model => model.mutiple_required, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" name="action:CreateSubmit" class="btn btn-default" />
+                <input id="submitSelect" type="submit" value="Select" name="action:Select" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

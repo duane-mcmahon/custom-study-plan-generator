@@ -467,6 +467,13 @@ html body {
     margin-right: 10%;
 }
 
+.error3 {
+    color: red;
+    font-size: 1vw;
+}
+
+/* ******************************* */
+
 th {
     text-align: left;
 }
@@ -538,6 +545,15 @@ th {
     background-color:#222;
     padding:2px 7px;
 }
+
+/********** Styling for CRUD Pages ************* */
+
+/* Create Page */
+#submitSelect {
+    display: none;
+}
+
+
 
 /*  styling for global nav bar  */
 

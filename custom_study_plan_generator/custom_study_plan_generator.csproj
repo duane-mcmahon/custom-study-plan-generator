@@ -325,6 +325,7 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="StudyPlanAlgorithm\Unit.cs" />
+    <Compile Include="Views\UnitPrerequisites\MutlipleButtonAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -434,6 +435,7 @@
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
     <Content Include="Views\Home\Final.cshtml" />
+    <Content Include="Views\Shared\_Create.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml.old" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -459,8 +461,8 @@
     <Content Include="Views\UnitPrerequisites\Create.cshtml" />
     <Content Include="Views\UnitPrerequisites\Delete.cshtml" />
     <Content Include="Views\UnitPrerequisites\Details.cshtml" />
-    <Content Include="Views\UnitPrerequisites\Edit.cshtml" />
     <Content Include="Views\UnitPrerequisites\Index.cshtml" />
+    <Content Include="Views\UnitPrerequisites\Select.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

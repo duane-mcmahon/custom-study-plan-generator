@@ -1,49 +1,49 @@
-﻿@Scripts.Render("~/Scripts/CRUD.js")
-@model IEnumerable<custom_study_plan_generator.Models.UnitPrerequisite>
+﻿@model IEnumerable<custom_study_plan_generator.Models.UnitPrerequisite>
 
-<div id="CRUDMain">
-    <div id="CRUDHeadingHolder">
+@{
+    ViewBag.Title = "Index";
+}
 
-        <h2>Edit Prerequisites</h2>
+<h2>Index</h2>
 
-        <p>
-            @Html.ActionLink("Create New", "Create")
-        </p>
-    </div>
-    <table id="table" class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.unit_code)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.prereq_code)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.mutiple_required)
-            </th>
-            <th></th>
-        </tr>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.mutiple_required)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Unit.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Unit1.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Course.name)
+        </th>
+        <th></th>
+    </tr>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.unit_code)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.prereq_code)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.mutiple_required)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { unit=item.unit_code, prereq=item.prereq_code }) |
-                    @Html.ActionLink("Details", "Details", new { unit = item.unit_code, prereq = item.prereq_code }) |
-                    @Html.ActionLink("Delete", "Delete", new { unit = item.unit_code, prereq = item.prereq_code })
-                </td>
-            </tr>
-        }
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.mutiple_required)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Unit.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Unit1.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Course.name)
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
 
-    </table>
-
-</div>
+</table>

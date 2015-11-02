@@ -424,7 +424,6 @@ C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Syste
 C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\System.Net.Http.Primitives.xml
 C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Zlib.Portable.xml
 C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csproj.App.config
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csprojResolveAssemblyReference.cache
 C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csprojResolveAssemblyReference.cache
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\custom_study_plan_generator.dll.config
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\custom_study_plan_generator.dll
@@ -520,3 +519,4 @@ C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csprojResolveAssemblyReference.cache
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.dll
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.pdb
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csprojResolveAssemblyReference.cache

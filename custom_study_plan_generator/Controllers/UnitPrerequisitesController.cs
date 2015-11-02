@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using custom_study_plan_generator.Models;
+using custom_study_plan_generator.Views.UnitPrerequisites;
+using System.Diagnostics;
 
 namespace custom_study_plan_generator.Controllers
 {
@@ -17,30 +19,78 @@ namespace custom_study_plan_generator.Controllers
         // GET: UnitPrerequisites
         public ActionResult Index()
         {
-            return View(db.UnitPrerequisites.ToList());
+            var unitPrerequisites = db.UnitPrerequisites.Include(u => u.Unit).Include(u => u.Unit1).Include(u => u.Course);
+            return View(unitPrerequisites.ToList());
         }
 
         // GET: UnitPrerequisites/Details/5
-        public ActionResult Details(string unit, string prereq)
+        public ActionResult Details(string id)
         {
-            if (unit == null || prereq == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UnitPrerequisite unitPrerequisite = db.UnitPrerequisites.Find(unit, prereq);
+            UnitPrerequisite unitPrerequisite = db.UnitPrerequisites.Find(id);
             if (unitPrerequisite == null)
             {
                 return HttpNotFound();
-            } 
+            }
             return View(unitPrerequisite);
         }
 
         // GET: UnitPrerequisites/Create
         public ActionResult Create()
         {
-            ViewBag.unit_code = new SelectList(db.Units.OrderBy(x => x.name), "unit_code", "name");
-            ViewBag.prereq_code = new SelectList(db.Units.OrderBy(x => x.name), "unit_code", "name");
-            
+
+
+            List<string> units = new List<string>();
+            List<string> prereqs = new List<string>();
+
+
+            ViewBag.prereq_code = new SelectList(prereqs, "unit_code", "name");
+            ViewBag.unit_code = new SelectList(units, "unit_code", "name");
+            ViewBag.course_code = new SelectList(db.Courses, "course_code", "name");
+
+            return View();
+        }
+
+        [HttpPost]
+        [MultipleButton(Name = "action", Argument = "Select")]
+        public ActionResult Select(string course_code)
+        {
+
+            if (course_code == "")
+            {
+                List<string> units = new List<string>();
+                List<string> prereqs = new List<string>();
+                SelectList courseSelectList = new SelectList(db.Courses, "course_code", "name");
+
+                ViewBag.prereq_code = new SelectList(units, "unit_code", "name");
+                ViewBag.unit_code = new SelectList(units, "unit_code", "name");
+                ViewBag.course_code = courseSelectList;
+
+                return View();
+            }
+
+            else
+            {
+                SelectList courseSelectList = new SelectList(db.Courses, "course_code", "name");
+
+                courseSelectList.First(item => item.Value.Equals(course_code)).Selected = true;
+
+                var unitsInPlan = from dp in db.DefaultPlans
+                                  where dp.course_code == course_code
+                                  select dp.unit_code;
+
+                var units = from u in db.Units
+                            where unitsInPlan.Contains(u.unit_code)
+                            select u;
+
+                ViewBag.prereq_code = new SelectList(units, "unit_code", "name");
+                ViewBag.unit_code = new SelectList(units, "unit_code", "name");
+                ViewBag.course_code = courseSelectList;
+            }
+
             return View();
         }
 
@@ -49,82 +99,37 @@ namespace custom_study_plan_generator.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "unit_code,prereq_code,mutiple_required")] UnitPrerequisite unitPrerequisite)
+        [MultipleButton(Name = "action", Argument = "CreateSubmit")]
+        public ActionResult CreateSubmit([Bind(Include = "unit_code,prereq_code,mutiple_required,course_code")] UnitPrerequisite unitPrerequisite)
         {
             if (ModelState.IsValid)
             {
-                db.UnitPrerequisites.Add(unitPrerequisite);
-                db.SaveChanges();
+                var unitPrerequisiteCheck = from up in db.UnitPrerequisites
+                                            where up.course_code == unitPrerequisite.course_code
+                                            where up.unit_code == unitPrerequisite.unit_code
+                                            where up.prereq_code == unitPrerequisite.prereq_code
+                                            select up;
+
+                if (unitPrerequisiteCheck.Count() > 0)
+                {
+                    Session["prereqExists"] = "true";
+                    return RedirectToAction("Create");
+                }
+                else
+                {
+                    Session["prereqExists"] = null;
+                    db.UnitPrerequisites.Add(unitPrerequisite);
+                    db.SaveChanges();
+                }
+
                 return RedirectToAction("Index");
             }
 
+            ViewBag.prereq_code = new SelectList(db.Units, "unit_code", "name", unitPrerequisite.prereq_code);
+            ViewBag.unit_code = new SelectList(db.Units, "unit_code", "name", unitPrerequisite.unit_code);
+            ViewBag.course_code = new SelectList(db.Courses, "course_code", "name", unitPrerequisite.course_code);
             return View(unitPrerequisite);
         }
 
-        // GET: UnitPrerequisites/Edit/5
-        public ActionResult Edit(string unit, string prereq)
-        {
-            if (unit == null || prereq == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UnitPrerequisite unitPrerequisite = db.UnitPrerequisites.Find(unit, prereq);
-            if (unitPrerequisite == null)
-            {
-                return HttpNotFound();
-            }
-            return View(unitPrerequisite);
-        }
-
-        // POST: UnitPrerequisites/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "unit_code,prereq_code,mutiple_required")] UnitPrerequisite unitPrerequisite)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(unitPrerequisite).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(unitPrerequisite);
-        }
-
-        // GET: UnitPrerequisites/Delete/5
-        public ActionResult Delete(string unit, string prereq)
-        {
-            if (unit == null || prereq == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UnitPrerequisite unitPrerequisite = db.UnitPrerequisites.Find(unit, prereq);
-            if (unitPrerequisite == null)
-            {
-                return HttpNotFound();
-            }
-            return View(unitPrerequisite);
-        }
-
-        // POST: UnitPrerequisites/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string unit, string prereq)
-        {
-            UnitPrerequisite unitPrerequisite = db.UnitPrerequisites.Find(unit, prereq);
-            db.UnitPrerequisites.Remove(unitPrerequisite);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
     }
 }
