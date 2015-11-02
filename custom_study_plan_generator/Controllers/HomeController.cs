@@ -25,7 +25,6 @@ namespace custom_study_plan_generator.Controllers
 	[RequireHttps]
     public class HomeController : Controller
     {
-        
         public ActionResult Index()
         {
             /* force ASP.NET session initialsiation, needed for Google OAuth */
@@ -571,7 +570,6 @@ namespace custom_study_plan_generator.Controllers
 
                     /* Save the session list to a session variable, ready for use by the view */
                     Session["StudentPlan"] = sessionList;
-
                 }
 
                 else
@@ -707,18 +705,29 @@ namespace custom_study_plan_generator.Controllers
             // Retrieve sessionList of coursePlan (units) from Session variable
             // StudentPlan.
             List<CoursePlan> sessionList = (List<CoursePlan>)Session["StudentPlan"];
-            // Retreive start semester
-            var startSemester = Convert.ToInt32(Session["StartSemester"]);
             
             /* Only run the algorithm if it has not already been run. */
             if (Session["AlgorithmRun"].ToString() == "false")
             {
-                
-                // Create StudyPlanAlgorithm object;
-                StudyPlanAlgorithm.StudyPlanAlgorithm algorithm = new StudyPlanAlgorithm.StudyPlanAlgorithm();
-                // Update sessionList by passing it to newly created StudyPlanAlgorithm.
+
+                // Retrieve course length.
+                int numUnits = (int)Session["numUnits"];
+
+                // Retrieve if it is midYearStart or not and convert from int to boolean for algorithm.
+                bool midYearIntake = false;
+                if (Session["StartSemester"] != null && Session["StartSemester"].ToString() == "2")
+                {
+                    System.Diagnostics.Debug.WriteLine("\n\n\nMID YEAR INTAKE =S TRUE \n\n\n");
+                    midYearIntake = true;
+                }
+
+                // Create StudyPlanAlgorithm object, that in turn will create course and unit objects.
+                //StudyPlanAlgorithm object to pass between methods;
+                StudyPlanAlgorithm.StudyPlanAlgorithm algorithm = new StudyPlanAlgorithm.StudyPlanAlgorithm(sessionList, numUnits, midYearIntake);
+
+                // Update sessionList by running algorithm on it.
                 sessionList = algorithm.RunAlgorithm(sessionList);
-                // Update Session["StudentPlan"]
+                
                
                 // Initialise empty spaces at the end of the plan so that units can be rearranged to any position.
                 int courseLength = ((CourseDTO)Session["Course"]).num_units;
@@ -729,6 +738,7 @@ namespace custom_study_plan_generator.Controllers
                     sessionList.Add(null);
                 }
 
+                // Update Session["StudentPlan"]
                 Session["StudentPlan"] = sessionList;
 
                 Session["AlgorithmRun"] = "true";
