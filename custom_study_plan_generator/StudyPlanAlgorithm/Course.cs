@@ -15,10 +15,15 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
     {
         // Linked list for algorithm
         public LinkedList<Unit> courseStructure = new LinkedList<Unit>();
+        public int courseDuration;
+        public bool midYearIntake;
         // SessionList for view
         private List<CoursePlan> oldSessionList;
-        public Course(List<CoursePlan> _sessionList)
+        public Course(List<CoursePlan> _sessionList, int _courseDuration, bool _midYearIntake)
         {
+            courseDuration = _courseDuration;
+            midYearIntake = _midYearIntake;
+
             // Save sessionList for other methods.
             oldSessionList = _sessionList;
 
@@ -42,23 +47,42 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
                 if (unit.preferred_year != null)
                     preferredYear = unit.preferred_year.ToString();
 
-                // Just grabbing pre req directly from database for now. XYZ TO DO!!!!!!
-                var preReqs =
+                /*
+                 * XYZ TO DO OLD WAY. remove when happy
+                 * // Just grabbing pre req directly from database for now. XYZ TO DO!!!!!!
+                var _preReqs =
                     from unitPreReqs in db.UnitPrerequisites
                     where unitPreReqs.unit_code == unit.unit_code
                     select unitPreReqs.prereq_code;
 
-                // Just grabbing first pre requisite for now if there is one null otherwise.
-                string preReq = null;
+                // list of preReqs
+                List<string> preReqs = null;
 
-                if (preReqs.Any())
-                    preReq = preReqs.First();
+                if (_preReqs.Any())
+                    preReqs = _preReqs.ToList();*/
+                
+                // Set preReqs if any.
+                List<string> preReqs = new List<string>();
+                preReqs = null;
+                if (unit.prerequisites.Any())
+                    preReqs = unit.prerequisites;
+
+                // Test pre reqs
+                System.Diagnostics.Debug.WriteLine(unit.name);
+                if (preReqs != null)
+                {
+                    foreach(var preReq in unit.prerequisites)
+                    {
+                        System.Diagnostics.Debug.WriteLine(preReq);
+                    }
+                }
+
 
                 // isPreReq XYZ TO DO!!!!! Appears algorithm doesn't use this.
                 bool isPreReq = false;
 
                 // Create Unit object suitable for the algorithm.
-                Unit tempUnit = new Unit(unit.name, unit.unit_code, unit.type_code, semester, preferredYear, preReq, isPreReq, unit.exempt);
+                Unit tempUnit = new Unit(unit.name, unit.unit_code, unit.type_code, semester, preferredYear, preReqs, isPreReq, unit.exempt);
 
                 // Add unit object to end of linked list.
                 courseStructure.AddLast(tempUnit);
@@ -106,6 +130,41 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
             }
             // Return new list.
             return newSessionlist;
+        }
+        public int CourseDuration
+        {
+            get
+            {
+                return courseDuration;
+            }
+            set
+            {
+                courseDuration = value;
+            }
+        }
+
+        public bool MidYearIntake
+        {
+            get
+            {
+                return midYearIntake;
+            }
+            set
+            {
+                midYearIntake = value;
+            }
+        }
+        public void check()
+        {
+            foreach( var unit in courseStructure)
+            {
+                System.Diagnostics.Debug.WriteLine(unit.UnitName);
+                if (unit.PreReq != null)
+                {
+                    foreach (var preReq in unit.PreReq)
+                        System.Diagnostics.Debug.WriteLine(preReq);
+                }
+            }
         }
     }
 }

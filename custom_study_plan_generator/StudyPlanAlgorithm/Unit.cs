@@ -13,10 +13,10 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
         private string unitType;
         private string semester;
         private string year;
-        private string preReq = null;
+        private List<string> preReq = null;
         private bool isPreReq;
         private bool exempt;
-        public Unit(string _unitName, string _unitCode, string _unitType, string _semester, string _year, string _preReq, bool _isPreReq, bool _exempt)
+        public Unit(string _unitName, string _unitCode, string _unitType, string _semester, string _year, List<string> _preReq, bool _isPreReq, bool _exempt)
         {
             unitName = _unitName;
             unitCode = _unitCode;
@@ -83,7 +83,7 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
                 year = value;
             }
         }
-        public string PreReq
+        public List<string> PreReq
         {
             get
             {
