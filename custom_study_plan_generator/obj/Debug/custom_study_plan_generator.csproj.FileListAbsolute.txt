@@ -1,65 +1,18 @@
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\custom_study_plan_generator.dll.config
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\custom_study_plan_generator.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\custom_study_plan_generator.pdb
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Antlr3.Runtime.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\EntityFramework.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\EntityFramework.SqlServer.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.Core.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.EntityFramework.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.Owin.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Microsoft.Owin.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Microsoft.Owin.Host.SystemWeb.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Cookies.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Facebook.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Google.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.OAuth.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Twitter.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Microsoft.Web.Infrastructure.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Newtonsoft.Json.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Owin.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Owin.Security.CAS.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\System.Web.Helpers.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\System.Web.Mvc.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\System.Web.Optimization.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\System.Web.Razor.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\System.Web.WebPages.Deployment.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\System.Web.WebPages.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\System.Web.WebPages.Razor.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\WebGrease.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Antlr3.Runtime.pdb
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\EntityFramework.xml
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\EntityFramework.SqlServer.xml
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.Core.xml
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.EntityFramework.xml
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.Owin.xml
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Microsoft.Owin.xml
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Microsoft.Owin.Host.SystemWeb.xml
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.xml
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Cookies.xml
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Facebook.xml
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Google.xml
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.OAuth.xml
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Twitter.xml
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\Newtonsoft.Json.xml
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\System.Web.Helpers.xml
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\System.Web.Mvc.xml
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\System.Web.Razor.xml
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\System.Web.WebPages.xml
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\System.Web.WebPages.Deployment.xml
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\System.Web.WebPages.Razor.xml
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\bin\System.Web.Optimization.xml
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csprojResolveAssemblyReference.cache
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.dll
-c:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.pdb
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\custom_study_plan_generator.dll.config
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\custom_study_plan_generator.dll
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\custom_study_plan_generator.pdb
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Antlr3.Runtime.dll
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\BouncyCastle.Crypto.dll
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\EntityFramework.dll
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\EntityFramework.SqlServer.dll
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.dll
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.Mvc4.dll
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.PlatformServices.dll
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Core.dll
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.dll
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Drive.v2.dll
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.PlatformServices.dll
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\log4net.dll
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.Core.dll
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.EntityFramework.dll
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.Owin.dll
@@ -72,10 +25,15 @@ D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_s
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Microsoft.Owin.Security.OAuth.dll
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Microsoft.Owin.Security.Twitter.dll
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.dll
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.Extensions.Desktop.dll
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.Extensions.dll
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Microsoft.Web.Infrastructure.dll
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Newtonsoft.Json.dll
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Owin.dll
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Owin.Security.CAS.dll
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\System.Net.Http.Extensions.dll
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\System.Net.Http.Primitives.dll
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\System.Web.Helpers.dll
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\System.Web.Mvc.dll
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\System.Web.Optimization.dll
@@ -84,9 +42,26 @@ D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_s
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\System.Web.WebPages.dll
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\System.Web.WebPages.Razor.dll
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\WebGrease.dll
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Zlib.Portable.dll
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Antlr3.Runtime.pdb
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\BouncyCastle.Crypto.pdb
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\EntityFramework.xml
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\EntityFramework.SqlServer.xml
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.pdb
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.xml
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.pdb
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.xml
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.Mvc4.pdb
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.Mvc4.xml
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.PlatformServices.pdb
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.PlatformServices.xml
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Core.pdb
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Core.xml
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Drive.v2.pdb
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Drive.v2.xml
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.PlatformServices.pdb
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.PlatformServices.xml
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\log4net.xml
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.Core.xml
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.EntityFramework.xml
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.Owin.xml
@@ -99,432 +74,20 @@ D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_s
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Microsoft.Owin.Security.OAuth.xml
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Microsoft.Owin.Security.Twitter.xml
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.xml
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.Extensions.xml
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.Extensions.Desktop.xml
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Newtonsoft.Json.xml
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\System.Net.Http.Extensions.xml
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\System.Net.Http.Primitives.xml
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\System.Web.Helpers.xml
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\System.Web.Mvc.xml
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\System.Web.Optimization.xml
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\System.Web.Razor.xml
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\System.Web.WebPages.xml
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\System.Web.WebPages.Deployment.xml
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\System.Web.WebPages.Razor.xml
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\System.Web.Optimization.xml
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.dll
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.pdb
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\custom_study_plan_generator.dll.config
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\custom_study_plan_generator.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\custom_study_plan_generator.pdb
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Antlr3.Runtime.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\EntityFramework.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\EntityFramework.SqlServer.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.Core.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.EntityFramework.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.Owin.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.Owin.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.Owin.Host.SystemWeb.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.Owin.Security.Cookies.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.Owin.Security.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.Owin.Security.Facebook.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.Owin.Security.Google.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.Owin.Security.OAuth.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.Owin.Security.Twitter.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.Web.Infrastructure.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Newtonsoft.Json.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Owin.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Owin.Security.CAS.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\System.Web.Helpers.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\System.Web.Mvc.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\System.Web.Optimization.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\System.Web.Razor.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\System.Web.WebPages.Deployment.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\System.Web.WebPages.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\System.Web.WebPages.Razor.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\WebGrease.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Antlr3.Runtime.pdb
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\EntityFramework.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\EntityFramework.SqlServer.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.Core.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.EntityFramework.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.Owin.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.Owin.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.Owin.Host.SystemWeb.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.Owin.Security.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.Owin.Security.Cookies.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.Owin.Security.Facebook.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.Owin.Security.Google.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.Owin.Security.OAuth.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.Owin.Security.Twitter.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Newtonsoft.Json.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\System.Web.Helpers.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\System.Web.Mvc.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\System.Web.Razor.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\System.Web.WebPages.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\System.Web.WebPages.Deployment.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\System.Web.WebPages.Razor.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\System.Web.Optimization.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\custom_study_plan_generator.dll.config
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\custom_study_plan_generator.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\custom_study_plan_generator.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Antlr3.Runtime.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\EntityFramework.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\EntityFramework.SqlServer.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.Core.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.EntityFramework.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.Owin.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Host.SystemWeb.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Cookies.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Facebook.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Google.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.OAuth.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Twitter.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Web.Infrastructure.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Newtonsoft.Json.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Owin.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Owin.Security.CAS.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Helpers.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Mvc.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Optimization.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Razor.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.WebPages.Deployment.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.WebPages.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.WebPages.Razor.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\WebGrease.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Antlr3.Runtime.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\EntityFramework.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\EntityFramework.SqlServer.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.Core.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.EntityFramework.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.Owin.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Host.SystemWeb.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Cookies.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Facebook.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Google.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.OAuth.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Twitter.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Newtonsoft.Json.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Helpers.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Mvc.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Razor.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.WebPages.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.WebPages.Deployment.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.WebPages.Razor.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Optimization.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csprojResolveAssemblyReference.cache
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\example.pdf
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Auth.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Auth.PlatformServices.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Core.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Drive.v2.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.PlatformServices.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\log4net.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.Extensions.Desktop.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.Extensions.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Net.Http.Extensions.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Net.Http.Primitives.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Zlib.Portable.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Auth.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Auth.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Auth.PlatformServices.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Auth.PlatformServices.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Core.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Core.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Drive.v2.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Drive.v2.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.PlatformServices.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.PlatformServices.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\log4net.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.Extensions.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.Extensions.Desktop.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Net.Http.Extensions.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Net.Http.Primitives.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\bin\Zlib.Portable.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom_study_plan_generator\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csproj.App.config
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.dll
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Drive.v2.dll
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.PlatformServices.dll
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\log4net.dll
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.dll
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.Extensions.Desktop.dll
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.Extensions.dll
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\System.Net.Http.Extensions.dll
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\System.Net.Http.Primitives.dll
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Zlib.Portable.dll
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.pdb
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.xml
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.pdb
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.xml
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.PlatformServices.pdb
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.PlatformServices.xml
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Core.pdb
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Core.xml
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Drive.v2.pdb
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Drive.v2.xml
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.PlatformServices.pdb
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.PlatformServices.xml
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\log4net.xml
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.xml
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.Extensions.xml
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.Extensions.Desktop.xml
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\System.Net.Http.Extensions.xml
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\System.Net.Http.Primitives.xml
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Zlib.Portable.xml
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csproj.App.config
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\BouncyCastle.Crypto.dll
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.dll
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.Mvc4.dll
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.PlatformServices.dll
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Core.dll
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\BouncyCastle.Crypto.pdb
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.Mvc4.pdb
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Auth.Mvc4.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\custom_study_plan_generator.dll.config
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\custom_study_plan_generator.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\custom_study_plan_generator.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Antlr3.Runtime.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\BouncyCastle.Crypto.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\EntityFramework.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\EntityFramework.SqlServer.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Auth.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Auth.Mvc4.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Auth.PlatformServices.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Core.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Drive.v2.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.PlatformServices.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\log4net.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.Core.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.EntityFramework.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.Owin.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Host.SystemWeb.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Cookies.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Facebook.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Google.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.OAuth.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Twitter.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.Extensions.Desktop.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.Extensions.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Web.Infrastructure.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Newtonsoft.Json.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Owin.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Owin.Security.CAS.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Net.Http.Extensions.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Net.Http.Primitives.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Helpers.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Mvc.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Optimization.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Razor.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.WebPages.Deployment.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.WebPages.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.WebPages.Razor.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\WebGrease.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Zlib.Portable.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Antlr3.Runtime.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\BouncyCastle.Crypto.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\EntityFramework.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\EntityFramework.SqlServer.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Auth.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Auth.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Auth.Mvc4.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Auth.Mvc4.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Auth.PlatformServices.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Auth.PlatformServices.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Core.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Core.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Drive.v2.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Drive.v2.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.PlatformServices.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.PlatformServices.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\log4net.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.Core.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.EntityFramework.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.Owin.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Host.SystemWeb.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Cookies.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Facebook.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Google.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.OAuth.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Twitter.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.Extensions.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.Extensions.Desktop.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Newtonsoft.Json.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Net.Http.Extensions.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Net.Http.Primitives.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Helpers.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Mvc.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Optimization.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Razor.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.WebPages.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.WebPages.Deployment.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.WebPages.Razor.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\bin\Zlib.Portable.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csproj.App.config
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csprojResolveAssemblyReference.cache
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.pdb
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\BouncyCastle.Crypto.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Google.Apis.Auth.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Google.Apis.Auth.Mvc4.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Google.Apis.Auth.PlatformServices.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Google.Apis.Core.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Google.Apis.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Google.Apis.Drive.v2.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Google.Apis.PlatformServices.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\log4net.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.Extensions.Desktop.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.Extensions.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\System.Net.Http.Extensions.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\System.Net.Http.Primitives.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Zlib.Portable.dll
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\BouncyCastle.Crypto.pdb
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Google.Apis.pdb
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Google.Apis.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Google.Apis.Auth.pdb
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Google.Apis.Auth.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Google.Apis.Auth.Mvc4.pdb
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Google.Apis.Auth.Mvc4.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Google.Apis.Auth.PlatformServices.pdb
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Google.Apis.Auth.PlatformServices.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Google.Apis.Core.pdb
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Google.Apis.Core.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Google.Apis.Drive.v2.pdb
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Google.Apis.Drive.v2.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Google.Apis.PlatformServices.pdb
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Google.Apis.PlatformServices.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\log4net.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.Extensions.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.Extensions.Desktop.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\System.Net.Http.Extensions.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\System.Net.Http.Primitives.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\bin\Zlib.Portable.xml
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csproj.App.config
-<<<<<<< HEAD
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csprojResolveAssemblyReference.cache
-=======
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csprojResolveAssemblyReference.cache
->>>>>>> 0e5f81a84a34875f76edef30ead1d442e80f0c01
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\custom_study_plan_generator.dll.config
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\custom_study_plan_generator.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\custom_study_plan_generator.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Antlr3.Runtime.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\BouncyCastle.Crypto.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\EntityFramework.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\EntityFramework.SqlServer.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Auth.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Auth.Mvc4.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Auth.PlatformServices.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Core.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Drive.v2.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.PlatformServices.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\log4net.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.Core.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.EntityFramework.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.Owin.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Host.SystemWeb.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Cookies.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Facebook.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Google.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.OAuth.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Twitter.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.Extensions.Desktop.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.Extensions.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Web.Infrastructure.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Newtonsoft.Json.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Owin.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Owin.Security.CAS.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Net.Http.Extensions.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Net.Http.Primitives.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Helpers.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Mvc.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Optimization.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Razor.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.WebPages.Deployment.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.WebPages.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.WebPages.Razor.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\WebGrease.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Zlib.Portable.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Antlr3.Runtime.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\BouncyCastle.Crypto.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\EntityFramework.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\EntityFramework.SqlServer.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Auth.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Auth.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Auth.Mvc4.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Auth.Mvc4.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Auth.PlatformServices.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Auth.PlatformServices.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Core.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Core.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Drive.v2.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.Drive.v2.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.PlatformServices.pdb
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Google.Apis.PlatformServices.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\log4net.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.Core.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.EntityFramework.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.AspNet.Identity.Owin.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Host.SystemWeb.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Cookies.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Facebook.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Google.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.OAuth.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Owin.Security.Twitter.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.Extensions.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Microsoft.Threading.Tasks.Extensions.Desktop.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Newtonsoft.Json.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Net.Http.Extensions.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Net.Http.Primitives.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Helpers.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Mvc.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Optimization.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.Razor.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.WebPages.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.WebPages.Deployment.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\System.Web.WebPages.Razor.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\bin\Zlib.Portable.xml
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csproj.App.config
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csprojResolveAssemblyReference.cache
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.dll
-C:\Users\Duane\Documents\Visual Studio 2013\Projects\custom-study-plan-generator\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.pdb
-<<<<<<< HEAD
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csprojResolveAssemblyReference.cache
-=======
-C:\Uni\CPT331 - ProgrammingProject\Project\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csprojResolveAssemblyReference.cache
->>>>>>> 0e5f81a84a34875f76edef30ead1d442e80f0c01
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.dll
+D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.pdb
