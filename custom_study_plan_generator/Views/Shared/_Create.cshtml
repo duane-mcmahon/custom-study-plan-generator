@@ -8,7 +8,7 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm(new { onsubmit = "return validateForm(this)" }))
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
@@ -24,12 +24,15 @@
             Session["prereqExists"] = null;
         }
         
+        <div id="unitPrereqSame" class="error3">Error, the unit and it's prerequisite can not be the same.</div>
+        <div id="emptyLists" class="error3">Error, please select values for each dropdown list.</div>
+        
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.course_code, "Course", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("course_code", null, "-- Select Course --", htmlAttributes: new { @class = "form-control", onchange = "$('#submitSelect').trigger('click')", name = "action:Select" })
+                @Html.DropDownList("course_code", null, "-- Select Course --", htmlAttributes: new { @class = "form-control", onchange = "$('#submitSelect').trigger('click')", name = "action:Select", id = "courseSelect" })
                 @Html.ValidationMessageFor(model => model.course_code, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -63,7 +66,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" name="action:CreateSubmit" class="btn btn-default" />
+                <input id ="submit" type="submit" value="Create" name="action:CreateSubmit" class="btn btn-default" />
                 <input id="submitSelect" type="submit" value="Select" name="action:Select" class="btn btn-default" />
             </div>
         </div>

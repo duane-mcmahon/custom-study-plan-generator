@@ -472,6 +472,18 @@ html body {
     font-size: 1vw;
 }
 
+#unitPrereqSame {
+    color: red;
+    font-size: 1vw;
+    display: none;
+}
+
+#emptyLists {
+    color: red;
+    font-size: 1vw;
+    display: none;
+}
+
 /* ******************************* */
 
 th {

@@ -407,7 +407,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Modify.js" />
-    <Content Include="Scripts\UnitPrerequsistesCreate.js" />
+    <Content Include="Scripts\UnitPrerequisitesCreate.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
