@@ -35,6 +35,18 @@
 
                 }).appendTo(idCont);
             }
+            else if (entry != "" && entry.exempt == true) {
+                idCont = "#p" + count;
+                jQuery('<div/>', {
+                    id: count,
+                    class: 'innerCell active marked',
+                    draggable: 'true',
+                    ondragstart: 'drag(event)',
+                    ondragend: 'dragend(event, this)',
+                    text: entry.name
+
+                }).appendTo(idCont);
+            }
             count++
         });
     }
@@ -76,7 +88,7 @@
             type: "POST",
             data: { data: array },
             success: function (response) {
-                $(".marked").remove();
+
             },
             error: function (response) {
                 $('#error2').html(response.responseText);
