@@ -20,9 +20,9 @@ using File = Google.Apis.Drive.v2.Data.File;
 
 namespace custom_study_plan_generator.Controllers
 {
-   
+
     [Authorize]
-	[RequireHttps]
+    [RequireHttps]
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -39,26 +39,26 @@ namespace custom_study_plan_generator.Controllers
             using (custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities())
             {
 
-                
+
                 var data = Request["data"].ToString();
                 var dataSplit = data.Split(',');
                 var idRaw = dataSplit[0];
                 var type = dataSplit[1];
-                
+
 
 
                 try
                 {
 
                     var id = Convert.ToInt32(idRaw.Substring(1, 7));
-                    
+
                     Session["StudentID"] = idRaw;
 
                     if (type == "create")
                     {
                         var match = from student in db.Students
-                                    where student.student_id == id
-                                    select student;
+                            where student.student_id == id
+                            select student;
 
                         if (match.Count() > 0)
                         {
@@ -71,8 +71,8 @@ namespace custom_study_plan_generator.Controllers
 
 
                         var studentPlan = from sp in db.StudentPlans
-                                          where sp.student_id == id
-                                          select sp;
+                            where sp.student_id == id
+                            select sp;
 
                         if (studentPlan.Count() > 0)
                         {
@@ -85,16 +85,16 @@ namespace custom_study_plan_generator.Controllers
                             return "Plan for this student does not exist.";
                         }
                     }
-                
+
                 }
-                catch (Exception ex) 
+                catch (Exception ex)
                 {
                     return "Student ID does not exist.";
                 }
-            
-            
 
-                
+
+
+
             }
 
             return "Student ID does not exist.";
@@ -128,8 +128,8 @@ namespace custom_study_plan_generator.Controllers
 
                 /* Query the course names from the database */
                 var courseQry = from d in db.Courses
-                                orderby d.name
-                                select d.name;
+                    orderby d.name
+                    select d.name;
 
                 /* Add distinct courses to the course list */
                 courseList.AddRange(courseQry.Distinct());
@@ -139,11 +139,11 @@ namespace custom_study_plan_generator.Controllers
 
                 /* Get all available plans */
                 var plans = from p in db.DefaultPlans
-                            select p;
+                    select p;
 
                 /* Get all available units */
                 var units = from u in db.Units
-                            select u;
+                    select u;
 
                 ViewBag.numUnits = 24;
 
@@ -152,18 +152,18 @@ namespace custom_study_plan_generator.Controllers
                 {
 
                     Session["CourseSelect"] = courseSelect;
-                    
+
                     /* Get the matching course and put it into a meta object */
                     var course = (from c in db.Courses
-                                    where c.name == courseSelect
-                                    select new CourseDTO
-                                    {
-                                        course_code = c.course_code,
-                                        duration = c.duration,
-                                        name = c.name,
-                                        num_units = c.num_units,
-                                        max_credit = c.max_credit
-                                    }).FirstOrDefault();
+                        where c.name == courseSelect
+                        select new CourseDTO
+                        {
+                            course_code = c.course_code,
+                            duration = c.duration,
+                            name = c.name,
+                            num_units = c.num_units,
+                            max_credit = c.max_credit
+                        }).FirstOrDefault();
 
                     /* Send the number of units to the view for correct table size generation */
                     ViewBag.numUnits = course.num_units;
@@ -172,14 +172,15 @@ namespace custom_study_plan_generator.Controllers
                     plans = plans.Where(u => u.course_code == course.course_code).OrderBy(u => u.unit_no);
 
                     /* join the units and plans tables to make them sortable by semester */
-                    var query = db.Units.Join(plans, u => u.unit_code, p => p.unit_code, (order, plan) => new { plan.unit_no, order.name });
+                    var query = db.Units.Join(plans, u => u.unit_code, p => p.unit_code,
+                        (order, plan) => new {plan.unit_no, order.name});
 
                     /* sort the query by semester */
                     query = query.OrderBy(u => u.unit_no);
 
                     /* Convert the matched units to only represent unit names */
                     var unitNamesFiltered = from u in query
-                                            select u.name;
+                        select u.name;
 
                     /* Convert the list of unit names to a seperate list which is usable by eager loading
                         * (This step is needed for when the database is disposed of */
@@ -198,7 +199,7 @@ namespace custom_study_plan_generator.Controllers
                         /* Pass the unit list to a session variable */
                         Session["DefaultPlanList"] = selectedList;
                     }
-                    
+
                     /* Alert the view that a course has been selected, otherwise a blank page will be loaded */
                     ViewBag.courseSelected = true;
 
@@ -207,7 +208,7 @@ namespace custom_study_plan_generator.Controllers
 
                     /* Get the list of default plan units from session */
                     var unitList = Session["DefaultPlanList"] as List<string>;
-                    
+
                     /* Initialise two lists required for checking and returning the problem units */
                     List<string> violatedList = new List<string>();
                     List<string> unitsChecked = new List<string>();
@@ -215,9 +216,9 @@ namespace custom_study_plan_generator.Controllers
                     /* Get the course code from the session stroed selected course */
                     var courseSelected = Session["CourseSelect"].ToString();
                     var courseCode = from c in db.Courses
-                                     where c.name == courseSelected
-                                     select c.course_code;
-                    
+                        where c.name == courseSelected
+                        select c.course_code;
+
                     /* Loop through the unit list */
                     foreach (var unit in unitList)
                     {
@@ -227,20 +228,20 @@ namespace custom_study_plan_generator.Controllers
 
                         /* Get the unit code of the unit currently being checked */
                         var unitToCheck = from u in db.Units
-                                          where u.name == unit
-                                          select u.unit_code;
-                        
+                            where u.name == unit
+                            select u.unit_code;
+
                         /* Get the unit prereq codes of the unit being checked (if any) */
                         var prereqs = from p in db.UnitPrerequisites
-                                      where unitToCheck.Contains(p.unit_code)
-                                      where courseCode.Contains(p.course_code)
-                                      select p.prereq_code;
+                            where unitToCheck.Contains(p.unit_code)
+                            where courseCode.Contains(p.course_code)
+                            select p.prereq_code;
 
                         /* Convert the prereq codes to unit names */
                         var prereqNames = from u in db.Units
-                                          where prereqs.Contains(u.unit_code)
-                                          select u.name;
-                        
+                            where prereqs.Contains(u.unit_code)
+                            select u.name;
+
                         /* If the unit has both it's prereqs before it, do nothing, else add it to the violated list */
                         if (prereqNames.Count() > 0)
                         {
@@ -272,7 +273,7 @@ namespace custom_study_plan_generator.Controllers
                    on selecting no course. This may also be required if a new or incomplete course is loaded 
                    into the view */
                 var unitNames = from u in units
-                                select u.name;
+                    select u.name;
 
                 /* Convert the unit names to a list, usable by eager loading */
                 var list = new List<string>(unitNames);
@@ -301,7 +302,7 @@ namespace custom_study_plan_generator.Controllers
             unitList[element] = unitName;
 
             Session["DefaultPlanList"] = unitList;
-            
+
         }
 
         [HttpPost]
@@ -336,36 +337,36 @@ namespace custom_study_plan_generator.Controllers
 
                 var unitList = Session["DefaultPlanList"] as List<string>;
                 var courseSelect = Session["CourseSelect"].ToString();
-                
+
                 Dictionary<Int32, string> listOrdered = new Dictionary<Int32, string>();
                 var count = 0;
-                foreach (var item in unitList) 
+                foreach (var item in unitList)
                 {
-                    listOrdered.Add(count , item);
+                    listOrdered.Add(count, item);
                     count++;
                 }
 
 
-                
+
                 /* Get the matching course and put it into a meta object */
                 var course = from c in db.Courses
-                             where c.name == courseSelect
-                             select c.course_code;
+                    where c.name == courseSelect
+                    select c.course_code;
 
                 var units = from a in listOrdered
-                            join u in db.Units
-                            on new { name = a.Value } equals
-                            new { u.name }
-                            orderby a.Key
-                            select u;
+                    join u in db.Units
+                        on new {name = a.Value} equals
+                        new {u.name}
+                    orderby a.Key
+                    select u;
 
                 var defaultPlan = from dp in db.DefaultPlans
-                                  where dp.course_code == course.FirstOrDefault()
-                                  select dp;
+                    where dp.course_code == course.FirstOrDefault()
+                    select dp;
 
                 foreach (var unit in defaultPlan)
                 {
-                    db.DefaultPlans.Remove(unit);                 
+                    db.DefaultPlans.Remove(unit);
                 }
 
 
@@ -376,7 +377,7 @@ namespace custom_study_plan_generator.Controllers
                     plan.unit_code = u.unit_code;
                     plan.course_code = course.FirstOrDefault();
                     plan.unit_no = count;
-                    plan.semester = (int)Math.Ceiling((double)count/4);
+                    plan.semester = (int) Math.Ceiling((double) count/4);
                     count++;
                     db.DefaultPlans.Add(plan);
                 }
@@ -384,7 +385,7 @@ namespace custom_study_plan_generator.Controllers
                 db.SaveChanges();
 
             }
- 
+
         }
 
         [HttpPost]
@@ -393,45 +394,46 @@ namespace custom_study_plan_generator.Controllers
 
             using (custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities())
             {
-                    
-                    /* Get unit name from ajax POST */ 
-                    var unit = Request["data"].ToString();
 
-                    var courseCode = Session["CourseCode"].ToString();
+                /* Get unit name from ajax POST */
+                var unit = Request["data"].ToString();
 
-                    /* Get the unit code of the unit */
-                    var unitToCheck = from u in db.Units
-                                      where u.name == unit
-                                      select u.unit_code;
-                        
-                    /* Get the unit prereq codes of the unit being checked (if any) */
-                    var prereqs = from p in db.UnitPrerequisites
-                                    where unitToCheck.Contains(p.unit_code)
-                                    where courseCode.Contains(p.course_code)
-                                    select p.prereq_code;
+                var courseCode = Session["CourseCode"].ToString();
 
-                    /* Convert the prereq codes to unit names */
-                    var prereqNames = from u in db.Units
-                                        where prereqs.Contains(u.unit_code)
-                                        select u.name;
+                /* Get the unit code of the unit */
+                var unitToCheck = from u in db.Units
+                    where u.name == unit
+                    select u.unit_code;
 
-                    var prereqList = "";
-                    var count = 0;
-                    foreach (var prereq in prereqNames) {
-                        if (count == 0) 
-                        {
-                            prereqList += prereq.ToString();
-                        }
-                        if (count > 0)
-                        {
-                            prereqList = prereqList + "," + prereq.ToString();
-                        }
-                        
-                        count++;
+                /* Get the unit prereq codes of the unit being checked (if any) */
+                var prereqs = from p in db.UnitPrerequisites
+                    where unitToCheck.Contains(p.unit_code)
+                    where courseCode.Contains(p.course_code)
+                    select p.prereq_code;
+
+                /* Convert the prereq codes to unit names */
+                var prereqNames = from u in db.Units
+                    where prereqs.Contains(u.unit_code)
+                    select u.name;
+
+                var prereqList = "";
+                var count = 0;
+                foreach (var prereq in prereqNames)
+                {
+                    if (count == 0)
+                    {
+                        prereqList += prereq.ToString();
+                    }
+                    if (count > 0)
+                    {
+                        prereqList = prereqList + "," + prereq.ToString();
                     }
 
-                    return prereqList;
+                    count++;
                 }
+
+                return prereqList;
+            }
         }
 
         [HttpPost]
@@ -477,8 +479,8 @@ namespace custom_study_plan_generator.Controllers
 
                 /* Query the course names from the database */
                 var courseQry = from d in db.Courses
-                                orderby d.name
-                                select d.name;
+                    orderby d.name
+                    select d.name;
 
                 /* Add distinct courses to the course list */
                 courseList.AddRange(courseQry.Distinct());
@@ -488,11 +490,11 @@ namespace custom_study_plan_generator.Controllers
 
                 /* Get all available plans */
                 var plans = from p in db.DefaultPlans
-                            select p;
+                    select p;
 
                 /* Get all available units */
                 var units = from u in db.Units
-                            select u;
+                    select u;
 
                 ViewBag.numUnits = 24;
 
@@ -501,15 +503,15 @@ namespace custom_study_plan_generator.Controllers
                 {
                     /* Get the matching course and put it into a meta object */
                     var course = (from c in db.Courses
-                                  where c.name == courseSelect
-                                  select new CourseDTO
-                                  {
-                                      course_code = c.course_code,
-                                      duration = c.duration,
-                                      name = c.name,
-                                      num_units = c.num_units,
-                                      max_credit = c.max_credit
-                                  }).FirstOrDefault();
+                        where c.name == courseSelect
+                        select new CourseDTO
+                        {
+                            course_code = c.course_code,
+                            duration = c.duration,
+                            name = c.name,
+                            num_units = c.num_units,
+                            max_credit = c.max_credit
+                        }).FirstOrDefault();
 
                     /* Send the number of units to the view for correct table size generation */
                     ViewBag.numUnits = course.num_units;
@@ -521,14 +523,15 @@ namespace custom_study_plan_generator.Controllers
                     plans = plans.Where(u => u.course_code == course.course_code).OrderBy(u => u.unit_no);
 
                     /* join the units and plans tables to make them sortable by semester */
-                    var query = db.Units.Join(plans, u => u.unit_code, p => p.unit_code, (order, plan) => new { plan.unit_no, order.name });
+                    var query = db.Units.Join(plans, u => u.unit_code, p => p.unit_code,
+                        (order, plan) => new {plan.unit_no, order.name});
 
                     /* sort the query by semester */
                     query = query.OrderBy(u => u.unit_no);
 
                     /* Convert the matched units to only represent unit names */
                     var unitNamesFiltered = from u in query
-                                            select u.name;
+                        select u.name;
 
                     /* Convert the list of unit names to a seperate list which is usable by eager loading
                      * (This step is needed for when the database is disposed of */
@@ -543,7 +546,20 @@ namespace custom_study_plan_generator.Controllers
                     /* The list will be in order, and accessible by element number */
                     /* The list can be used to track changes to the unit position */
 
-                    var sessionQuery = db.Units.Join(plans, u => u.unit_code, p => p.unit_code, (order, plan) => new CoursePlan { position = plan.unit_no, semester = plan.semester, unit_code = order.unit_code, name = order.name, type_code = order.type_code, semester1 = order.semester1, semester2 = order.semester2, exempt = false, preferred_year = order.preferred_year });
+                    var sessionQuery = db.Units.Join(plans, u => u.unit_code, p => p.unit_code,
+                        (order, plan) =>
+                            new CoursePlan
+                            {
+                                position = plan.unit_no,
+                                semester = plan.semester,
+                                unit_code = order.unit_code,
+                                name = order.name,
+                                type_code = order.type_code,
+                                semester1 = order.semester1,
+                                semester2 = order.semester2,
+                                exempt = false,
+                                preferred_year = order.preferred_year
+                            });
 
                     sessionQuery = sessionQuery.OrderBy(u => u.position);
 
@@ -555,17 +571,17 @@ namespace custom_study_plan_generator.Controllers
                     for (var x = 0; x < sessionList.Count(); x++)
                     {
                         var unitCode = sessionList[x].unit_code;
-                        
+
                         var prerequisites = from p in db.UnitPrerequisites
-                                            where p.course_code == course.course_code
-                                            where p.unit_code.Equals(unitCode)
-                                            select p.prereq_code;
+                            where p.course_code == course.course_code
+                            where p.unit_code.Equals(unitCode)
+                            select p.prereq_code;
 
                         /* ( Convert the prerequisites for this unitCode into as List<string> */
                         List<string> prereqList = prerequisites.ToList();
 
                         /* Modiy the original list for the session to include the list of prereqs for this unit */
-                        sessionList[x].prerequisites = new List<string>(prereqList);       
+                        sessionList[x].prerequisites = new List<string>(prereqList);
                     }
 
                     /* Save the session list to a session variable, ready for use by the view */
@@ -583,7 +599,7 @@ namespace custom_study_plan_generator.Controllers
                    on selecting no course. This may also be required if a new or incomplete course is loaded 
                    into the view */
                 var unitNames = from u in units
-                                select u.name;
+                    select u.name;
 
                 /* Convert the unit names to a list, usable by eager loading */
                 var list = new List<string>(unitNames);
@@ -645,7 +661,7 @@ namespace custom_study_plan_generator.Controllers
                 int totalExempt = 0;
 
                 // Check for previously selected Exemptions removed.
-                foreach (CoursePlan unit in (List<CoursePlan>)Session["StudentPlan"])
+                foreach (CoursePlan unit in (List<CoursePlan>) Session["StudentPlan"])
                 {
                     if (unit.exempt == true)
                     {
@@ -657,7 +673,7 @@ namespace custom_study_plan_generator.Controllers
                 totalExempt = countExistingExempt + exemptions.Length;
 
                 // Make sure Exemption Limit has not been reached. 
-                if (totalExempt > 0 && totalExempt <= ((CourseDTO)Session["Course"]).max_credit)
+                if (totalExempt > 0 && totalExempt <= ((CourseDTO) Session["Course"]).max_credit)
                 {
                     // Valid number of Exemptions has been selected - mark the Exemptions in the session variable. 
                     foreach (string id in exemptions)
@@ -666,7 +682,7 @@ namespace custom_study_plan_generator.Controllers
                         int pos = Convert.ToInt32(id);
 
                         // Mark each selected unit as Exempt in the Plan session variable.
-                        foreach (CoursePlan unit in (List<CoursePlan>)Session["StudentPlan"])
+                        foreach (CoursePlan unit in (List<CoursePlan>) Session["StudentPlan"])
                         {
                             if (unit.position == pos)
                             {
@@ -682,14 +698,14 @@ namespace custom_study_plan_generator.Controllers
                 else
                 {
                     // Exemption Limit has been exceeded.
-                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    Response.StatusCode = (int) HttpStatusCode.BadRequest;
                     return Content("Exemption Limit exceeded: Please select less units.", MediaTypeNames.Text.Plain);
                 }
             }
             else
             {
                 // No Exemptions selected.
-                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                Response.StatusCode = (int) HttpStatusCode.BadRequest;
                 return Content("Please select exemptions to remove.", MediaTypeNames.Text.Plain);
             }
         }
@@ -707,14 +723,14 @@ namespace custom_study_plan_generator.Controllers
 
             // Retrieve sessionList of coursePlan (units) from Session variable
             // StudentPlan.
-            List<CoursePlan> sessionList = (List<CoursePlan>)Session["StudentPlan"];
-            
+            List<CoursePlan> sessionList = (List<CoursePlan>) Session["StudentPlan"];
+
             /* Only run the algorithm if it has not already been run. */
             if (Session["AlgorithmRun"].ToString() == "false")
             {
 
                 // Retrieve course length.
-                int numUnits = (int)Session["numUnits"];
+                int numUnits = (int) Session["numUnits"];
 
                 // Retrieve if it is midYearStart or not and convert from int to boolean for algorithm.
                 bool midYearIntake = false;
@@ -726,14 +742,15 @@ namespace custom_study_plan_generator.Controllers
 
                 // Create StudyPlanAlgorithm object, that in turn will create course and unit objects.
                 //StudyPlanAlgorithm object to pass between methods;
-                StudyPlanAlgorithm.StudyPlanAlgorithm algorithm = new StudyPlanAlgorithm.StudyPlanAlgorithm(sessionList, numUnits, midYearIntake);
+                StudyPlanAlgorithm.StudyPlanAlgorithm algorithm = new StudyPlanAlgorithm.StudyPlanAlgorithm(
+                    sessionList, numUnits, midYearIntake);
 
                 // Update sessionList by running algorithm on it.
                 sessionList = algorithm.RunAlgorithm(sessionList);
-                
-               
+
+
                 // Initialise empty spaces at the end of the plan so that units can be rearranged to any position.
-                int courseLength = ((CourseDTO)Session["Course"]).num_units;
+                int courseLength = ((CourseDTO) Session["Course"]).num_units;
                 int planLength = sessionList.Count;
 
                 for (int i = planLength; i < courseLength; i++)
@@ -756,45 +773,46 @@ namespace custom_study_plan_generator.Controllers
 
             using (custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities())
             {
-                
+
                 /* Get the course code from the session stored selected course */
                 var courseCode = Session["CourseCode"].ToString();
 
-                List<string> exemptionsList = (List<string>)Session["RemovedExemptions"];
-                
+                List<string> exemptionsList = (List<string>) Session["RemovedExemptions"];
+
                 /* If there are any exempt units, add them to list of units that have been checked for violations */
                 foreach (var exemption in exemptionsList)
                 {
                     unitsChecked.Add(exemption);
-                    
+
                 }
 
-                
+
                 /* Loop through the unit list */
                 foreach (var unit in sessionList)
                 {
 
-                    if (unit != null) {
+                    if (unit != null)
+                    {
 
-                        
+
                         /* Add current unit to the list of units that have been checked for violations */
                         unitsChecked.Add(unit.name);
 
                         /* Get the unit code of the unit currently being checked */
                         var unitToCheck = from u in db.Units
-                                          where u.name == unit.name
-                                          select u.unit_code;
+                            where u.name == unit.name
+                            select u.unit_code;
 
                         /* Get the unit prereq codes of the unit being checked (if any) */
                         var prereqs = from p in db.UnitPrerequisites
-                                      where unitToCheck.Contains(p.unit_code)
-                                      where p.course_code == courseCode
-                                      select p.prereq_code;
+                            where unitToCheck.Contains(p.unit_code)
+                            where p.course_code == courseCode
+                            select p.prereq_code;
 
                         /* Convert the prereq codes to unit names */
                         var prereqNames = from u in db.Units
-                                          where prereqs.Contains(u.unit_code)
-                                          select u.name;
+                            where prereqs.Contains(u.unit_code)
+                            select u.name;
 
                         /* If the unit has both it's prereqs before it, do nothing, else add it to the violated list */
                         if (prereqNames.Count() > 0)
@@ -842,7 +860,7 @@ namespace custom_study_plan_generator.Controllers
 
                 Session["StudentPlanSwap"] = studentPlanSwap;
             }
-            
+
             var unitListSwap = Session["StudentPlanSwap"] as List<CoursePlan>;
 
             unitList[toInt] = unitListSwap[fromInt];
@@ -865,8 +883,8 @@ namespace custom_study_plan_generator.Controllers
             var toInt = Convert.ToInt32(to) - 1;
 
             var unitList = Session["StudentPlan"] as List<CoursePlan>;
-            var courseLength = ((CourseDTO)Session["Course"]).num_units;
-            
+            var courseLength = ((CourseDTO) Session["Course"]).num_units;
+
             if (Session["StudentPlanSwap"] == null)
             {
                 List<CoursePlan> studentPlanSwap = new List<CoursePlan>();
@@ -882,7 +900,7 @@ namespace custom_study_plan_generator.Controllers
 
             unitListSwap[toInt] = unitList[fromInt];
             unitList[fromInt] = null;
-           
+
 
             Session["StudentPlan"] = unitList;
             Session["StudentPlanSwap"] = unitListSwap;
@@ -938,7 +956,7 @@ namespace custom_study_plan_generator.Controllers
         {
 
             var fromIndex = Session["FromIndex"].ToString();
-     
+
             /* open database so that it will be autmoatically disposed */
             using (custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities())
             {
@@ -954,7 +972,7 @@ namespace custom_study_plan_generator.Controllers
                     Session["CourseCode"] = null;
                     Session["StudentPlan"] = null;
                     Session["StudentPlanSwap"] = null;
-                
+
                 }
 
                 /* Convert the student ID in session to an int */
@@ -963,40 +981,41 @@ namespace custom_study_plan_generator.Controllers
                 ViewBag.studentid = studentID;
                 /* Get a list of all the student plans */
                 var plans = from p in db.StudentPlans
-                            where p.student_id == studentID
-                            select p;
+                    where p.student_id == studentID
+                    select p;
 
                 /* Get the id of the most recent plan */
                 var newestPlanId = plans.Max(p => p.plan_id);
 
                 /* Select the plan with the newest id */
                 var plan = (from p in db.StudentPlans
-                            where p.plan_id == newestPlanId
-                            select p).FirstOrDefault();
+                    where p.plan_id == newestPlanId
+                    select p).FirstOrDefault();
 
                 /* Get a list of all the units in the students plan */
                 var units = from u in db.StudentPlanUnits
-                            where u.plan_id == plan.plan_id
-                            orderby u.unit_no
-                            select u;
+                    where u.plan_id == plan.plan_id
+                    orderby u.unit_no
+                    select u;
 
                 /* Find the unit names that match the unit code in the list of units in the students plan */
-                var unitNameQuery = db.Units.Join(units, u => u.unit_code, p => p.unit_code, (unitDB, unitP) => new { unitP.unit_no, unitDB.name });
+                var unitNameQuery = db.Units.Join(units, u => u.unit_code, p => p.unit_code,
+                    (unitDB, unitP) => new {unitP.unit_no, unitDB.name});
 
                 /* Order the list of unit names by their order number according to the student plan */
                 unitNameQuery = unitNameQuery.OrderBy(un => un.unit_no);
 
                 /* Filter query to consist only of unit names */
                 var unitNamesFiltered = from un in unitNameQuery
-                                        select un.name;
+                    select un.name;
 
                 /* create the unit list */
                 var sessionList = new List<string>(unitNamesFiltered);
 
                 /* Get the course name from course identified in StudentPlan */
                 var courseName = (from c in db.Courses
-                                 where c.course_code == plan.course_code
-                                 select c.name).ToString();
+                    where c.course_code == plan.course_code
+                    select c.name).ToString();
 
                 var numUnits = units.Count();
                 ViewBag.numUnits = numUnits;
@@ -1009,12 +1028,12 @@ namespace custom_study_plan_generator.Controllers
                 }
 
                 var studentExemptions = from e in db.StudentExemptions
-                                        where e.student_id == studentID
-                                        select e.unit_code;
+                    where e.student_id == studentID
+                    select e.unit_code;
 
                 List<string> exemptionsList = (from en in db.Units
-                                                     where studentExemptions.Contains(en.unit_code)
-                                                     select en.name).ToList();
+                    where studentExemptions.Contains(en.unit_code)
+                    select en.name).ToList();
 
                 Session["RemovedExemptions"] = exemptionsList;
 
@@ -1025,7 +1044,7 @@ namespace custom_study_plan_generator.Controllers
                 List<string> violatedList = new List<string>();
                 List<string> unitsChecked = new List<string>();
 
-                
+
 
                 /* Get the course code from the session stroed selected course */
                 var courseCode = Session["CourseCode"].ToString();
@@ -1037,8 +1056,8 @@ namespace custom_study_plan_generator.Controllers
                 }
 
                 /* Get the updated session list from session */
-                sessionList = (List<string>)Session["StudentPlan"];
-                
+                sessionList = (List<string>) Session["StudentPlan"];
+
                 /* Loop through the unit list */
                 foreach (var unit in sessionList)
                 {
@@ -1051,26 +1070,26 @@ namespace custom_study_plan_generator.Controllers
 
                         /* Get the unit code of the unit currently being checked */
                         var unitToCheck = from u in db.Units
-                                            where u.name == unit
-                                            select u.unit_code;
+                            where u.name == unit
+                            select u.unit_code;
 
                         /* Get the unit prereq codes of the unit being checked (if any) */
                         var prereqs = from p in db.UnitPrerequisites
-                                        where unitToCheck.Contains(p.unit_code)
-                                        where p.course_code == courseCode
-                                        select p.prereq_code;
+                            where unitToCheck.Contains(p.unit_code)
+                            where p.course_code == courseCode
+                            select p.prereq_code;
 
                         /* Convert the prereq codes to unit names */
                         var prereqNames = from u in db.Units
-                                            where prereqs.Contains(u.unit_code)
-                                            select u.name;
+                            where prereqs.Contains(u.unit_code)
+                            select u.name;
 
                         /* If the unit has both it's prereqs before it, do nothing, else add it to the violated list */
                         if (prereqNames.Count() > 0)
                         {
                             if (!prereqNames.Except(unitsChecked).Any())
                             {
-                 
+
                             }
                             else
                             {
@@ -1157,8 +1176,8 @@ namespace custom_study_plan_generator.Controllers
 
 
             /* Retreive required variables from session */
-            List<string> sessionList = (List<string>)Session["StudentPlan"];
-            List<string> RemovedExemptions = (List<string>)Session["RemovedExemptions"];
+            List<string> sessionList = (List<string>) Session["StudentPlan"];
+            List<string> RemovedExemptions = (List<string>) Session["RemovedExemptions"];
             string studentIDRaw = Session["StudentID"].ToString();
             var studentID = Convert.ToInt32(studentIDRaw.Substring(1, 7));
             var courseCode = Session["CourseCode"].ToString();
@@ -1171,8 +1190,8 @@ namespace custom_study_plan_generator.Controllers
 
                 /* Remove all existing exemptions before creating new ones */
                 var currentExemptions = from ce in db.StudentExemptions
-                                        where ce.student_id == studentID
-                                        select ce;
+                    where ce.student_id == studentID
+                    select ce;
 
                 foreach (var exemption in currentExemptions)
                 {
@@ -1181,9 +1200,9 @@ namespace custom_study_plan_generator.Controllers
 
                 /* Create a list of the new exemptions */
                 List<ExemptionModel> studentExemptions = (from unit in db.Units
-                                                          where RemovedExemptions.Contains(unit.name)
-                                                          select new ExemptionModel() { name = unit.name, unit_code = unit.unit_code }).ToList();
-            
+                    where RemovedExemptions.Contains(unit.name)
+                    select new ExemptionModel() {name = unit.name, unit_code = unit.unit_code}).ToList();
+
                 /* Populate the properties of the new exemptions list and add each exemption to the database */
                 foreach (var exemption in studentExemptions)
                 {
@@ -1196,7 +1215,7 @@ namespace custom_study_plan_generator.Controllers
 
                 /* Select all the student plans */
                 var plans = from plan in db.StudentPlans
-                            select plan;
+                    select plan;
 
                 /* Select the plan with highest id, extract the id, and increment it */
                 int highestPlanID = plans.Max(p => p.plan_id);
@@ -1204,8 +1223,8 @@ namespace custom_study_plan_generator.Controllers
 
                 /* Select the plans for current student */
                 var studentPlans = from sps in plans
-                                   where sps.student_id == studentID
-                                   select sps;
+                    where sps.student_id == studentID
+                    select sps;
 
                 /* select the most recent plan of the plans for the current student */
                 var recentPlan = studentPlans.OrderByDescending(o => o.plan_id).FirstOrDefault();
@@ -1220,14 +1239,16 @@ namespace custom_study_plan_generator.Controllers
 
                 /* Get the default plan for this course */
                 var defaultPlan = from dp in db.DefaultPlans
-                                  where dp.course_code == courseCode
-                                  select dp;
+                    where dp.course_code == courseCode
+                    select dp;
 
                 /* join the units and plans tables to make them sortable by semester */
-                
-                var query = sessionList.Join(db.Units, sl => sl, u => u.name, (unitSL, unitDB) => new { unitDB.unit_code, name = unitSL });
+
+                var query = sessionList.Join(db.Units, sl => sl, u => u.name,
+                    (unitSL, unitDB) => new {unitDB.unit_code, name = unitSL});
                 Debug.WriteLine("QUERY COUNT: " + query.Count());
-                var query2 = query.Join(defaultPlan, sl => sl.unit_code, u => u.unit_code, (SL, DP) => new { SL.unit_code, SL.name, DP.semester });
+                var query2 = query.Join(defaultPlan, sl => sl.unit_code, u => u.unit_code,
+                    (SL, DP) => new {SL.unit_code, SL.name, DP.semester});
                 Debug.WriteLine("QUERY COUNT2: " + query2.Count());
                 /* Create a new unit, populate its properties, and add each new unit to the database */
                 var count = 1;
@@ -1258,8 +1279,8 @@ namespace custom_study_plan_generator.Controllers
         public ActionResult Final()
         {
 
-            
-        
+
+
             return View();
         }
 
@@ -1335,7 +1356,7 @@ namespace custom_study_plan_generator.Controllers
                     db.StudentPlanUnits.Add(spu);
                 }
 
-             
+
                 db.SaveChanges();
 
                 /* see submitplanasync
@@ -1345,16 +1366,17 @@ namespace custom_study_plan_generator.Controllers
 
         }
 
+
         public ActionResult submitPlan()
         {
 
             FileModel m = new FileModel();
-            
+
             m.Title = Session["StudentID"].ToString();
-       
+
             return View(m);
         }
-        
+
         [HttpPost]
         public ActionResult submitPlan(FileModel model)
         {
@@ -1362,7 +1384,7 @@ namespace custom_study_plan_generator.Controllers
             if (ModelState.IsValid)
             {
                 Session["Step1"] = model;
-               
+
                 return RedirectToAction("submitPlanAsync");
             }
 
@@ -1370,7 +1392,7 @@ namespace custom_study_plan_generator.Controllers
             return View(model);
         }
 
-      
+
         [Authorize]
         public async Task<ActionResult> submitPlanAsync(CancellationToken cancellationToken)
         {
@@ -1405,7 +1427,7 @@ namespace custom_study_plan_generator.Controllers
 
             File returnedFile = null;
 
-            
+
             if (folderList.Items.Count >= 1)
             {
                 // If multiple folders with StudyPlanModel.StudyPlanDirectory title always choose first one
@@ -1421,7 +1443,7 @@ namespace custom_study_plan_generator.Controllers
                 returnedFile = StudyPlanModel.generateGoogleSpreadSheet(driveService, step1.Title, studyPlanFolder.Id, fileList);
 
             }
-            else 
+            else
             {
                 var folder = StudyPlanModel.createDirectory(driveService, StudyPlanModel.StudyPlanDirectory, "RMIT", "root");
 
@@ -1437,12 +1459,12 @@ namespace custom_study_plan_generator.Controllers
             // For javascript sharing popup
             ViewBag.UserAccessToken = result.Credential.Token.AccessToken;
             ViewBag.FileId = returnedFile.Id;
-           
+
             return View(step1);
 
         }
 
-     
+
         [Authorize]
         public async Task<ActionResult> driveAsync(CancellationToken cancellationToken)
         {
@@ -1476,7 +1498,7 @@ namespace custom_study_plan_generator.Controllers
             return View(items);
         }
 
-     
+
     }
 
 }
