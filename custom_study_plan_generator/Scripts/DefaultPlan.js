@@ -447,6 +447,8 @@ function deleteInnerCell(xThis) {
     var targetId = $(target).attr("id");
     var targetActual = $(xThis).parent();
 
+    $('.dialogConfirm').show();
+
     $(function () {
         $("#dialog-confirm").dialog({
             resizable: false,
