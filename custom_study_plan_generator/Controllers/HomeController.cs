@@ -1370,9 +1370,11 @@ namespace custom_study_plan_generator.Controllers
 
             var step1 = Session["Step1"] as FileModel;
 
-            var step2 = Session["StudentPlan"];
+            var step2 = Session["StudentPlan"] as StudentPlan;
 
             Session.Remove("Step1");
+
+            Session.Remove("StudentPlan");
 
             var result = await new AuthorizationCodeMvcApp(this, new AppAuthFlowMetadata()).
                     AuthorizeAsync(cancellationToken);
