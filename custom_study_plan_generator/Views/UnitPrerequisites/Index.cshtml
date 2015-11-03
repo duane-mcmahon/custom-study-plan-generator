@@ -1,49 +1,60 @@
-﻿@model IEnumerable<custom_study_plan_generator.Models.UnitPrerequisite>
+﻿@Styles.Render("~/Scripts/jquery-ui-1.11.4.custom/jquery-ui.theme.min.css")
+@Scripts.Render("~/Scripts/UnitPrerequisitesIndex.js")
+@Scripts.Render("//code.jquery.com/ui/1.11.4/jquery-ui.js")
+
+@model IEnumerable<custom_study_plan_generator.Models.UnitPrerequisite>
 
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="prerequisitesIndexCRUDHeading">
+    <h3 class="CRUDFont">Prerequisites List</h3>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+    <p>
+        @Html.ActionLink("Create New", "Create", null, null, new { @class = "prerequisitesCRUDLink CRUDFont" })
+    </p>
+</div>
+
+<table class="table prerequisiteIndexCRUDTable">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.mutiple_required)
+            Course Name
+        </th>        
+        <th>
+            Multiple<br/>Prerequisites
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Unit.name)
+            Unit Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Unit1.name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Course.name)
+            Prerequisite Name
         </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
+    <tr class="prereqIndexCRUDRow">
         <td>
-            @Html.DisplayFor(modelItem => item.mutiple_required)
+            @Html.DisplayFor(modelItem => item.Course.name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Unit.name)
+            @Html.DisplayFor(modelItem => item.mutiple_required)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Unit1.name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Course.name)
+            @Html.DisplayFor(modelItem => item.Unit.name)
         </td>
         <td>
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Delete", "Delete", new { course_code = item.course_code, unit_code = item.unit_code, prereq_code = item.prereq_code }, new { @class = "prerequisitesCRUDLink CRUDFont prereqDelete" })
         </td>
     </tr>
 }
 
 </table>
+
+<div id="dialog-confirm" title="Delete Prerequisite?">
+    <p class ="dialogConfirm"><span class=" ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This prerequisite will be removed from the selected plan. Are you sure?</pclass>
+</div>

@@ -408,6 +408,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\Modify.js" />
     <Content Include="Scripts\UnitPrerequisitesCreate.js" />
+    <Content Include="Scripts\UnitPrerequisitesIndex.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -461,7 +462,6 @@
     <Content Include="Views\Units\Index.cshtml" />
     <Content Include="Views\UnitPrerequisites\Create.cshtml" />
     <Content Include="Views\UnitPrerequisites\Delete.cshtml" />
-    <Content Include="Views\UnitPrerequisites\Details.cshtml" />
     <Content Include="Views\UnitPrerequisites\Index.cshtml" />
     <Content Include="Views\UnitPrerequisites\Select.cshtml" />
   </ItemGroup>

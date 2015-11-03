@@ -131,5 +131,21 @@ namespace custom_study_plan_generator.Controllers
             return View(unitPrerequisite);
         }
 
+        [HttpGet]
+        public ActionResult Delete(string course_code, string unit_code, string prereq_code)
+        {
+
+            var unitPrerequisite = from up in db.UnitPrerequisites
+                                   where up.course_code == course_code
+                                   where up.unit_code == unit_code
+                                   where up.prereq_code == prereq_code
+                                   select up;
+
+            db.UnitPrerequisites.Remove(unitPrerequisite.FirstOrDefault());
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
     }
 }
