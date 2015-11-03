@@ -1265,8 +1265,8 @@ namespace custom_study_plan_generator.Controllers
 
 
             /* Retreive required variables from session */
-            List<CoursePlan> sessionList = (List<CoursePlan>)Session["StudentPlan"];
-            List<string> RemovedExemptions = (List<string>)Session["RemovedExemptions"];
+            List<CoursePlan> sessionList = (List<CoursePlan>) Session["StudentPlan"];
+            List<string> RemovedExemptions = (List<string>) Session["RemovedExemptions"];
             var startSemester = Convert.ToInt32(Session["StartSemester"]);
             string studentIDRaw = Session["StudentID"].ToString();
             var studentID = Convert.ToInt32(studentIDRaw.Substring(1, 7));
@@ -1280,19 +1280,19 @@ namespace custom_study_plan_generator.Controllers
 
                 /* Remove all existing exemptions before creating new ones */
                 var currentExemptions = from ce in db.StudentExemptions
-                                        where ce.student_id == studentID
-                                        select ce;
+                    where ce.student_id == studentID
+                    select ce;
 
                 foreach (var exemption in currentExemptions)
                 {
                     db.StudentExemptions.Remove(exemption);
                 }
-                
+
                 /* Create a list of the new exemptions */
                 List<ExemptionModel> studentExemptions = (from unit in db.Units
-                                        where RemovedExemptions.Contains(unit.name)
-                                        select new ExemptionModel() { name = unit.name, unit_code = unit.unit_code}).ToList();
-                
+                    where RemovedExemptions.Contains(unit.name)
+                    select new ExemptionModel() {name = unit.name, unit_code = unit.unit_code}).ToList();
+
                 /* Populate the properties of the new exemptions list and add each exemption to the database */
                 foreach (var exemption in studentExemptions)
                 {
@@ -1305,12 +1305,12 @@ namespace custom_study_plan_generator.Controllers
 
                 /* Select all the student plans */
                 var plans = from plan in db.StudentPlans
-                            select plan;
+                    select plan;
 
                 /* Select the plan with highest id, extract the id, and increment it */
                 int highestPlanID = plans.Max(p => p.plan_id);
                 var planID = highestPlanID + 1;
-                
+
                 /* Create a new plan, populate its properties, and add it to the database */
                 StudentPlan sp = new StudentPlan();
                 sp.plan_id = planID;
@@ -1332,17 +1332,16 @@ namespace custom_study_plan_generator.Controllers
                     db.StudentPlanUnits.Add(spu);
                 }
 
-            /* NEED TO ADD A TRY-CATCH */
-            db.SaveChanges();
+             
+                db.SaveChanges();
 
-            uploadPlan(studentExemptions, sessionList, studentID, courseCode, startSemester);
-               
+                /* see submitplanasync
+                 * using session["StudyPlan"]
+                 */
             }
 
-            
-
         }
-        
+
         public ActionResult submitPlan()
         {
        
@@ -1370,6 +1369,8 @@ namespace custom_study_plan_generator.Controllers
             ViewBag.Message = "Plan Submission Page.";
 
             var step1 = Session["Step1"] as FileModel;
+
+            var step2 = Session["StudentPlan"];
 
             Session.Remove("Step1");
 
@@ -1426,6 +1427,7 @@ namespace custom_study_plan_generator.Controllers
             // For javascript sharing popup
             ViewBag.UserAccessToken = result.Credential.Token.AccessToken;
             ViewBag.FileId = returnedFile.Id;
+            ViewBag.studyplanobj = step2;
             return View(step1);
 
         }
