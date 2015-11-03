@@ -1464,10 +1464,7 @@ namespace custom_study_plan_generator.Controllers
             return View(items);
         }
 
-        private void uploadPlan(List<ExemptionModel> studentExemptions, List<CoursePlan> sessionList, int studentID, string courseCode, int startSemester)
-        {
-
-        }
+     
     }
 
 }
