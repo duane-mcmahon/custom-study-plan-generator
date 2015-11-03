@@ -1,0 +1,53 @@
+﻿@Scripts.Render("~/Scripts/StudentIndex.js")
+
+@model IEnumerable<custom_study_plan_generator.Models.Student>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="prerequisitesIndexCRUDHeading">
+    <h3 class="CRUDFont">Students List</h3>
+
+    @if (Session["ForeignKeyConstraint"] != null)
+    {
+        <div id="FKConstraint" class="error3">Error, this student already exists in student plans, and as such, cannot be deleted.</div>
+        Session["ForeignKeyConstraint"] = null;
+    }
+
+    <p>
+        @Html.ActionLink("Create New", "Create", null, null, new { @class = "prerequisitesCRUDLink CRUDFont" })
+    </p>
+</div>
+<table class="table prerequisiteIndexCRUDTable">
+    <tr>
+        <th>Student ID</th>
+        <th>
+            First Name
+        </th>
+        <th>
+            Surname
+        </th>
+        <th></th>
+    </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr class="prereqIndexCRUDRow">
+                <td>
+                    @Html.DisplayFor(modelItem => item.student_id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.firstname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.lastname)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.student_id }, new { @class = "prerequisitesCRUDLink CRUDFont"}) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.student_id }, new { @class = "prerequisitesCRUDLink CRUDFont studentDelete" })
+                </td>
+            </tr>
+    }
+
+</table>

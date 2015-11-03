@@ -1,0 +1,65 @@
+﻿@Scripts.Render("~/Scripts/StudentCreate.js")
+
+@model custom_study_plan_generator.Models.Student
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="prerequisitesIndexCRUDHeading">
+
+
+    <h3 class="CRUDFont">Create</h3>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4 class="CRUDFont">Student</h4>
+
+            @if (Session["studentExists"] != null)
+            {
+                <div id="studentExists" class="error3">Error, a student with this ID already exists.</div>
+                Session["studentExists"] = null;
+            }
+
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.student_id, "Student ID", htmlAttributes: new { @class = "control-label col-md-2 CRUDFont prequisiteCreateTitle" })
+                <div class="col-md-10 prerequsiteCRUDCreateRow">
+                    @Html.EditorFor(model => model.student_id, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.student_id, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.firstname, "First Name", htmlAttributes: new { @class = "control-label col-md-2 CRUDFont prequisiteCreateTitle" })
+                <div class="col-md-10 prerequsiteCRUDCreateRow">
+                    @Html.EditorFor(model => model.firstname, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.firstname, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.lastname, "Surname", htmlAttributes: new { @class = "control-label col-md-2 CRUDFont prequisiteCreateTitle" })
+                <div class="col-md-10 prerequsiteCRUDCreateRow">
+                    @Html.EditorFor(model => model.lastname, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.lastname, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input class="prerequisiteCRUDCreateButton CRUDFont" type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="prerequisitesCRUDCreateBack">
+        @Html.ActionLink("Back to List", "Index", null, null, new { @class = "prerequisitesCRUDLink CRUDFont" })
+    </div>
+
+</div>
