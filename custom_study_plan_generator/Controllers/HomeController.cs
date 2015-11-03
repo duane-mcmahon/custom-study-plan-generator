@@ -608,6 +608,8 @@ namespace custom_study_plan_generator.Controllers
                 return RedirectToAction("CreatePlan", "Home");
             }
 
+            ViewBag.studentid = Session["StudentID"].ToString();
+
             /* Retreive the start semester from the form and put it in a session variable, to be used on the Modify page */
             if (Session["StartSemester"] == null)
             {
@@ -701,7 +703,8 @@ namespace custom_study_plan_generator.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            
+            ViewBag.studentid = Session["StudentID"].ToString();
+
             // Retrieve sessionList of coursePlan (units) from Session variable
             // StudentPlan.
             List<CoursePlan> sessionList = (List<CoursePlan>)Session["StudentPlan"];
@@ -957,7 +960,7 @@ namespace custom_study_plan_generator.Controllers
                 /* Convert the student ID in session to an int */
                 var studentIDRaw = Session["StudentID"].ToString();
                 var studentID = Convert.ToInt32(studentIDRaw.Substring(1, 7));
-
+                ViewBag.studentid = studentID;
                 /* Get a list of all the student plans */
                 var plans = from p in db.StudentPlans
                             where p.student_id == studentID
@@ -1344,8 +1347,12 @@ namespace custom_study_plan_generator.Controllers
 
         public ActionResult submitPlan()
         {
+
+            FileModel m = new FileModel();
+            
+            m.Title = Session["StudentID"].ToString();
        
-            return View();
+            return View(m);
         }
         
         [HttpPost]
@@ -1355,6 +1362,7 @@ namespace custom_study_plan_generator.Controllers
             if (ModelState.IsValid)
             {
                 Session["Step1"] = model;
+               
                 return RedirectToAction("submitPlanAsync");
             }
 
@@ -1370,11 +1378,11 @@ namespace custom_study_plan_generator.Controllers
 
             var step1 = Session["Step1"] as FileModel;
 
-            var step2 = Session["StudentPlan"] as StudentPlan;
+            var step2 = Session["StudentPlan"] as CoursePlan;
 
             Session.Remove("Step1");
 
-            Session.Remove("StudentPlan");
+            //Session.Remove("StudentPlan");
 
             var result = await new AuthorizationCodeMvcApp(this, new AppAuthFlowMetadata()).
                     AuthorizeAsync(cancellationToken);
@@ -1429,7 +1437,7 @@ namespace custom_study_plan_generator.Controllers
             // For javascript sharing popup
             ViewBag.UserAccessToken = result.Credential.Token.AccessToken;
             ViewBag.FileId = returnedFile.Id;
-            ViewBag.studyplanobj = step2;
+           
             return View(step1);
 
         }
