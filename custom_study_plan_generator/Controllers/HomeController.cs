@@ -1439,7 +1439,7 @@ namespace custom_study_plan_generator.Controllers
 
 
             File returnedFile = null;
-
+            
             // Creating spreadsheets api service
             // Spreadsheet api test
             OAuth2Parameters parameters = new OAuth2Parameters()
@@ -1472,6 +1472,7 @@ namespace custom_study_plan_generator.Controllers
             }
             else
             {
+
                 var folder = StudyPlanModel.createDirectory(driveService, StudyPlanModel.StudyPlanDirectory, "RMIT", "root");
 
                 returnedFile = StudyPlanModel.generateGoogleSpreadSheet(driveService, sheetsService, step1.Title, folder.Id, step2);
