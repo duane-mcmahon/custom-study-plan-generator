@@ -7,6 +7,8 @@ using Google.Apis.Drive.v2;
 using Google.Apis.Drive.v2.Data;
 using File = Google.Apis.Drive.v2.Data.File;
 using System.Diagnostics;
+using Google.GData.Client;
+using Google.GData.Spreadsheets;
 
 namespace custom_study_plan_generator.Models
 {
@@ -53,7 +55,7 @@ namespace custom_study_plan_generator.Models
 
         //generate a google spread sheet from model data in sql database
         //returns the uploaded File result
-        public static File generateGoogleSpreadSheet(DriveService service, string studentID, string fileID,
+        public static File generateGoogleSpreadSheet(DriveService service, SpreadsheetsService sheetsService, string studentID, string fileID,
             FileList list)
         {
 
@@ -95,12 +97,17 @@ namespace custom_study_plan_generator.Models
             }
 
  
-                var request = service.Files.Insert(file);
+            var request = service.Files.Insert(file);
 
-                result = request.Execute();
+            result = request.Execute();
 
-            
 
+            // Sheets api testing
+            /*
+            SpreadsheetQuery query = new SpreadsheetQuery();
+
+            SpreadsheetFeed feed = sheetsService.Query(query);
+            throw new Exception("Debug: " + feed.Entries[0].Title.Text);*/
 
             return result;
 
@@ -108,7 +115,7 @@ namespace custom_study_plan_generator.Models
 
         //generate a google spread sheet from model data in sql database
         //returns the uploaded File result
-        public static File generateGoogleSpreadSheet(DriveService service, string studentID, string fileID)
+        public static File generateGoogleSpreadSheet(DriveService service, SpreadsheetsService sheetsService, string studentID, string fileID)
         {
 
             var file = new File();
@@ -128,7 +135,12 @@ namespace custom_study_plan_generator.Models
 
             var result = request.Execute();
 
+            // Sheets api testing
+            /*
+            SpreadsheetQuery query = new SpreadsheetQuery();
 
+            SpreadsheetFeed feed = sheetsService.Query(query);
+            throw new Exception("Debug: " + feed.Entries[0].Title.Text);*/
 
 
             return result;

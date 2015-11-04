@@ -16,6 +16,8 @@ using Google.Apis.Drive.v2;
 using Google.Apis.Drive.v2.Data;
 using Google.Apis.Services;
 using File = Google.Apis.Drive.v2.Data.File;
+using Google.GData.Client;
+using Google.GData.Spreadsheets;
 
 
 namespace custom_study_plan_generator.Controllers
@@ -1427,6 +1429,19 @@ namespace custom_study_plan_generator.Controllers
 
             File returnedFile = null;
 
+            // Creating spreadsheets api service
+            // Spreadsheet api test
+            OAuth2Parameters parameters = new OAuth2Parameters()
+            {
+                AccessToken = result.Credential.Token.AccessToken
+            };
+
+            GOAuth2RequestFactory requestFactory = new GOAuth2RequestFactory(null, driveService.ApplicationName, parameters);
+
+            SpreadsheetsService sheetsService = new SpreadsheetsService(driveService.ApplicationName) 
+            { 
+                RequestFactory = requestFactory
+            };
 
             if (folderList.Items.Count >= 1)
             {
@@ -1439,15 +1454,14 @@ namespace custom_study_plan_generator.Controllers
                 // Get all spreadsheets in the studyPlanFolder
                 fileListReq.Q = "'" + studyPlanFolder.Id + "' in parents and mimeType = 'application/vnd.google-apps.spreadsheet' and trashed = false";
                 FileList fileList = await fileListReq.ExecuteAsync();
-
-                returnedFile = StudyPlanModel.generateGoogleSpreadSheet(driveService, step1.Title, studyPlanFolder.Id, fileList);
+                returnedFile = StudyPlanModel.generateGoogleSpreadSheet(driveService, sheetsService, step1.Title, studyPlanFolder.Id, fileList);
 
             }
             else
             {
                 var folder = StudyPlanModel.createDirectory(driveService, StudyPlanModel.StudyPlanDirectory, "RMIT", "root");
 
-                returnedFile = StudyPlanModel.generateGoogleSpreadSheet(driveService, step1.Title, folder.Id);
+                returnedFile = StudyPlanModel.generateGoogleSpreadSheet(driveService, sheetsService, step1.Title, folder.Id);
 
             }
             // Permission args are currently hardcoded. Uncomment and replace STUDENTNUMBER to enable sharing of the file.

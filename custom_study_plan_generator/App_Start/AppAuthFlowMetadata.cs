@@ -27,7 +27,7 @@ namespace custom_study_plan_generator.App_Start
                     ClientSecret = "M9VrJ6WN9s_9FXLFfpgttwuO"
                 },
 
-                Scopes = new[] { DriveService.Scope.Drive },
+                Scopes = new[] { DriveService.Scope.Drive, "https://spreadsheets.google.com/feeds" },
 
                 DataStore = new FileDataStore(folder)
             });
