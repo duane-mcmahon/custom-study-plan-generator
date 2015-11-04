@@ -7,6 +7,9 @@ using Google.Apis.Drive.v2;
 using Google.Apis.Drive.v2.Data;
 using File = Google.Apis.Drive.v2.Data.File;
 using System.Diagnostics;
+using Google.GData.Spreadsheets;
+using custom_study_plan_generator.MetaObjects;
+using Google.Apis.Services;
 using Google.GData.Client;
 using Google.GData.Spreadsheets;
 
@@ -16,8 +19,32 @@ namespace custom_study_plan_generator.Models
     {
         public const string StudyPlanDirectory = "RMITStudentStudyPlans";
 
-        // Create a new Directory. This has been tested and works (by Duane) (will be called in Submit Study Plan process)
-        // Documentation: https://developers.google.com/drive/v2/reference/files/insert
+        public List<CoursePlan> StudentPlan {
+
+            get; set;
+        }
+
+        public string StudentId
+        {
+            get; set;
+        }
+
+        public string CourseCode
+        {
+           
+            get; set;
+
+        }
+
+        public List<ExemptionModel> Exemptions
+        {
+
+            get; set;
+        
+        }
+
+        public int? BeginningSemester { get; set; }
+
 
 
 
@@ -55,8 +82,9 @@ namespace custom_study_plan_generator.Models
 
         //generate a google spread sheet from model data in sql database
         //returns the uploaded File result
+
         public static File generateGoogleSpreadSheet(DriveService service, SpreadsheetsService sheetsService, string studentID, string fileID,
-            FileList list)
+            FileList list, StudyPlanModel u)
         {
 
             var file = new File();
@@ -96,18 +124,11 @@ namespace custom_study_plan_generator.Models
 
             }
 
- 
             var request = service.Files.Insert(file);
 
             result = request.Execute();
 
-
-            // Sheets api testing
-            /*
-            SpreadsheetQuery query = new SpreadsheetQuery();
-
-            SpreadsheetFeed feed = sheetsService.Query(query);
-            throw new Exception("Debug: " + feed.Entries[0].Title.Text);*/
+            populateGoogleSpreadSheet(file, u, sheetsService);
 
             return result;
 
@@ -115,7 +136,9 @@ namespace custom_study_plan_generator.Models
 
         //generate a google spread sheet from model data in sql database
         //returns the uploaded File result
-        public static File generateGoogleSpreadSheet(DriveService service, SpreadsheetsService sheetsService, string studentID, string fileID)
+
+        public static File generateGoogleSpreadSheet(DriveService service, SpreadsheetsService sheetsService, string studentID,
+            string fileID, StudyPlanModel u)
         {
 
             var file = new File();
@@ -130,10 +153,21 @@ namespace custom_study_plan_generator.Models
             }
 
 
-
             var request = service.Files.Insert(file);
 
             var result = request.Execute();
+
+            populateGoogleSpreadSheet(file, u, sheetsService);
+
+
+            return result;
+
+        }
+
+        //http://www.dreamincode.net/forums/topic/300526-add-row-to-google-spreadsheet/
+        //Filling the Spreadsheet
+        public static void populateGoogleSpreadSheet(File file, StudyPlanModel uploadable, SpreadsheetsService sheetsService)
+        {
 
             // Sheets api testing
             /*
@@ -143,23 +177,36 @@ namespace custom_study_plan_generator.Models
             throw new Exception("Debug: " + feed.Entries[0].Title.Text);*/
 
 
-            return result;
+            //TODO
+            // Instantiate a SpreadsheetQuery object to retrieve spreadsheets.
+            /*SpreadsheetQuery query = new SpreadsheetQuery();
+
+            query.Title = file.Title;
+
+            SpreadsheetFeed feed = spreadsheetService.Query(query);
+            SpreadsheetEntry spreadsheet = (SpreadsheetEntry)feed.Entries[0];
+            // Create a local representation of the new worksheet.
+            WorksheetEntry worksheet = new WorksheetEntry();
+            worksheet.Title.Text = "New Worksheet";
+            worksheet.Cols = 10;
+            worksheet.Rows = 20;
+
+            // Send the local representation of the worksheet to the API for
+            // creation.  The URL to use here is the worksheet feed URL of our
+            // spreadsheet.
+            WorksheetFeed wsFeed = spreadsheet.Worksheets;
+            spreadsheetService.Insert(wsFeed, worksheet); */
 
         }
 
         // Adds a permission to a file. i.e. Allows sharing
-        public static void addPermission(DriveService service, string fileID, string value, string type, string role)
+        public static void addPermission(DriveService service, string fileID, string value, string type, string role, StudyPlanModel uploadable)
         {
             Permission permission = new Permission { Value = value, Type = type, Role = role };
             service.Permissions.Insert(permission, fileID).Execute();
         }
 
 
-
-        public static void populateGoogleSpreadSheet()
-        {
-
-        }
 
 
 

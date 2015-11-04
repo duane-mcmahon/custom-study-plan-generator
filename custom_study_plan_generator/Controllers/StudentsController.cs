@@ -10,6 +10,7 @@ using custom_study_plan_generator.Models;
 using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Data.Entity.Infrastructure;
+using custom_study_plan_generator.MetaObjects;
 
 namespace custom_study_plan_generator.Controllers
 {
@@ -34,7 +35,7 @@ namespace custom_study_plan_generator.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "student_id,firstname,lastname")] Student student)
+        public ActionResult Create([Bind(Include = "student_id,firstname,lastname")] StudentMeta student)
         {
 
             var studentCheck = from stud in db.Students
@@ -53,7 +54,13 @@ namespace custom_study_plan_generator.Controllers
             
             if (ModelState.IsValid)
             {
-                db.Students.Add(student);
+                
+                Student studentAdd = new Student();
+                studentAdd.student_id = student.student_id;
+                studentAdd.firstname = student.firstname;
+                studentAdd.lastname = student.lastname;
+                
+                db.Students.Add(studentAdd);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

@@ -7,7 +7,6 @@ using System.Net.Mime;
 using System.Web.Mvc;
 using custom_study_plan_generator.MetaObjects;
 using System.Diagnostics;
-
 using System.Threading;
 using System.Threading.Tasks;
 using custom_study_plan_generator.App_Start;
@@ -1361,6 +1360,15 @@ namespace custom_study_plan_generator.Controllers
 
                 db.SaveChanges();
 
+                var uploadable = new StudyPlanModel();
+
+                uploadable.CourseCode = sp.course_code;
+                uploadable.StudentPlan = sessionList;
+                uploadable.StudentId = Session["StudentID"].ToString();
+                uploadable.BeginningSemester = sp.start_semester;
+                
+                Session["StudyPlan"] = uploadable;
+
                 /* see submitplanasync
                  * using session["StudyPlan"]
                  */
@@ -1377,6 +1385,7 @@ namespace custom_study_plan_generator.Controllers
             m.Title = Session["StudentID"].ToString();
 
             return View(m);
+
         }
 
         [HttpPost]
@@ -1402,11 +1411,11 @@ namespace custom_study_plan_generator.Controllers
 
             var step1 = Session["Step1"] as FileModel;
 
-            var step2 = Session["StudentPlan"] as CoursePlan;
+            var step2 = Session["StudyPlan"] as StudyPlanModel;
 
             Session.Remove("Step1");
 
-            //Session.Remove("StudentPlan");
+            Session.Remove("StudyPlan");
 
             var result = await new AuthorizationCodeMvcApp(this, new AppAuthFlowMetadata()).
                     AuthorizeAsync(cancellationToken);
@@ -1420,10 +1429,12 @@ namespace custom_study_plan_generator.Controllers
                 ApplicationName = "custom-study-plan-generator"
             });
 
+
             var folderListReq = driveService.Files.List();
             folderListReq.Fields = "items/title,items/id";
             // Set query
             folderListReq.Q = "mimeType = 'application/vnd.google-apps.folder' and title ='" + StudyPlanModel.StudyPlanDirectory + "' and trashed = false";
+            
             FileList folderList = await folderListReq.ExecuteAsync();
 
 
@@ -1454,14 +1465,16 @@ namespace custom_study_plan_generator.Controllers
                 // Get all spreadsheets in the studyPlanFolder
                 fileListReq.Q = "'" + studyPlanFolder.Id + "' in parents and mimeType = 'application/vnd.google-apps.spreadsheet' and trashed = false";
                 FileList fileList = await fileListReq.ExecuteAsync();
-                returnedFile = StudyPlanModel.generateGoogleSpreadSheet(driveService, sheetsService, step1.Title, studyPlanFolder.Id, fileList);
+
+                returnedFile = StudyPlanModel.generateGoogleSpreadSheet(driveService, sheetsService, step1.Title, studyPlanFolder.Id, fileList, step2);
+
 
             }
             else
             {
                 var folder = StudyPlanModel.createDirectory(driveService, StudyPlanModel.StudyPlanDirectory, "RMIT", "root");
 
-                returnedFile = StudyPlanModel.generateGoogleSpreadSheet(driveService, sheetsService, step1.Title, folder.Id);
+                returnedFile = StudyPlanModel.generateGoogleSpreadSheet(driveService, sheetsService, step1.Title, folder.Id, step2);
 
             }
             // Permission args are currently hardcoded. Uncomment and replace STUDENTNUMBER to enable sharing of the file.
@@ -1469,6 +1482,8 @@ namespace custom_study_plan_generator.Controllers
 
 
             //todo...
+
+
 
             // For javascript sharing popup
             ViewBag.UserAccessToken = result.Credential.Token.AccessToken;
@@ -1482,7 +1497,7 @@ namespace custom_study_plan_generator.Controllers
         [Authorize]
         public async Task<ActionResult> driveAsync(CancellationToken cancellationToken)
         {
-            ViewBag.Message = "Your drive page.";
+            ViewBag.Message = "Your Drive page.";
 
             var result = await new AuthorizationCodeMvcApp(this, new AppAuthFlowMetadata()).
                     AuthorizeAsync(cancellationToken);
