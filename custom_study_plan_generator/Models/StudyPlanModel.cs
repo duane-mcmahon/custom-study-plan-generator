@@ -164,30 +164,28 @@ namespace custom_study_plan_generator.Models
 
         }
 
-        //http://www.dreamincode.net/forums/topic/300526-add-row-to-google-spreadsheet/
+        
         //Filling the Spreadsheet
         public static void populateGoogleSpreadSheet(File file, StudyPlanModel uploadable, SpreadsheetsService sheetsService)
         {
 
-            // Sheets api testing
-            /*
-            SpreadsheetQuery query = new SpreadsheetQuery();
-
-            SpreadsheetFeed feed = sheetsService.Query(query);
-            throw new Exception("Debug: " + feed.Entries[0].Title.Text);*/
-
-
-            //TODO
+            /* Sheets api testing: verified as working (duane)
+           
+            //test must be called after plan has been saved/uploaded via ui at index page 
+             
             // Instantiate a SpreadsheetQuery object to retrieve spreadsheets.
-            /*SpreadsheetQuery query = new SpreadsheetQuery();
+            
+            SpreadsheetQuery query = new SpreadsheetQuery();
 
             query.Title = file.Title;
 
-            SpreadsheetFeed feed = spreadsheetService.Query(query);
+            SpreadsheetFeed feed = sheetsService.Query(query);
+
             SpreadsheetEntry spreadsheet = (SpreadsheetEntry)feed.Entries[0];
+            
             // Create a local representation of the new worksheet.
             WorksheetEntry worksheet = new WorksheetEntry();
-            worksheet.Title.Text = "New Worksheet";
+            worksheet.Title.Text = "Testing Connection Worksheet";
             worksheet.Cols = 10;
             worksheet.Rows = 20;
 
@@ -195,7 +193,9 @@ namespace custom_study_plan_generator.Models
             // creation.  The URL to use here is the worksheet feed URL of our
             // spreadsheet.
             WorksheetFeed wsFeed = spreadsheet.Worksheets;
-            spreadsheetService.Insert(wsFeed, worksheet); */
+            sheetsService.Insert(wsFeed, worksheet); */
+
+            //TODO
 
         }
 
