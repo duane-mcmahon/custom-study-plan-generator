@@ -252,11 +252,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="MetaObjects\CourseMeta.cs" />
     <Compile Include="MetaObjects\CoursePlan.cs" />
     <Compile Include="MetaObjects\CoursesDTO.cs" />
     <Compile Include="MetaObjects\CheckStudentIDAttribute.cs" />
+    <Compile Include="MetaObjects\UnitMeta.cs" />
     <Compile Include="Models\ExemptionModel.cs" />
-    <Compile Include="MetaObjects\StudentID.cs" />
+    <Compile Include="MetaObjects\StudentMeta.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AspNetRole.cs">
       <DependentUpon>CPT331.tt</DependentUpon>
