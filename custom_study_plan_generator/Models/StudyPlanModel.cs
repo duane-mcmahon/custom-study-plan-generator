@@ -185,18 +185,34 @@ namespace custom_study_plan_generator.Models
             
             // Create a local representation of the new worksheet.
             WorksheetEntry worksheet = new WorksheetEntry();
-            worksheet.Title.Text = "Testing Connection Worksheet";
-            worksheet.Cols = 10;
-            worksheet.Rows = 20;
+            worksheet.Title.Text = "Testing Study Plan";
 
+            //task obviously is to determine size or rows cols from list data etc.
+            //dummy data:
+            worksheet.Cols = 10;
+            worksheet.Rows = 10;
+
+
+           
             // Send the local representation of the worksheet to the API for
             // creation.  The URL to use here is the worksheet feed URL of our
             // spreadsheet.
             WorksheetFeed wsFeed = spreadsheet.Worksheets;
-            sheetsService.Insert(wsFeed, worksheet); */
 
-            //TODO
+            //updating the worksheet to contain the feedlinks, etc.
+            var updated = sheetsService.Insert(wsFeed, worksheet);
 
+            foreach (var course in uploadable.StudentPlan)
+            {
+                uint row = 1;
+                uint col = 1;
+                UpdateCell(sheetsService, row, col, updated, course.name);
+                row++;
+                col++;
+            }
+
+        
+            */
         }
 
         // Adds a permission to a file. i.e. Allows sharing
@@ -207,6 +223,30 @@ namespace custom_study_plan_generator.Models
         }
 
 
+        /// <summary>
+        /// Updates a single cell in the specified worksheet.
+        /// </summary>
+        /// <param name="service">an authenticated SpreadsheetsService object</param>
+        /// <param name="entry">the worksheet to update</param>
+        private static void UpdateCell(SpreadsheetsService service, uint row, uint col, WorksheetEntry entry, string newValue)
+        {
+            
+            CellQuery query = new CellQuery(entry.CellFeedLink);
+           
+            query.ReturnEmpty = ReturnEmptyCells.yes;
+
+            query.MinimumRow = query.MaximumRow = row;
+            query.MinimumColumn = query.MaximumColumn = col;
+
+            CellFeed feed = service.Query(query);
+            CellEntry cell = feed.Entries[0] as CellEntry;
+
+            cell.Cell.InputValue = newValue;
+            
+            cell.Update();
+
+           
+        }
 
 
 

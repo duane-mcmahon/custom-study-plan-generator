@@ -1399,7 +1399,8 @@ namespace custom_study_plan_generator.Controllers
                 return RedirectToAction("submitPlanAsync");
             }
 
-            // errors
+           
+            
             return View(model);
         }
 
