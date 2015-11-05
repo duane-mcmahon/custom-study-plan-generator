@@ -202,10 +202,11 @@ namespace custom_study_plan_generator.Models
             var updated = sheetsService.Insert(wsFeed, worksheet);
 
              //todo 
+            uint row = 1;
+            uint col = 1;
             foreach (var course in uploadable.StudentPlan)
             {
-                uint row = 1;
-                uint col = 1;
+             
                 UpdateCell(sheetsService, row, col, updated, course.name);
                 row++;
                 col++;
