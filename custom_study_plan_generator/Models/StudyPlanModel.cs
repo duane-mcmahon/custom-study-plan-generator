@@ -169,7 +169,7 @@ namespace custom_study_plan_generator.Models
         public static void populateGoogleSpreadSheet(File file, StudyPlanModel uploadable, SpreadsheetsService sheetsService)
         {
 
-            /* Sheets api testing: verified as working (duane)
+            // Sheets api testing: verified as working (duane)
            
             //test must be called after plan has been saved/uploaded via ui at index page 
              
@@ -188,11 +188,10 @@ namespace custom_study_plan_generator.Models
             worksheet.Title.Text = "Testing Study Plan";
 
             //task obviously is to determine size or rows cols from list data etc.
+            //real model: 4 units per semester, 2 semesters per year (list of courses is sorted in that way)
             //dummy data:
             worksheet.Cols = 10;
             worksheet.Rows = 10;
-
-
            
             // Send the local representation of the worksheet to the API for
             // creation.  The URL to use here is the worksheet feed URL of our
@@ -202,6 +201,7 @@ namespace custom_study_plan_generator.Models
             //updating the worksheet to contain the feedlinks, etc.
             var updated = sheetsService.Insert(wsFeed, worksheet);
 
+             //todo 
             foreach (var course in uploadable.StudentPlan)
             {
                 uint row = 1;
@@ -211,8 +211,7 @@ namespace custom_study_plan_generator.Models
                 col++;
             }
 
-        
-            */
+      
         }
 
         // Adds a permission to a file. i.e. Allows sharing
@@ -247,6 +246,63 @@ namespace custom_study_plan_generator.Models
 
            
         }
+
+        /// <summary>
+        /// Inserts a new row in the specified worksheet.
+        /// </summary>
+        /// <param name="service">an authenticated SpreadsheetsService object</param>
+        /// <param name="entry">the worksheet into which the row will be inserted</param>
+        /// <returns>the inserted ListEntry object, representing the new row</returns>
+        private static ListEntry InsertRow(SpreadsheetsService service, WorksheetEntry entry)
+        {
+            AtomLink listFeedLink = entry.Links.FindService(GDataSpreadsheetsNameTable.ListRel, null);
+
+            ListQuery query = new ListQuery(listFeedLink.HRef.ToString());
+
+            ListFeed feed = service.Query(query);
+
+            ListEntry firstRow = feed.Entries[0] as ListEntry;
+            
+            ListEntry newRow = new ListEntry();
+
+         
+            foreach (ListEntry.Custom element in firstRow.Elements)
+            {
+                
+                String elementValue = Console.ReadLine();//inputValue
+
+                ListEntry.Custom curElement = new ListEntry.Custom();
+                curElement.LocalName = element.LocalName;
+                curElement.Value = elementValue;
+
+                newRow.Elements.Add(curElement);
+            }
+
+            ListEntry insertedRow = feed.Insert(newRow);
+
+            return insertedRow;
+        }
+
+        /// <summary>
+        /// Updates the value of a cell in a single worksheet row.
+        /// </summary>
+        /// <param name="service">an authenticated SpreadsheetsService object</param>
+        /// <param name="entry">the ListEntry representing the row to update</param>
+        /// <returns>the updated ListEntry object</returns>
+        private static ListEntry UpdateRow(SpreadsheetsService service, ListEntry entry)
+        {
+            ListEntry.Custom firstColumn = entry.Elements[0];
+      
+            String newValue = Console.ReadLine();//inputValue
+
+            firstColumn.Value = newValue;
+
+            ListEntry updatedRow = entry.Update() as ListEntry;
+
+            return updatedRow;
+        }
+
+
 
 
 
