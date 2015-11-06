@@ -182,37 +182,79 @@ namespace custom_study_plan_generator.Models
             SpreadsheetFeed feed = sheetsService.Query(query);
 
             SpreadsheetEntry spreadsheet = (SpreadsheetEntry)feed.Entries[0];
-            
-            // Create a local representation of the new worksheet.
-            WorksheetEntry worksheet = new WorksheetEntry();
-            worksheet.Title.Text = "Testing Study Plan";
-
-            //task obviously is to determine size or rows cols from list data etc.
-            //real model: 4 units per semester, 2 semesters per year (list of courses is sorted in that way)
-            //dummy data:
-            worksheet.Cols = 10;
-            worksheet.Rows = 10;
-           
             // Send the local representation of the worksheet to the API for
             // creation.  The URL to use here is the worksheet feed URL of our
             // spreadsheet.
             WorksheetFeed wsFeed = spreadsheet.Worksheets;
+            // Create a local representation of the new worksheet.
+            WorksheetEntry worksheet = (WorksheetEntry)wsFeed.Entries[0];
+            
+            worksheet.Title.Text = "Study Plan";
+
+            //task obviously is to determine size or rows cols from list data etc.
+            //real model: 4 units per semester, 2 semesters per year (list of courses is sorted in that way)
+            
+            //the following works, just need to pass the correct model data to it and tweak other spects of the spreadsheet
+            //dummy data:
+            worksheet.Cols = 4;
+
+
+            worksheet.Rows = 6;//7
+                 
 
             //updating the worksheet to contain the feedlinks, etc.
             var updated = sheetsService.Insert(wsFeed, worksheet);
+            
+            CellQuery cellquery = new CellQuery(updated.CellFeedLink);
 
-             //todo 
-            uint row = 1;
-            uint col = 1;
-            foreach (var course in uploadable.StudentPlan)
+            CellFeed cellFeed = sheetsService.Query(cellquery);
+
+
+            // Build list of cell addresses to be filled in
+            List<CellAddress> cellAddrs = new List<CellAddress>();
+            for (uint row = 1; row <= worksheet.Rows; ++row)
             {
-             
-                UpdateCell(sheetsService, row, col, updated, course.name);
-                row++;
-                col++;
+                for (uint col = 1; col <= worksheet.Cols; ++col)
+                {
+                    cellAddrs.Add(new CellAddress(row, col));
+                }
             }
 
-      
+
+            CellFeed batchRequest = new CellFeed(new Uri(cellFeed.Self), sheetsService);
+            foreach (CellAddress cellId in cellAddrs)
+            {
+                CellEntry batchEntry = new CellEntry(cellId.Row, cellId.Col, cellId.IdString);
+                batchEntry.Id = new AtomId(string.Format("{0}/{1}", cellFeed.Self, cellId.IdString));
+                batchEntry.BatchData = new GDataBatchEntryData(cellId.IdString, GDataBatchOperationType.query);
+                batchRequest.Entries.Add(batchEntry);
+            }
+
+            CellFeed queryBatchResponse = (CellFeed)sheetsService.Batch(batchRequest, new Uri(cellFeed.Batch));
+
+            Dictionary<String, CellEntry> cellEntries = new Dictionary<String, CellEntry>();
+            foreach (CellEntry entry in queryBatchResponse.Entries)
+            {
+                cellEntries.Add(entry.BatchData.Id, entry);
+               
+            }
+
+
+
+            foreach (CellAddress cellAddr in cellAddrs)
+            {
+                CellEntry batchEntry = cellEntries[cellAddr.IdString];
+                batchEntry.InputValue = cellAddr.IdString;
+                batchEntry.BatchData = new GDataBatchEntryData(cellAddr.IdString, GDataBatchOperationType.update);
+                batchRequest.Entries.Add(batchEntry);
+            }
+
+            // Submit the update
+            sheetsService.Batch(batchRequest, new Uri(cellFeed.Batch));
+
+
+  
+
         }
 
         // Adds a permission to a file. i.e. Allows sharing
@@ -222,6 +264,7 @@ namespace custom_study_plan_generator.Models
             service.Permissions.Insert(permission, fileID).Execute();
         }
 
+       
 
         /// <summary>
         /// Updates a single cell in the specified worksheet.
@@ -236,10 +279,15 @@ namespace custom_study_plan_generator.Models
             query.ReturnEmpty = ReturnEmptyCells.yes;
 
             query.MinimumRow = query.MaximumRow = row;
+            
             query.MinimumColumn = query.MaximumColumn = col;
-
+            
+        
+            
             CellFeed feed = service.Query(query);
+
             CellEntry cell = feed.Entries[0] as CellEntry;
+
 
             cell.Cell.InputValue = newValue;
             
@@ -309,5 +357,21 @@ namespace custom_study_plan_generator.Models
 
     }
 
+    class CellAddress
+    {
+        public uint Row;
+        public uint Col;
+        public string IdString;
 
+        /**
+         * Constructs a CellAddress representing the specified {@code row} and
+         * {@code col}. The IdString will be set in 'RnCn' notation.
+         */
+        public CellAddress(uint row, uint col)
+        {
+            this.Row = row;
+            this.Col = col;
+            this.IdString = string.Format("R{0}C{1}", row, col);
+        }
+    }
 }
