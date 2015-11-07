@@ -168,10 +168,7 @@ namespace custom_study_plan_generator.Models
         //Filling the Spreadsheet
         public static void populateGoogleSpreadSheet(File file, StudyPlanModel uploadable, SpreadsheetsService sheetsService)
         {
-
-            // Sheets api testing: verified as working (duane)
-           
-            //test must be called after plan has been saved/uploaded via ui at index page 
+        
              
             // Instantiate a SpreadsheetQuery object to retrieve spreadsheets.
             
@@ -191,15 +188,16 @@ namespace custom_study_plan_generator.Models
             
             worksheet.Title.Text = "Study Plan";
 
-            //task obviously is to determine size or rows cols from list data etc.
-            //real model: 4 units per semester, 2 semesters per year (list of courses is sorted in that way)
+            
+            //real model: 4 units per semester (= 4 columns), 2 semesters per year (list of courses is sorted in that way)
             
             //the following works, just need to pass the correct model data to it and tweak other spects of the spreadsheet
-            //dummy data:
-            worksheet.Cols = 4;
+            
+            //hardcoded: 
+            worksheet.Cols = 5;
 
 
-            worksheet.Rows = 6;//7
+            worksheet.Rows = 6;
                  
 
             //updating the worksheet to contain the feedlinks, etc.
@@ -240,20 +238,36 @@ namespace custom_study_plan_generator.Models
             }
 
 
+            int index = 0;
+
+            int semester_number = 1;
+
+            char col_num = '1';
 
             foreach (CellAddress cellAddr in cellAddrs)
             {
-                CellEntry batchEntry = cellEntries[cellAddr.IdString];
-                batchEntry.InputValue = cellAddr.IdString;
-                batchEntry.BatchData = new GDataBatchEntryData(cellAddr.IdString, GDataBatchOperationType.update);
-                batchRequest.Entries.Add(batchEntry);
+                if (cellAddr.IdString[cellAddr.IdString.Length - 1] == col_num)
+                {
+
+                    CellEntry batchEntry = cellEntries[cellAddr.IdString];
+                    batchEntry.InputValue = "Semester " + semester_number.ToString();
+                    batchEntry.BatchData = new GDataBatchEntryData(cellAddr.IdString, GDataBatchOperationType.update);
+                    batchRequest.Entries.Add(batchEntry);
+                    semester_number++;
+
+                }
+                else
+                {
+                    CellEntry batchEntry = cellEntries[cellAddr.IdString];
+                    batchEntry.InputValue = uploadable.StudentPlan[index].unit_code;
+                    batchEntry.BatchData = new GDataBatchEntryData(cellAddr.IdString, GDataBatchOperationType.update);
+                    batchRequest.Entries.Add(batchEntry);
+                    index++;
+                }
             }
 
             // Submit the update
             sheetsService.Batch(batchRequest, new Uri(cellFeed.Batch));
-
-
-  
 
         }
 
@@ -265,95 +279,6 @@ namespace custom_study_plan_generator.Models
         }
 
        
-
-        /// <summary>
-        /// Updates a single cell in the specified worksheet.
-        /// </summary>
-        /// <param name="service">an authenticated SpreadsheetsService object</param>
-        /// <param name="entry">the worksheet to update</param>
-        private static void UpdateCell(SpreadsheetsService service, uint row, uint col, WorksheetEntry entry, string newValue)
-        {
-            
-            CellQuery query = new CellQuery(entry.CellFeedLink);
-           
-            query.ReturnEmpty = ReturnEmptyCells.yes;
-
-            query.MinimumRow = query.MaximumRow = row;
-            
-            query.MinimumColumn = query.MaximumColumn = col;
-            
-        
-            
-            CellFeed feed = service.Query(query);
-
-            CellEntry cell = feed.Entries[0] as CellEntry;
-
-
-            cell.Cell.InputValue = newValue;
-            
-            cell.Update();
-
-           
-        }
-
-        /// <summary>
-        /// Inserts a new row in the specified worksheet.
-        /// </summary>
-        /// <param name="service">an authenticated SpreadsheetsService object</param>
-        /// <param name="entry">the worksheet into which the row will be inserted</param>
-        /// <returns>the inserted ListEntry object, representing the new row</returns>
-        private static ListEntry InsertRow(SpreadsheetsService service, WorksheetEntry entry)
-        {
-            AtomLink listFeedLink = entry.Links.FindService(GDataSpreadsheetsNameTable.ListRel, null);
-
-            ListQuery query = new ListQuery(listFeedLink.HRef.ToString());
-
-            ListFeed feed = service.Query(query);
-
-            ListEntry firstRow = feed.Entries[0] as ListEntry;
-            
-            ListEntry newRow = new ListEntry();
-
-         
-            foreach (ListEntry.Custom element in firstRow.Elements)
-            {
-                
-                String elementValue = Console.ReadLine();//inputValue
-
-                ListEntry.Custom curElement = new ListEntry.Custom();
-                curElement.LocalName = element.LocalName;
-                curElement.Value = elementValue;
-
-                newRow.Elements.Add(curElement);
-            }
-
-            ListEntry insertedRow = feed.Insert(newRow);
-
-            return insertedRow;
-        }
-
-        /// <summary>
-        /// Updates the value of a cell in a single worksheet row.
-        /// </summary>
-        /// <param name="service">an authenticated SpreadsheetsService object</param>
-        /// <param name="entry">the ListEntry representing the row to update</param>
-        /// <returns>the updated ListEntry object</returns>
-        private static ListEntry UpdateRow(SpreadsheetsService service, ListEntry entry)
-        {
-            ListEntry.Custom firstColumn = entry.Elements[0];
-      
-            String newValue = Console.ReadLine();//inputValue
-
-            firstColumn.Value = newValue;
-
-            ListEntry updatedRow = entry.Update() as ListEntry;
-
-            return updatedRow;
-        }
-
-
-
-
 
     }
 
