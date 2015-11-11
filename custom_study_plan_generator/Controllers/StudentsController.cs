@@ -48,10 +48,6 @@ namespace custom_study_plan_generator.Controllers
                 return View(student);
             }
 
-
-            
-            
-            
             if (ModelState.IsValid)
             {
                 
@@ -76,11 +72,17 @@ namespace custom_study_plan_generator.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Student student = db.Students.Find(id);
+
+            StudentMeta studentMeta = new StudentMeta();
+            studentMeta.student_id = student.student_id;
+            studentMeta.firstname = student.firstname;
+            studentMeta.lastname = student.lastname;
+
             if (student == null)
             {
                 return HttpNotFound();
             }
-            return View(student);
+            return View(studentMeta);
         }
 
         // POST: Students/Edit/5
@@ -88,11 +90,17 @@ namespace custom_study_plan_generator.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "student_id,firstname,lastname")] Student student)
+        public ActionResult Edit([Bind(Include = "student_id,firstname,lastname")] StudentMeta student)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(student).State = EntityState.Modified;
+
+                Student studentEdit = new Student();
+                studentEdit.student_id = student.student_id;
+                studentEdit.firstname = student.firstname;
+                studentEdit.lastname = student.lastname;
+
+                db.Entry(studentEdit).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

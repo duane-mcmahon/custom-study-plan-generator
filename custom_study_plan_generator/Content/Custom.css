@@ -466,6 +466,10 @@ html body {
     color: #242424;
 }
 
+.text-danger {
+    color: red !important;
+}
+
 /* UnitPrerequisite CRUD */
 .table {
     margin-left: auto;

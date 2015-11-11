@@ -1,66 +1,67 @@
-﻿@Scripts.Render("~/Scripts/CRUD.js")
-@model IEnumerable<custom_study_plan_generator.Models.Unit>
+﻿@model IEnumerable<custom_study_plan_generator.Models.Unit>
 
-<div id="CRUDMain">
-    <div id="CRUDHeadingHolder">
+@{
+    ViewBag.Title = "Index";
+}
 
-        <h2>Edit Units</h2>
+<div class="prerequisitesIndexCRUDHeading">
+    <h3 class="CRUDFont">Units List</h3>
 
-        <p>
-            @Html.ActionLink("Create New", "Create")
-        </p>
-    </div>
-    <table id="table" class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.unit_code)
-            </th>            
-            <th>
-                @Html.DisplayNameFor(model => model.name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.semester1)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.semester2)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.preferred_year)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.UnitType.Description)
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.unit_code)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.semester1)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.semester2)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.preferred_year)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UnitType.Description)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.unit_code }) |
-                        @Html.ActionLink("Details", "Details", new { id = item.unit_code }) |
-                        @Html.ActionLink("Delete", "Delete", new { id = item.unit_code })
-                </td>
-            </tr>
-        }
-
-    </table>
+    @if (Session["ForeignKeyConstraint"] != null)
+    {
+        <div id="FKConstraint" class="error3">Error, this unit already exists in courses or student plans, and cannot be deleted.</div>
+        Session["ForeignKeyConstraint"] = null;
+    }
+    
+    <p>
+        @Html.ActionLink("Create New", "Create", null, null, new { @class = "prerequisitesCRUDLink CRUDFont" })
+    </p>
 </div>
+
+<table class="table prerequisiteIndexCRUDTable">
+    <tr>
+        <th>
+            Unit Code
+        </th>
+        <th>
+            Unit Name
+        </th>
+        <th>
+            Semester 1
+        </th>
+        <th>
+            Semester 2
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UnitType.Description)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class="prereqIndexCRUDRow">
+            <td>
+                @Html.DisplayFor(modelItem => item.unit_code)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.semester1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.semester2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitType.Description)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.unit_code }, new { @class = "prerequisitesCRUDLink CRUDFont" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.unit_code }, new { @class = "prerequisitesCRUDLink CRUDFont" })
+            </td>
+        </tr>
+    }
+
+</table>
+

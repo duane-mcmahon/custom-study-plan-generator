@@ -1,31 +1,48 @@
-﻿@Scripts.Render("~/Scripts/CRUD.js")
+﻿@Scripts.Render("~/Scripts/CourseIndex.js")
 @model IEnumerable<custom_study_plan_generator.Models.Course>
 
-<div id="CRUDMain">
-    <div id="CRUDHeadingHolder">
+@{
+    ViewBag.Title = "Index";
+}
 
-        <h2>Edit Courses</h2>
+<div class="prerequisitesIndexCRUDHeading">
+    <h3 class="CRUDFont">CourseList</h3>
 
-        <p>
-            @Html.ActionLink("Create New", "Create")
-        </p>
-    </div>
-    <table id ="table" class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.num_units)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.duration)
-            </th>
-            <th></th>
-        </tr>
+    @if (Session["ForeignKeyConstraint"] != null)
+    {
+        <div id="FKConstraint" class="error3">Error, this course already contains units, or is used in a student plan, and cannot be deleted.</div>
+        Session["ForeignKeyConstraint"] = null;
+    }
 
-    @foreach (var item in Model) {
-        <tr>
+    <p>
+        @Html.ActionLink("Create New", "Create", null, null, new { @class = "prerequisitesCRUDLink CRUDFont" })
+    </p>
+
+</div>
+
+<table class="table prerequisiteIndexCRUDTable">
+    <tr>
+        <th>
+            Course Code
+        </th>
+        <th>
+            Course Name
+        </th>
+        <th>
+            Number of Units
+        </th>
+        <th>
+            Maximum Exemptions
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr class ="prereqIndexCRUDRow">
+            <td>
+                @Html.DisplayFor(modelItem => item.course_code)
+            </td>                
             <td>
                 @Html.DisplayFor(modelItem => item.name)
             </td>
@@ -33,15 +50,15 @@
                 @Html.DisplayFor(modelItem => item.num_units)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.duration)
+                @Html.DisplayFor(modelItem => item.max_credit)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.course_code }) |
-                @Html.ActionLink("Details", "Details", new { id=item.course_code }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.course_code })
+                @Html.ActionLink("Edit", "Edit", new { id = item.course_code }, new { @class = "prerequisitesCRUDLink CRUDFont" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.course_code }, new { @class = "prerequisitesCRUDLink CRUDFont studentDelete" })
             </td>
         </tr>
     }
 
-    </table>
-</div>
+</table>
+
+

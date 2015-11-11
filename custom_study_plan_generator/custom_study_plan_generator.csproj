@@ -376,6 +376,8 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\CourseCreate.js" />
+    <Content Include="Scripts\CourseIndex.js" />
     <Content Include="Scripts\Create.js" />
     <Content Include="Scripts\CRUD.js" />
     <Content Include="Scripts\DefaultPlan.js" />
@@ -424,6 +426,9 @@
     <Content Include="Scripts\Modify.js" />
     <Content Include="Scripts\StudentCreate.js" />
     <Content Include="Scripts\StudentIndex.js" />
+    <Content Include="Scripts\UnitCreate.js" />
+    <Content Include="Scripts\UnitEdit.js" />
+    <Content Include="Scripts\UnitIndex.js" />
     <Content Include="Scripts\UnitPrerequisitesCreate.js" />
     <Content Include="Scripts\UnitPrerequisitesIndex.js" />
     <Content Include="Scripts\_references.js" />
@@ -443,11 +448,6 @@
     <Content Include="Views\Home\Exemptions.cshtml" />
     <Content Include="Views\Home\Modify.cshtml" />
     <Content Include="Views\Home\submitPlan.cshtml" />
-    <Content Include="Views\Courses\Create.cshtml" />
-    <Content Include="Views\Courses\Delete.cshtml" />
-    <Content Include="Views\Courses\Details.cshtml" />
-    <Content Include="Views\Courses\Edit.cshtml" />
-    <Content Include="Views\Courses\Index.cshtml" />
     <Content Include="Views\Home\DefaultPlan.cshtml" />
     <Content Include="Views\Home\DriveAsync.cshtml" />
     <Content Include="Views\Home\submitPlanAsync.cshtml" />
@@ -455,6 +455,10 @@
     <Content Include="Views\Shared\_Create.cshtml" />
     <Content Include="packages.config" />
     <Content Include="Scripts\jquery-2.1.4.min.map" />
+    <Content Include="Views\Courses\Create.cshtml" />
+    <Content Include="Views\Courses\Delete.cshtml" />
+    <Content Include="Views\Courses\Edit.cshtml" />
+    <Content Include="Views\Courses\Index.cshtml" />
     <None Include="Views\Shared\_Layout.cshtml.old" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -472,11 +476,6 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Units\Create.cshtml" />
-    <Content Include="Views\Units\Delete.cshtml" />
-    <Content Include="Views\Units\Details.cshtml" />
-    <Content Include="Views\Units\Edit.cshtml" />
-    <Content Include="Views\Units\Index.cshtml" />
     <Content Include="Views\UnitPrerequisites\Create.cshtml" />
     <Content Include="Views\UnitPrerequisites\Delete.cshtml" />
     <Content Include="Views\UnitPrerequisites\Index.cshtml" />
@@ -485,6 +484,11 @@
     <Content Include="Views\Students\Delete.cshtml" />
     <Content Include="Views\Students\Edit.cshtml" />
     <Content Include="Views\Students\Index.cshtml" />
+    <Content Include="Views\Units\Create.cshtml" />
+    <Content Include="Views\Units\Delete.cshtml" />
+    <Content Include="Views\Units\Details.cshtml" />
+    <Content Include="Views\Units\Edit.cshtml" />
+    <Content Include="Views\Units\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

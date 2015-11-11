@@ -10,22 +10,20 @@ namespace custom_study_plan_generator.MetaObjects
     public class CourseMeta
     {
         [NotMapped]
-        [Required]
+        [Required(ErrorMessage = "Course Code is required")]
         public string course_code { get; set; }
 
         [NotMapped]
-        [Required]
+        [Required(ErrorMessage = "Course Name is required")]
         public string name { get; set; }
         
         [NotMapped]
-        [Required]
-        [Range(0,64)]
+        [Required(ErrorMessage = "Number of Units is required")]
+        [Range(0, 64, ErrorMessage = "The number of units must be between 0 and 64")]
         public int num_units { get; set; }
 
-        /* Check if wee need this property */
-        public int duration { get; set; }
-
-        /* Check if we need this property */
+        [NotMapped]
+        [Required(ErrorMessage = "Maximum Credit is required")]
         public int max_credit { get; set; }
 
     }

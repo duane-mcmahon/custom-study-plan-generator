@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using custom_study_plan_generator.Models;
+using System.Data.Entity.Infrastructure;
+using custom_study_plan_generator.MetaObjects;
 
 namespace custom_study_plan_generator.Controllers
 {
@@ -20,21 +22,6 @@ namespace custom_study_plan_generator.Controllers
             return View(db.Courses.ToList());
         }
 
-        // GET: Courses/Details/5
-        public ActionResult Details(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Course course = db.Courses.Find(id);
-            if (course == null)
-            {
-                return HttpNotFound();
-            }
-            return View(course);
-        }
-
         // GET: Courses/Create
         public ActionResult Create()
         {
@@ -46,11 +33,32 @@ namespace custom_study_plan_generator.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "course_code,name,num_units,duration")] Course course)
+        public ActionResult Create([Bind(Include = "course_code,name,num_units,duration,max_credit")] CourseMeta course)
         {
+
+            var courseCheck = from crs in db.Courses
+                               where crs.course_code == course.course_code
+                               select crs;
+
+            if (courseCheck.Count() > 0)
+            {
+                Session["courseExists"] = "true";
+                return View(course);
+            }            
+            
             if (ModelState.IsValid)
             {
-                db.Courses.Add(course);
+
+                Course courseAdd = new Course();
+                courseAdd.course_code = course.course_code;
+                courseAdd.name = course.name;
+                courseAdd.num_units = course.num_units;
+                courseAdd.max_credit = course.max_credit;
+
+                /* Remove once database property is removed */
+                courseAdd.duration = 0;
+                
+                db.Courses.Add(courseAdd);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -66,11 +74,18 @@ namespace custom_study_plan_generator.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Course course = db.Courses.Find(id);
+
+            CourseMeta courseMeta = new CourseMeta();
+            courseMeta.course_code = course.course_code;
+            courseMeta.name = course.name;
+            courseMeta.num_units = course.num_units;
+            courseMeta.max_credit = course.max_credit;
+
             if (course == null)
             {
                 return HttpNotFound();
             }
-            return View(course);
+            return View(courseMeta);
         }
 
         // POST: Courses/Edit/5
@@ -78,11 +93,21 @@ namespace custom_study_plan_generator.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "course_code,name,num_units,duration")] Course course)
+        public ActionResult Edit([Bind(Include = "course_code,name,num_units,duration,max_credit")] CourseMeta course)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(course).State = EntityState.Modified;
+
+                Course courseEdit = new Course();
+                courseEdit.course_code = course.course_code;
+                courseEdit.name = course.name;
+                courseEdit.num_units = course.num_units;
+                courseEdit.max_credit = course.max_credit;
+
+                /* Remove once database property is removed */
+                courseEdit.duration = 0;
+
+                db.Entry(courseEdit).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -111,7 +136,19 @@ namespace custom_study_plan_generator.Controllers
         {
             Course course = db.Courses.Find(id);
             db.Courses.Remove(course);
-            db.SaveChanges();
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException.ToString().Contains("The DELETE statement conflicted with the REFERENCE constraint"))
+                {
+                    Session["ForeignKeyConstraint"] = "true";
+                }
+            }
+
             return RedirectToAction("Index");
         }
 

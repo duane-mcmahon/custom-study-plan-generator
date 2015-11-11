@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using custom_study_plan_generator.Models;
+using custom_study_plan_generator.MetaObjects;
+using System.Data.Entity.Infrastructure;
 
 namespace custom_study_plan_generator.Controllers
 {
@@ -48,16 +50,39 @@ namespace custom_study_plan_generator.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "unit_code,name,type_code,semester1,semester2,preferred_year")] Unit unit)
+        public ActionResult Create([Bind(Include = "unit_code,name,type_code,semester1,semester2,preferred_year")] UnitMeta unit)
         {
+
+            var unitCheck = from un in db.Units
+                               where un.unit_code == unit.unit_code
+                               select un;
+
+            if (unitCheck.Count() > 0)
+            {
+                Session["unitExists"] = "true";
+                return View(unit);
+            }
+
+            Unit unitAdd = new Unit();
+            unitAdd.unit_code = unit.unit_code;
+            unitAdd.name = unit.name;
+            unitAdd.type_code = unit.type_code;
+            unitAdd.semester1 = unit.semester1;
+            unitAdd.semester2 = unit.semester2;
+
+            /* Remove once database is updated */
+            unitAdd.preferred_year = 0;
+
+            ViewBag.type_code = new SelectList(db.UnitTypes, "type_code", "Description");
+            
             if (ModelState.IsValid)
             {
-                db.Units.Add(unit);
+
+                db.Units.Add(unitAdd);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.type_code = new SelectList(db.UnitTypes, "type_code", "Description", unit.type_code);
             return View(unit);
         }
 
@@ -69,12 +94,20 @@ namespace custom_study_plan_generator.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Unit unit = db.Units.Find(id);
+
+            UnitMeta unitEdit = new UnitMeta();
+            unitEdit.unit_code = unit.unit_code;
+            unitEdit.name = unit.name;
+            unitEdit.type_code = unit.type_code;
+            unitEdit.semester1 = unit.semester1;
+            unitEdit.semester2 = unit.semester2;
+
             if (unit == null)
             {
                 return HttpNotFound();
             }
             ViewBag.type_code = new SelectList(db.UnitTypes, "type_code", "Description", unit.type_code);
-            return View(unit);
+            return View(unitEdit);
         }
 
         // POST: Units/Edit/5
@@ -116,7 +149,18 @@ namespace custom_study_plan_generator.Controllers
         {
             Unit unit = db.Units.Find(id);
             db.Units.Remove(unit);
-            db.SaveChanges();
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException.ToString().Contains("The DELETE statement conflicted with the REFERENCE constraint"))
+                {
+                    Session["ForeignKeyConstraint"] = "true";
+                }
+            }
             return RedirectToAction("Index");
         }
 

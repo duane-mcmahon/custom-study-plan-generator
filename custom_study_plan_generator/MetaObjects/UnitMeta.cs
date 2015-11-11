@@ -18,7 +18,8 @@ namespace custom_study_plan_generator.MetaObjects
         [Required]
         public string name { get; set; }
 
-        /* Check if we need this property */
+        [NotMapped]
+        [Required]
         public string type_code { get; set; }
 
         /* Will need client side validation to make sure on or the other is set */
@@ -27,10 +28,6 @@ namespace custom_study_plan_generator.MetaObjects
 
         [NotMapped]
         public bool semester2 { get; set; }
-
-        /* Need to check if this is required */
-        [Range(1, 8)]
-        public Nullable<int> preferred_year { get; set; }
 
     }
 }
