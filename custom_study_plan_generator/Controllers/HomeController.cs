@@ -854,6 +854,7 @@ namespace custom_study_plan_generator.Controllers
             var unitListSwap = Session["StudentPlanSwap"] as List<CoursePlan>;
 
             unitList[toInt] = unitListSwap[fromInt];
+            unitList[toInt].position = toInt + 1;
             unitListSwap[fromInt] = null;
 
             Session["StudentPlan"] = unitList;
@@ -913,6 +914,7 @@ namespace custom_study_plan_generator.Controllers
 
             // Move the unit to its new position in the Session plan, mark the old position as null.
             unitList[toInt] = unitList[fromInt];
+            unitList[toInt].position = toInt + 1;
             unitList[fromInt] = null;
 
             Session["StudentPlan"] = unitList;
@@ -1340,13 +1342,16 @@ namespace custom_study_plan_generator.Controllers
                 var count = 1;
                 foreach (var unit in sessionList)
                 {
-                    StudentPlanUnit spu = new StudentPlanUnit();
-                    spu.plan_id = planID;
-                    spu.unit_code = unit.unit_code;
-                    spu.unit_no = count;
-                    spu.semester = unit.semester;
-                    count++;
-                    db.StudentPlanUnits.Add(spu);
+                    if (unit != null)
+                    {
+                        StudentPlanUnit spu = new StudentPlanUnit();
+                        spu.plan_id = planID;
+                        spu.unit_code = unit.unit_code;
+                        spu.unit_no = unit.position;
+                        spu.semester = unit.semester;
+                        count++;
+                        db.StudentPlanUnits.Add(spu);
+                    }
                 }
 
 
