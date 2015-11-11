@@ -88,7 +88,7 @@
             type: "POST",
             data: { data: array },
             success: function (response) {
-
+                location.href = 'Modify';
             },
             error: function (response) {
                 $('#error2').html(response.responseText);

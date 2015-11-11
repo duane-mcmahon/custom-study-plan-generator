@@ -615,14 +615,13 @@ namespace custom_study_plan_generator.Controllers
 
         }
 
-        [HttpPost]
-        public ActionResult Exemptions(string removeExemptions, string next)
+        public ActionResult Exemptions()
         {
             // Check a valid DefaultPlan is in the Session variable.
             if (Session["StudentPlan"] == null)
             {
                 // No Course has been selected - Redirect back to the course selection page.
-                return RedirectToAction("CreatePlan", "Home");
+                return RedirectToAction("Index", "Home");
             }
 
             ViewBag.studentid = Session["StudentID"].ToString();
@@ -632,17 +631,6 @@ namespace custom_study_plan_generator.Controllers
             {
                 var startSemester = Request["startSemester"];
                 Session["StartSemester"] = startSemester;
-            }
-
-            // If "loadDefault" button is pressed, return the list of updated units to the view.
-            if (!string.IsNullOrEmpty(removeExemptions))
-            {
-                return View();
-            }
-            /* If "next" button is pressed proceed to "Modify" page */
-            else if (!string.IsNullOrEmpty(next))
-            {
-                return RedirectToAction("Modify", "Home");
             }
 
             return View();
@@ -669,7 +657,7 @@ namespace custom_study_plan_generator.Controllers
                         countExistingExempt++;
                     }
                 }
-
+                  
                 // Add total of exemptions in Session variable and newly selected. 
                 totalExempt = countExistingExempt + exemptions.Length;
 
@@ -715,10 +703,10 @@ namespace custom_study_plan_generator.Controllers
         {
             // Check a valid StudentPlan is in the Session variable.
             if (Session["StudentPlan"] == null)
-            {
+            { 
                 // No Course has been selected - Redirect back to the Index page.
                 return RedirectToAction("Index", "Home");
-            }
+            } 
 
             ViewBag.studentid = Session["StudentID"].ToString();
 

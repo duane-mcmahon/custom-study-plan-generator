@@ -32,16 +32,9 @@
                 Mark any exemptions, then click "Remove Exemptions" to remove selected units. Click "Next" when done.
             </div>
             <div class="inline CPcol3desc">
-
-                <button id="removeExemptions" type="button" class="CPButton" name="removeExemptions" value="removeExemptions" title="Remove Exemptions">Remove Exemptions</button><br />
-
-                @using (Html.BeginForm("Exemptions", "Home", FormMethod.Post))
-                {
-                    <button type="submit" class="CPButton2" name="next" value="next" title="Next Step">Next</button>
-                }
+                <button id="removeExemptions" type="button" class="CPButton" name="removeExemptions" value="removeExemptions" title="Next">Next</button><br />
 
                 <div id="error2" class="errors"></div>
-
             </div>
 
             @{
