@@ -63,6 +63,16 @@ namespace custom_study_plan_generator.Controllers
 
                         if (match.Count() > 0)
                         {
+
+                            var studentPlan = from sp in db.StudentPlans
+                                              where sp.student_id == id
+                                              select sp;
+                            
+                            if (studentPlan.Count() > 0)
+                            {
+                                return "hasPlan";
+                            }
+                            
                             return "true";
                         }
                     }
