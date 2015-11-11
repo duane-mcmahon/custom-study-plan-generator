@@ -29,7 +29,10 @@
                 </div>
             </div>
             <div class="inline CPcol1desc">
-
+                @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+                {
+                    <button type="submit" class="CPButton" name="back">Back</button>
+                }
             </div>
             <div class="pagewideFont CPcol2desc inline">
                 Select the course the student will be enrolling in. This new plan will will be created from the default plan for that course.
@@ -50,7 +53,7 @@
             </div>
 
             @{
-                List<CoursePlan> studentPlan = (List<CoursePlan>)Session["StudentPlan"];
+                List<CoursePlan> studentPlan = (List<CoursePlan>)Session["StudentPlanInitial"];
             }
 
             <script>

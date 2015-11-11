@@ -29,7 +29,10 @@
                     </div>
                 </div>
                 <div class="inline CPcol1desc">
-
+                    @using (Html.BeginForm("Exemptions", "Home", FormMethod.Post))
+                    {
+                        <button type="submit" class="CPButton" name="back">Back</button>
+                    }
                 </div>
                 <div class="pagewideFont CPcol2desc inline">
                     Make any manual adjustments using the unit swap space, then click "Next".

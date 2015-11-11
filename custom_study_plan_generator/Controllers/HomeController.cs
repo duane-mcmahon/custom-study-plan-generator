@@ -461,6 +461,7 @@ namespace custom_study_plan_generator.Controllers
             using (custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities())
             {
                 /* Reset any session variables */
+                Session["StudentPlanInitial"] = null;
                 Session["StudentPlan"] = null;
                 Session["StudentPlanSwap"] = null;
                 Session["numUnits"] = null;
@@ -586,7 +587,7 @@ namespace custom_study_plan_generator.Controllers
                     }
 
                     /* Save the session list to a session variable, ready for use by the view */
-                    Session["StudentPlan"] = sessionList;
+                    Session["StudentPlanInitial"] = sessionList;
                 }
 
                 else
@@ -618,7 +619,7 @@ namespace custom_study_plan_generator.Controllers
         public ActionResult Exemptions()
         {
             // Check a valid DefaultPlan is in the Session variable.
-            if (Session["StudentPlan"] == null)
+            if (Session["StudentPlanInitial"] == null)
             {
                 // No Course has been selected - Redirect back to the course selection page.
                 return RedirectToAction("Index", "Home");
@@ -650,7 +651,7 @@ namespace custom_study_plan_generator.Controllers
                 int totalExempt = 0;
 
                 // Check for previously selected Exemptions removed.
-                foreach (CoursePlan unit in (List<CoursePlan>) Session["StudentPlan"])
+                foreach (CoursePlan unit in (List<CoursePlan>)Session["StudentPlanInitial"])
                 {
                     if (unit.exempt == true)
                     {
@@ -671,7 +672,7 @@ namespace custom_study_plan_generator.Controllers
                         int pos = Convert.ToInt32(id);
 
                         // Mark each selected unit as Exempt in the Plan session variable.
-                        foreach (CoursePlan unit in (List<CoursePlan>) Session["StudentPlan"])
+                        foreach (CoursePlan unit in (List<CoursePlan>)Session["StudentPlanInitial"])
                         {
                             if (unit.position == pos)
                             {
@@ -702,7 +703,7 @@ namespace custom_study_plan_generator.Controllers
         public ActionResult Modify()
         {
             // Check a valid StudentPlan is in the Session variable.
-            if (Session["StudentPlan"] == null)
+            if (Session["StudentPlanInitial"] == null)
             { 
                 // No Course has been selected - Redirect back to the Index page.
                 return RedirectToAction("Index", "Home");
@@ -712,7 +713,7 @@ namespace custom_study_plan_generator.Controllers
 
             // Retrieve sessionList of coursePlan (units) from Session variable
             // StudentPlan.
-            List<CoursePlan> sessionList = (List<CoursePlan>) Session["StudentPlan"];
+            List<CoursePlan> sessionList = (List<CoursePlan>)Session["StudentPlanInitial"];
 
             /* Only run the algorithm if it has not already been run. */
             if (Session["AlgorithmRun"].ToString() == "false")
@@ -1267,8 +1268,11 @@ namespace custom_study_plan_generator.Controllers
 
         public ActionResult Final()
         {
-
-
+            // Prevent user from accessing the final page if the algorithm hasn't yet run.
+            if (Session["StudentPlan"] == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
             return View();
         }

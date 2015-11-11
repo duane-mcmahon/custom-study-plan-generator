@@ -26,7 +26,10 @@
                 </div>
             </div>
             <div class="inline CPcol1desc">
-
+                @using (Html.BeginForm("CreatePlan", "Home", FormMethod.Post))
+                {
+                    <button type="submit" class="CPButton" name="back">Back</button>
+                }
             </div>
             <div class="pagewideFont CPcol2desc inline">
                 Mark any exemptions, then click "Remove Exemptions" to remove selected units. Click "Next" when done.
@@ -38,7 +41,7 @@
             </div>
 
             @{
-                List<CoursePlan> studentPlan = (List<CoursePlan>)Session["StudentPlan"];
+                List<CoursePlan> studentPlan = (List<CoursePlan>)Session["StudentPlanInitial"];
                 Int32 numUnits = (Int32)Session["numUnits"];
             }
 

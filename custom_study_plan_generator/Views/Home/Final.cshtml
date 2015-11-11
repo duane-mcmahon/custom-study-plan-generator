@@ -26,7 +26,10 @@
                 </div>
             </div>
             <div class="inline CPcol1desc">
-
+                @using (Html.BeginForm("Modify", "Home", FormMethod.Post))
+                {
+                    <button type="submit" class="CPButton" name="back">Back</button>
+                }
             </div>
             <div class="pagewideFont CPcol2desc inline">
                 Review the final plan, then click "Save Plan" to save and upload.
