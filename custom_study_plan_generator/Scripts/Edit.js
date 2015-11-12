@@ -218,8 +218,17 @@ function dragend(ev, target) {
         if ($(target).parent().hasClass('swapSpaceCell')) {
 
             var idRawFrom = dragParentId;
-            var idStringFrom = idRawFrom.toString();
-            var idFrom = idStringFrom.substring(1);
+        
+            if (idRawFrom.indexOf("ss") > -1) {
+                var idStringFrom = idRawFrom.toString();
+                var idFrom = idStringFrom.substring(2);
+                var fromSwap = true;
+            }
+            else {
+                var idStringFrom = idRawFrom.toString();
+                var idFrom = idStringFrom.substring(1);
+                var fromSwap = false;
+            }
 
             var dataRemove = idFrom;
 
@@ -228,6 +237,13 @@ function dragend(ev, target) {
             var idTo = idStringTo.substring(2);
 
             dataRemove += "," + idTo;
+
+            if (fromSwap == true) {
+                dataRemove += "," + "fromSwap";
+            }
+            else {
+                dataRemove += "," + "fromPlan";
+            }
 
             $.ajax({
                 url: "../Home/EditRemove",
@@ -249,9 +265,17 @@ function dragend(ev, target) {
         else if ($(target).parent().hasClass('planCell')) {
 
             var idRawFrom = dragParentId;
-            var idStringFrom = idRawFrom.toString();
-            var idFrom = idStringFrom.substring(2);
-
+            if (idRawFrom.indexOf("p") > -1) {
+                var idStringFrom = idRawFrom.toString();
+                var idFrom = idStringFrom.substring(1);
+                var fromPlan = true;
+            }
+            else {
+                var idStringFrom = idRawFrom.toString();
+                var idFrom = idStringFrom.substring(2);
+                var fromPlan = false;
+            }
+           
             var dataAdd = idFrom;
 
             var idRawTo = $(target).parent().attr('id');
@@ -259,6 +283,13 @@ function dragend(ev, target) {
             var idTo = idStringTo.substring(1);
 
             dataAdd += "," + idTo;
+
+            if (fromPlan == true) {
+                dataAdd += "," + "fromPlan";
+            }
+            else {
+                dataAdd += "," + "fromSwap";
+            }
 
             $.ajax({
                 url: "../Home/EditAdd",
