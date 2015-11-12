@@ -656,40 +656,50 @@ namespace custom_study_plan_generator.Controllers
             if (!string.IsNullOrEmpty(Request["data[]"]))
             {
                 var data = Request["data[]"].ToString();
-                string[] exemptions = data.Split(',');
-                int countExistingExempt = 0;
-                int totalExempt = 0;
-
-                // Check for previously selected Exemptions removed.
-                foreach (CoursePlan unit in (List<CoursePlan>)Session["StudentPlanInitial"])
-                {
-                    if (unit.exempt == true)
-                    {
-                        countExistingExempt++;
-                    }
-                }
-                  
-                // Add total of exemptions in Session variable and newly selected. 
-                totalExempt = countExistingExempt + exemptions.Length;
+                List<String> exemptions = new List<String>();
+                exemptions = data.Split(',').ToList();
 
                 // Make sure Exemption Limit has not been reached. 
-                if (totalExempt > 0 && totalExempt <= ((CourseDTO) Session["Course"]).max_credit)
+                if (exemptions.Count > 0 && exemptions.Count <= ((CourseDTO)Session["Course"]).max_credit)
                 {
                     // Valid number of Exemptions has been selected - mark the Exemptions in the session variable. 
-                    foreach (string id in exemptions)
+                    foreach (CoursePlan unit in Session["StudentPlanInitial"] as List<CoursePlan>)
                     {
-                        // Convert string to int.
-                        int pos = Convert.ToInt32(id);
+                        bool match = false;
 
-                        // Mark each selected unit as Exempt in the Plan session variable.
-                        foreach (CoursePlan unit in (List<CoursePlan>)Session["StudentPlanInitial"])
+                        // Check selected exemptions against each unit in the Default Plan.
+                        if (exemptions.Count != 0)
                         {
-                            if (unit.position == pos)
+                            foreach (string id in exemptions)
                             {
-                                unit.exempt = true;
-                                break;
+                                // Convert string to int.
+                                int pos = Convert.ToInt32(id);
+
+                                if (unit.position == pos)
+                                {
+                                    unit.exempt = true;
+                                    match = true;
+                                    exemptions.Remove(id);
+                                    break;
+                                }
                             }
                         }
+
+                        // Mark Exempt as false if no match found - this is to reset any unmarked exemptions.
+                        if (!match)
+                        {
+                            unit.exempt = false;
+                        }
+                    }
+
+                    // Flag for Rerun if the Algorithm has been run previously.
+                    if (Session["AlgorithmRun"].ToString() == "true")
+                    {
+                        Session["Rerun"] = "true";
+                    }
+                    else
+                    {
+                        Session["Rerun"] = "false";
                     }
 
                     // Return Success.
@@ -710,6 +720,7 @@ namespace custom_study_plan_generator.Controllers
             }
         }
 
+
         public ActionResult Modify()
         {
             // Check a valid StudentPlan is in the Session variable.
@@ -717,18 +728,40 @@ namespace custom_study_plan_generator.Controllers
             { 
                 // No Course has been selected - Redirect back to the Index page.
                 return RedirectToAction("Index", "Home");
-            } 
+            }
+            else if (Session["Rerun"].ToString() == "true")
+            {
+                // Reset Algorithm Session variables when rerunning the algorithm.
+                Session["StudentPlan"] = null;
+                Session["RemovedExemptions"] = null;
+                Session["AlgorithmRun"] = "false";
+                Session["Rerun"] = "false";
+            }
 
             ViewBag.studentid = Session["StudentID"].ToString();
 
             // Retrieve sessionList of coursePlan (units) from Session variable
             // StudentPlan.
-            List<CoursePlan> sessionList = (List<CoursePlan>)Session["StudentPlanInitial"];
+            List<CoursePlan> sessionList = new List<CoursePlan>();
+            sessionList = ((List<CoursePlan>)Session["StudentPlanInitial"]).Select(unit => 
+                                new CoursePlan
+                                    {
+                                        position = unit.position,
+                                        semester = unit.semester,
+                                        unit_code = unit.unit_code,
+                                        name = unit.name,
+                                        type_code = unit.type_code,
+                                        semester1 = unit.semester1,
+                                        semester2 = unit.semester2,
+                                        exempt = unit.exempt,
+                                        preferred_year = unit.preferred_year,
+                                        prerequisites = unit.prerequisites,
+                                        start_semester = unit.start_semester
+                                    }).ToList();
 
             /* Only run the algorithm if it has not already been run. */
             if (Session["AlgorithmRun"].ToString() == "false")
             {
-
                 // Retrieve course length.
                 int numUnits = (int) Session["numUnits"];
 
@@ -748,7 +781,6 @@ namespace custom_study_plan_generator.Controllers
                 // Update sessionList by running algorithm on it.
                 sessionList = algorithm.RunAlgorithm(sessionList);
 
-
                 // Initialise empty spaces at the end of the plan so that units can be rearranged to any position.
                 int courseLength = ((CourseDTO) Session["Course"]).num_units;
                 int planLength = sessionList.Count;
@@ -759,7 +791,8 @@ namespace custom_study_plan_generator.Controllers
                 }
 
                 // Update Session["StudentPlan"]
-                Session["StudentPlan"] = sessionList;
+                Session["StudentPlan"] = new List<CoursePlan>();
+                Session["StudentPlan"] = sessionList.ToList();
 
                 Session["AlgorithmRun"] = "true";
             }
@@ -840,7 +873,7 @@ namespace custom_study_plan_generator.Controllers
         [HttpPost]
         public void ModifyAdd()
         {
-
+            // Retrieve data from POST string array and process it.
             var data = Request["data"].ToString();
             var dataSplit = data.Split(',');
             var from = dataSplit[0];
@@ -850,6 +883,7 @@ namespace custom_study_plan_generator.Controllers
 
             var unitList = Session["StudentPlan"] as List<CoursePlan>;
 
+            // Initialise all spaces in the Swap Space List to allow units to be moved around.
             if (Session["StudentPlanSwap"] == null)
             {
                 List<CoursePlan> studentPlanSwap = new List<CoursePlan>();
@@ -863,19 +897,22 @@ namespace custom_study_plan_generator.Controllers
 
             var unitListSwap = Session["StudentPlanSwap"] as List<CoursePlan>;
 
+            // Move the unit from Swap Space to the selected position in the Student Plan.
             unitList[toInt] = unitListSwap[fromInt];
-            unitList[toInt].position = toInt + 1;
+            unitList[toInt].position = (toInt + 1);
+
+            // Reset the previous/from position as null.
             unitListSwap[fromInt] = null;
 
+            // Update Session variables.
             Session["StudentPlan"] = unitList;
             Session["StudentPlanSwap"] = unitListSwap;
-
         }
 
         [HttpPost]
         public void ModifyRemove()
         {
-
+            // Retrieve data from POST string array and process it.
             var data = Request["data"].ToString();
             var dataSplit = data.Split(',');
             var from = dataSplit[0];
@@ -886,6 +923,7 @@ namespace custom_study_plan_generator.Controllers
             var unitList = Session["StudentPlan"] as List<CoursePlan>;
             var courseLength = ((CourseDTO) Session["Course"]).num_units;
 
+            // Initialise all spaces in the Swap Space List to allow units to be moved around.
             if (Session["StudentPlanSwap"] == null)
             {
                 List<CoursePlan> studentPlanSwap = new List<CoursePlan>();
@@ -899,20 +937,22 @@ namespace custom_study_plan_generator.Controllers
 
             var unitListSwap = Session["StudentPlanSwap"] as List<CoursePlan>;
 
+            // Move the unit to the Swap Space.
             unitListSwap[toInt] = unitList[fromInt];
+
+            // Reset the previous/from position as null.
             unitList[fromInt] = null;
 
-
+            // Update Session variables.
             Session["StudentPlan"] = unitList;
             Session["StudentPlanSwap"] = unitListSwap;
-
         }
 
 
         [HttpPost]
         public void ModifyMove()
         {
-
+            // Retrieve data from POST string array and process it.
             var data = Request["data"].ToString();
             var dataSplit = data.Split(',');
             var from = dataSplit[0];
@@ -924,18 +964,18 @@ namespace custom_study_plan_generator.Controllers
 
             // Move the unit to its new position in the Session plan, mark the old position as null.
             unitList[toInt] = unitList[fromInt];
-            unitList[toInt].position = toInt + 1;
+            unitList[toInt].position = (toInt + 1);
             unitList[fromInt] = null;
 
+            // Update Session variable.
             Session["StudentPlan"] = unitList;
-
         }
 
 
         [HttpPost]
         public void ModifySwap()
         {
-
+            // Retrieve data from POST string array and process it.
             var data = Request["data"].ToString();
             var dataSplit = data.Split(',');
             var from = dataSplit[0];
@@ -949,8 +989,8 @@ namespace custom_study_plan_generator.Controllers
             unitListSwap[toInt] = unitListSwap[fromInt];
             unitListSwap[fromInt] = null;
 
+            // Update Session variable.
             Session["StudentPlanSwap"] = unitListSwap;
-
         }
 
 
