@@ -36,34 +36,34 @@ namespace custom_study_plan_generator.Controllers
 
         public string CheckStudentID()
         {
-
+            // Check the Student ID entered exists.
             using (custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities())
             {
-
-
+                // Retrieve data from Post.
                 var data = Request["data"].ToString();
                 var dataSplit = data.Split(',');
                 var idRaw = dataSplit[0];
                 var type = dataSplit[1];
 
-
-
+                // Check for existing students and retrieve Student's data from database.
                 try
                 {
-
                     var id = Convert.ToInt32(idRaw.Substring(1, 7));
 
                     Session["StudentID"] = idRaw;
 
+                    // Create Plan - Check for existing Student Plan.
                     if (type == "create")
                     {
                         var match = from student in db.Students
                             where student.student_id == id
                             select student;
 
+                        // If matching Student is found, retrieve their details.
                         if (match.Count() > 0)
                         {
                             Session["StudentName"] = ((Student)match.First()).firstname + " " + ((Student)match.First()).lastname;
+                            
                             var studentPlan = from sp in db.StudentPlans
                                               where sp.student_id == id
                                               select sp;
@@ -77,14 +77,21 @@ namespace custom_study_plan_generator.Controllers
                         }
                     }
 
+                    // Edit Plan - Check for existing Student Plan.
                     else if (type == "edit")
                     {
+                        var match = from student in db.Students
+                                    where student.student_id == id
+                                    select student;
 
+                        Session["StudentName"] = ((Student)match.First()).firstname + " " + ((Student)match.First()).lastname;
 
+                        // Lookup existing Student Plans.
                         var studentPlan = from sp in db.StudentPlans
                             where sp.student_id == id
                             select sp;
 
+                        // If a Student Plan exists for this student, retrieve Plan data.
                         if (studentPlan.Count() > 0)
                         {
                             int highestPlanID = studentPlan.Max(p => p.plan_id);
@@ -113,7 +120,6 @@ namespace custom_study_plan_generator.Controllers
 
         public ActionResult DefaultPlan(string courseSelect)
         {
-
             /* Reset the unit list if the course dropdown list changes */
             if (Session["CurrentCourse"] != null)
             {
@@ -122,6 +128,7 @@ namespace custom_study_plan_generator.Controllers
                     Session["DefaultPlanList"] = null;
                 }
             }
+
             /* Store the currently selected course */
             Session["CurrentCourse"] = courseSelect;
 
@@ -175,6 +182,9 @@ namespace custom_study_plan_generator.Controllers
                             num_units = c.num_units,
                             max_credit = c.max_credit
                         }).FirstOrDefault();
+
+                    // Set Course Code Session Variable.
+                    Session["CourseCode"] = course.course_code;
 
                     /* Send the number of units to the view for correct table size generation */
                     ViewBag.numUnits = course.num_units;
@@ -1018,6 +1028,12 @@ namespace custom_study_plan_generator.Controllers
 
         public ActionResult EditPlan()
         {
+            // Check a valid Student has been selected.
+            if (Session["StudentID"] == null)
+            {
+                // No Student has been selected - Redirect back to the Index page.
+                return RedirectToAction("Index", "Home");
+            }
 
             var fromIndex = Session["FromIndex"].ToString();
 
@@ -1120,12 +1136,13 @@ namespace custom_study_plan_generator.Controllers
                 /* Get the course name from course identified in StudentPlan */
                 var courseName = (from c in db.Courses
                     where c.course_code == plan.course_code
-                    select c.name).ToString();
+                    select c.name).First();
 
                 ViewBag.numUnits = numUnits;
                 Session["numUnits"] = numUnits;
                 Session["CourseCode"] = plan.course_code;
                 Session["CourseName"] = courseName;
+
                 if (fromIndex == "true")
                 {
                     Session["StudentPlan"] = sessionList;
@@ -1209,6 +1226,11 @@ namespace custom_study_plan_generator.Controllers
             }
 
             Session["FromIndex"] = "false";
+
+            // Pass Student Details to the View.
+            ViewBag.studentID = Session["StudentID"].ToString();
+            ViewBag.studentName = Session["StudentName"].ToString();
+            ViewBag.courseName = Session["CourseName"].ToString();
 
             return View();
         }
