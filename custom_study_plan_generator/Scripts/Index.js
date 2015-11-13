@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
 
-    $('#createButton').click(function() {
+    $('#createButton').click(function () {
 
         var data = $('#studentIdInput').val();
         data += ",create";

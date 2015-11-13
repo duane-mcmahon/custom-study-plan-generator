@@ -101,7 +101,6 @@ html body {
 
 .textLogin {
     width: calc(100% - 160px);
-    height: calc(300px - 120px);
     background-color: #F6F6F4;
     padding: 80px;
     padding-top: 40px;
@@ -109,6 +108,7 @@ html body {
     font-size: 1.5vw;
     color: #242424;
     word-wrap: break-word;
+    position: relative;
 }
 
 .textHome {
@@ -217,7 +217,11 @@ html body {
 }
 
 #loginForm {
-    text-align: center;
+    position: absolute;
+}
+
+#tempButton {
+    position: absolute;
 }
 
 #studentIdInput {

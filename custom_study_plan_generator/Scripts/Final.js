@@ -1,10 +1,9 @@
 ﻿$(document).ready(function () {
 
     /* Dynamic sizing of background divs and table height */
-    var widthBacker = $('#backerEdit').width();
-    var widthText = $('#textEdit').width();
-    $('#backerEdit').css("height", widthBacker * .50);
-    $('#textEdit').css("height", widthText * .47);
+    var heightTable = $('#planTable').height();
+    $('#textEdit').css("height", heightTable * 1.9);
+    $('#backerEdit').css("height", heightTable * 2.1);
 
     var heightTopCell = $('#topCell').height();
     var heightp1 = $('#p1').height();
@@ -49,6 +48,18 @@
         window.location.href = "../Home/Index";
     });
 
+});
+
+$(window).on('resize', function () {
+
+    var heightTable = $('#planTable').height();
+    $('#textEdit').css("height", heightTable * 2.7);
+    $('#backerEdit').css("height", heightTable * 2.9);
+
+    var heightTopCell = $('#topCell').height();
+    var heightp1 = $('#p1').height();
+
+    $('#planTable').css("height", heightTopCell + (heightp1 * 4));
 });
 
 function savePlan() {

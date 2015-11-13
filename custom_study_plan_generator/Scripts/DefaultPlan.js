@@ -4,10 +4,10 @@ var preventProgress = false;
 $(document).ready(function () {
 
     /* Dynamic sizing of background divs and table height */
-    var widthBacker = $('#backerDefault').width();
-    var widthText = $('#textDefault').width();
-    $('#backerDefault').css("height", widthBacker * .80);
-    $('#textDefault').css("height", widthText * .77);
+
+    var heightTable = $('#planTable').height();
+    $('#textDefault').css("height", heightTable * 3.1);
+    $('#backerDefault').css("height", heightTable * 3.3);
 
     var heightTopCell = $('#topCell').height();
     var heightp1 = $('#p1').height();
@@ -187,10 +187,9 @@ $(document).ready(function () {
 $(window).on('resize', function () {
 
     /* Dynamic sizing of background divs and table height */
-    var widthBacker = $('#backerDefault').width();
-    var widthText = $('#textDefault').width();
-    $('#backerDefault').css("height", widthBacker * .80);
-    $('#textDefault').css("height", widthText * .77);
+    var heightTable = $('#planTable').height();
+    $('#textDefault').css("height", heightTable * 3.1);
+    $('#backerDefault').css("height", heightTable * 3.3);
 
     var heightTopCell = $('#topCell').height();
     var heightp1 = $('#p1').height();

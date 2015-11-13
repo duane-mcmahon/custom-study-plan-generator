@@ -423,6 +423,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\Login.js" />
     <Content Include="Scripts\Modify.js" />
     <Content Include="Scripts\StudentCreate.js" />
     <Content Include="Scripts\StudentIndex.js" />
