@@ -674,7 +674,7 @@ namespace custom_study_plan_generator.Controllers
         {
             // Remove exemptions from plan, return true or false.
             // Receives a string of unit id's to remove from the plan in the format of a string: "1,2,3,4,5" etc.
-            // Check if Exemptions selected are valid. 
+            // Check if Exemptions selected are valid.
             if (!string.IsNullOrEmpty(Request["data[]"]))
             {
                 var data = Request["data[]"].ToString();
@@ -697,6 +697,7 @@ namespace custom_study_plan_generator.Controllers
                                 // Convert string to int.
                                 int pos = Convert.ToInt32(id);
 
+                                // If Unit matches, mark as exempt.
                                 if (unit.position == pos)
                                 {
                                     unit.exempt = true;
@@ -761,11 +762,14 @@ namespace custom_study_plan_generator.Controllers
                 Session["Rerun"] = "false";
             }
 
-            // Retrieve sessionList of coursePlan (units) from Session variable
-            // StudentPlan.
-            List<CoursePlan> sessionList = new List<CoursePlan>();
-            sessionList = ((List<CoursePlan>)Session["StudentPlanInitial"]).Select(unit => 
-                                new CoursePlan
+            /* Only run the algorithm if it has not already been run. */
+            if (Session["AlgorithmRun"].ToString() == "false")
+            {
+                // Retrieve sessionList of coursePlan (units) from Session variable
+                // StudentPlan.
+                List<CoursePlan> sessionList = new List<CoursePlan>();
+                sessionList = ((List<CoursePlan>)Session["StudentPlanInitial"]).Select(unit =>
+                                    new CoursePlan
                                     {
                                         position = unit.position,
                                         semester = unit.semester,
@@ -780,11 +784,8 @@ namespace custom_study_plan_generator.Controllers
                                         start_semester = unit.start_semester
                                     }).ToList();
 
-            /* Only run the algorithm if it has not already been run. */
-            if (Session["AlgorithmRun"].ToString() == "false")
-            {
                 // Retrieve course length.
-                int numUnits = (int) Session["numUnits"];
+                int numUnits = (int)Session["numUnits"];
 
                 // Retrieve if it is midYearStart or not and convert from int to boolean for algorithm.
                 bool midYearIntake = false;
@@ -827,11 +828,11 @@ namespace custom_study_plan_generator.Controllers
 
             using (custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities())
             {
-
                 /* Get the course code from the session stored selected course */
                 var courseCode = Session["CourseCode"].ToString();
 
                 List<string> exemptionsList = (List<string>) Session["RemovedExemptions"];
+                List<CoursePlan> sessionList = (List<CoursePlan>) Session["StudentPlan"];
 
                 /* If there are any exempt units, add them to list of units that have been checked for violations */
                 foreach (var exemption in exemptionsList)
@@ -840,15 +841,11 @@ namespace custom_study_plan_generator.Controllers
 
                 }
 
-
                 /* Loop through the unit list */
                 foreach (var unit in sessionList)
                 {
-
                     if (unit != null)
                     {
-
-
                         /* Add current unit to the list of units that have been checked for violations */
                         unitsChecked.Add(unit.name);
 
@@ -883,7 +880,6 @@ namespace custom_study_plan_generator.Controllers
 
                         ViewBag.violatedList = violatedList;
                     }
-
                 }
             }
 
