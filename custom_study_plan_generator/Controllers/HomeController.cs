@@ -1035,16 +1035,20 @@ namespace custom_study_plan_generator.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            var fromIndex = Session["FromIndex"].ToString();
+            var fromIndex = "true";
 
-            /* open database so that it will be autmoatically disposed */
+            // Read value of FromIndex if it is not null.
+            if (Session["FromIndex"] != null)
+            {
+                fromIndex = Session["FromIndex"].ToString();
+            }            
+
+            /* Open database so that it will be autmoatically disposed. */
             using (custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities())
             {
-                /* Reset any session variables if the page is coming from the hompage */
-
+                /* Reset any session variables if the page is coming from the homepage. */
                 if (fromIndex == "true")
                 {
-
                     Session["numUnits"] = null;
                     Session["RemovedExemptions"] = null;
                     Session["AlgorithmRun"] = "false";
@@ -1052,17 +1056,22 @@ namespace custom_study_plan_generator.Controllers
                     Session["CourseCode"] = null;
                     Session["StudentPlan"] = null;
                     Session["StudentPlanSwap"] = null;
-
                 }
 
                 /* Convert the student ID in session to an int */
                 var studentIDRaw = Session["StudentID"].ToString();
                 var studentID = Convert.ToInt32(studentIDRaw.Substring(1, 7));
-                ViewBag.studentid = studentID;
+
                 /* Get a list of all the student plans */
                 var plans = from p in db.StudentPlans
                     where p.student_id == studentID
                     select p;
+
+                // Redirect if no Student Plans are found.
+                if (plans.Count() == 0)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
 
                 /* Get the id of the most recent plan */
                 var newestPlanId = plans.Max(p => p.plan_id);
