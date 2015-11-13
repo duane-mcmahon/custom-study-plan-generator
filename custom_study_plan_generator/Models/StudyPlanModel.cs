@@ -11,7 +11,6 @@ using Google.GData.Spreadsheets;
 using custom_study_plan_generator.MetaObjects;
 using Google.Apis.Services;
 using Google.GData.Client;
-using Google.GData.Spreadsheets;
 
 namespace custom_study_plan_generator.Models
 {
@@ -258,13 +257,29 @@ namespace custom_study_plan_generator.Models
                 }
                 else
                 {
+                    if (uploadable.StudentPlan[index] != null)
+                    {
+                    
+                        CellEntry batchEntry = cellEntries[cellAddr.IdString];
+                        batchEntry.InputValue = uploadable.StudentPlan[index].unit_code;
+                        batchEntry.BatchData = new GDataBatchEntryData(cellAddr.IdString, GDataBatchOperationType.update);
+                        batchRequest.Entries.Add(batchEntry);
+                        index++;
+
+                }
+                    else
+                {
+
                     CellEntry batchEntry = cellEntries[cellAddr.IdString];
-                    batchEntry.InputValue = uploadable.StudentPlan[index].unit_code;
+                    batchEntry.InputValue = "Void";
                     batchEntry.BatchData = new GDataBatchEntryData(cellAddr.IdString, GDataBatchOperationType.update);
                     batchRequest.Entries.Add(batchEntry);
                     index++;
+
+
                 }
             }
+        }
 
             // Submit the update
             sheetsService.Batch(batchRequest, new Uri(cellFeed.Batch));
@@ -272,9 +287,10 @@ namespace custom_study_plan_generator.Models
         }
 
         // Adds a permission to a file. i.e. Allows sharing
-        public static void addPermission(DriveService service, string fileID, string value, string type, string role, StudyPlanModel uploadable)
+        public static void addPermission(DriveService service, string fileID, string type, string role, StudyPlanModel uploadable)
         {
-            Permission permission = new Permission { Value = value, Type = type, Role = role };
+            string email = uploadable.StudentId + "@student.rmit.edu.au";
+            Permission permission = new Permission { Value = email, Type = type, Role = role };
             service.Permissions.Insert(permission, fileID).Execute();
         }
 
