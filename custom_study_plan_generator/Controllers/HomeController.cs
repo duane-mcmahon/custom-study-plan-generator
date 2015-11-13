@@ -63,7 +63,7 @@ namespace custom_study_plan_generator.Controllers
 
                         if (match.Count() > 0)
                         {
-
+                            Session["StudentName"] = ((Student)match.First()).firstname + " " + ((Student)match.First()).lastname;
                             var studentPlan = from sp in db.StudentPlans
                                               where sp.student_id == id
                                               select sp;
@@ -466,6 +466,11 @@ namespace custom_study_plan_generator.Controllers
 
         public ActionResult CreatePlan(string courseSelect)
         {
+            // Redirect user back to the beginning if no Student has been selected.
+            if (Session["StudentID"] == null)
+            {
+                return RedirectToAction("Index","Home");
+            }
 
             /* open database so that it will be autmoatically disposed */
             using (custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities())
@@ -620,6 +625,19 @@ namespace custom_study_plan_generator.Controllers
                 /* Pass the list to the view */
                 ViewBag.unitList = new SelectList(list);
 
+                // Pass Student Details to the View.
+                ViewBag.studentID = Session["StudentID"].ToString();
+                ViewBag.studentName = Session["StudentName"].ToString();
+
+                if (Session["Course"] != null)
+                {
+                    ViewBag.courseName = ((CourseDTO)Session["Course"]).name.ToString();
+                }
+                else
+                {
+                    ViewBag.courseName = "";
+                }
+                
                 return View();
             }
 
@@ -628,14 +646,13 @@ namespace custom_study_plan_generator.Controllers
 
         public ActionResult Exemptions()
         {
-            // Check a valid DefaultPlan is in the Session variable.
-            if (Session["StudentPlanInitial"] == null)
+            // Check a valid DefaultPlan is in the Session variable and a Student has been selected.
+            if (Session["StudentPlanInitial"] == null ||
+                Session["StudentID"] == null)
             {
                 // No Course has been selected - Redirect back to the course selection page.
                 return RedirectToAction("Index", "Home");
             }
-
-            ViewBag.studentid = Session["StudentID"].ToString();
 
             /* Retreive the start semester from the form and put it in a session variable, to be used on the Modify page */
             if (Session["StartSemester"] == null)
@@ -643,6 +660,11 @@ namespace custom_study_plan_generator.Controllers
                 var startSemester = Request["startSemester"];
                 Session["StartSemester"] = startSemester;
             }
+
+            // Pass Student Details to the View.
+            ViewBag.studentID = Session["StudentID"].ToString();
+            ViewBag.studentName = Session["StudentName"].ToString();
+            ViewBag.courseName = ((CourseDTO)Session["Course"]).name.ToString();
 
             return View();
         }
@@ -723,8 +745,9 @@ namespace custom_study_plan_generator.Controllers
 
         public ActionResult Modify()
         {
-            // Check a valid StudentPlan is in the Session variable.
-            if (Session["StudentPlanInitial"] == null)
+            // Check a valid StudentPlan is in the Session variable and a Student has been selected.
+            if (Session["StudentPlanInitial"] == null ||
+                Session["StudentID"] == null)
             { 
                 // No Course has been selected - Redirect back to the Index page.
                 return RedirectToAction("Index", "Home");
@@ -737,8 +760,6 @@ namespace custom_study_plan_generator.Controllers
                 Session["AlgorithmRun"] = "false";
                 Session["Rerun"] = "false";
             }
-
-            ViewBag.studentid = Session["StudentID"].ToString();
 
             // Retrieve sessionList of coursePlan (units) from Session variable
             // StudentPlan.
@@ -865,6 +886,11 @@ namespace custom_study_plan_generator.Controllers
 
                 }
             }
+
+            // Pass Student Details to the View.
+            ViewBag.studentID = Session["StudentID"].ToString();
+            ViewBag.studentName = Session["StudentName"].ToString();
+            ViewBag.courseName = ((CourseDTO)Session["Course"]).name.ToString();
 
             return View();
         }
@@ -1384,10 +1410,15 @@ namespace custom_study_plan_generator.Controllers
         public ActionResult Final()
         {
             // Prevent user from accessing the final page if the algorithm hasn't yet run.
-            if (Session["StudentPlan"] == null)
+            if (Session["StudentPlan"] == null || Session["StudentID"] == null)
             {
                 return RedirectToAction("Index", "Home");
             }
+
+            // Pass Student Details to the View.
+            ViewBag.studentID = Session["StudentID"].ToString();
+            ViewBag.studentName = Session["StudentName"].ToString();
+            ViewBag.courseName = ((CourseDTO)Session["Course"]).name.ToString();
 
             return View();
         }

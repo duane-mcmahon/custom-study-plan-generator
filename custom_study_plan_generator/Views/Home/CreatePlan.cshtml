@@ -6,13 +6,11 @@
         <div id="textDefault" class="textCP">
             <div class="CPcol1 inline">
                 <div class="inline">
-                    @if (ViewBag.courseSelected == true)
-                    {
-                        <input id ="startSemester" type="checkbox" name="startSemester" value="startSemester" /> @: Mid-Year Intake
-                    }
+                    @ViewBag.studentID
+                    @ViewBag.studentName
                 </div>
-                <div class="inline">
-                    <!-- Avaliable location - top left -->
+                <div class="inline">                    
+                    
                 </div>
             </div>
 
@@ -22,17 +20,28 @@
 
             <div class="CPcol3 inline">
                 <div class="inline">
-                    <!-- Available location - top right -->
+                    @if (ViewBag.courseSelected == true)
+                    {
+                        @ViewBag.courseName
+                    }
                 </div>
                 <div class="inline">
-                    <!-- Available location - top right -->
+
                 </div>
             </div>
             <div class="inline CPcol1desc">
-                @using (Html.BeginForm("Index", "Home", FormMethod.Post))
-                {
-                    <button type="submit" class="CPButton" name="back">Back</button>
-                }
+                <div>
+                    @if (ViewBag.courseSelected == true)
+                    {
+                        <input id="startSemester" type="checkbox" name="startSemester" value="startSemester" /> @: Mid-Year Intake
+                    }
+                </div>
+                <div>
+                    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+                    {
+                        <button type="submit" class="CPButton" name="back">Back</button>
+                    }
+                </div>
             </div>
             <div class="pagewideFont CPcol2desc inline">
                 Select the course the student will be enrolling in. This new plan will will be created from the default plan for that course.
