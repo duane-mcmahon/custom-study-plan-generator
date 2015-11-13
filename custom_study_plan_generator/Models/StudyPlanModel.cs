@@ -11,7 +11,6 @@ using Google.GData.Spreadsheets;
 using custom_study_plan_generator.MetaObjects;
 using Google.Apis.Services;
 using Google.GData.Client;
-using Google.GData.Spreadsheets;
 
 namespace custom_study_plan_generator.Models
 {
