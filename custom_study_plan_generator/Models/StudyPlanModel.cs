@@ -258,13 +258,29 @@ namespace custom_study_plan_generator.Models
                 }
                 else
                 {
+                    if (uploadable.StudentPlan[index] != null)
+                    {
+                    
+                        CellEntry batchEntry = cellEntries[cellAddr.IdString];
+                        batchEntry.InputValue = uploadable.StudentPlan[index].unit_code;
+                        batchEntry.BatchData = new GDataBatchEntryData(cellAddr.IdString, GDataBatchOperationType.update);
+                        batchRequest.Entries.Add(batchEntry);
+                        index++;
+
+                }
+                    else
+                {
+
                     CellEntry batchEntry = cellEntries[cellAddr.IdString];
-                    batchEntry.InputValue = uploadable.StudentPlan[index].unit_code;
+                    batchEntry.InputValue = "Void";
                     batchEntry.BatchData = new GDataBatchEntryData(cellAddr.IdString, GDataBatchOperationType.update);
                     batchRequest.Entries.Add(batchEntry);
                     index++;
+
+
                 }
             }
+        }
 
             // Submit the update
             sheetsService.Batch(batchRequest, new Uri(cellFeed.Batch));

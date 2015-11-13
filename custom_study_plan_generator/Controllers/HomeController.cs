@@ -682,7 +682,7 @@ namespace custom_study_plan_generator.Controllers
                 exemptions = data.Split(',').ToList();
 
                 // Make sure Exemption Limit has not been reached. 
-                if (exemptions.Count > 0 && exemptions.Count <= ((CourseDTO)Session["Course"]).max_credit)
+                if (exemptions.Count <= ((CourseDTO)Session["Course"]).max_credit)
                 {
                     // Valid number of Exemptions has been selected - mark the Exemptions in the session variable. 
                     foreach (CoursePlan unit in Session["StudentPlanInitial"] as List<CoursePlan>)
@@ -1520,6 +1520,14 @@ namespace custom_study_plan_generator.Controllers
 
         public ActionResult submitPlan()
         {
+
+            if (Session["StudyPlan"] == null)
+            {
+
+                TempData["msg"] = "<script>alert('Please create a course to upload!');</script>";
+
+                return View();
+            }
 
             FileModel m = new FileModel();
 
