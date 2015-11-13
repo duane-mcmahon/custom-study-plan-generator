@@ -1629,7 +1629,10 @@ namespace custom_study_plan_generator.Controllers
 
             }
             // Permission args are currently hardcoded. Uncomment and replace STUDENTNUMBER to enable sharing of the file.
-            //StudyPlanModel.addPermission(driveService, returnedFile.Id, STUDENTNUMBER + "@student.rmit.edu.au", "user", "reader");
+
+            
+
+            StudyPlanModel.addPermission(driveService, returnedFile.Id, "user", "reader", step2);
             // For javascript sharing popup
             ViewBag.UserAccessToken = result.Credential.Token.AccessToken;
             ViewBag.FileId = returnedFile.Id;
