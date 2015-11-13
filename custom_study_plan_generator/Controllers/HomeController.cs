@@ -1636,6 +1636,7 @@ namespace custom_study_plan_generator.Controllers
             // For javascript sharing popup
             ViewBag.UserAccessToken = result.Credential.Token.AccessToken;
             ViewBag.FileId = returnedFile.Id;
+            ViewBag.AlternateLink = returnedFile.AlternateLink;
 
             return View(step1);
 

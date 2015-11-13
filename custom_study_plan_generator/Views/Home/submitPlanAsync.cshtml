@@ -25,11 +25,7 @@
 <table>
     <tr>
         <td>
-            @Html.ActionLink("Download", "DownloadAsync", new
-                     {
-                         title = Model.Title,
-                         downloadUrl = Model.DownloadUrl
-                     })
+            <a href="@ViewBag.AlternateLink" target="_blank">Link to File</a>
         </td>
         <!-- <td>
             <button onclick="s.showSettingsDialog()">Share</button>
