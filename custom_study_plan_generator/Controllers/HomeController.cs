@@ -1114,34 +1114,6 @@ namespace custom_study_plan_generator.Controllers
                     }
                 }
 
-                
-
-
-
-
-
-
-
-
-
-
-
-                /* Find the unit names that match the unit code in the list of units in the students plan */
-                /*var unitNameQuery = db.Units.Join(units, u => u.unit_code, p => p.unit_code,
-                    (unitDB, unitP) => new {unitP.unit_no, unitDB.name});*/
-
-                /* Order the list of unit names by their order number according to the student plan */
-               /* unitNameQuery = unitNameQuery.OrderBy(un => un.unit_no);*/
-
-                /* Filter query to consist only of unit names */
-                /*var unitNamesFiltered = from un in unitNameQuery
-                    select un.name;*/
-
-                
-
-                /* create the unit list */
-                /*var sessionList = new List<string>(unitNamesFiltered);*/
-
                 /* Get the course name from course identified in StudentPlan */
                 var courseName = (from c in db.Courses
                     where c.course_code == plan.course_code
@@ -1354,7 +1326,7 @@ namespace custom_study_plan_generator.Controllers
 
 
             /* Retreive required variables from session */
-            List<string> sessionList = (List<string>) Session["StudentPlan"];
+            List<string> unitList = (List<string>) Session["StudentPlan"];
             List<string> RemovedExemptions = (List<string>) Session["RemovedExemptions"];
             string studentIDRaw = Session["StudentID"].ToString();
             var studentID = Convert.ToInt32(studentIDRaw.Substring(1, 7));
@@ -1394,7 +1366,7 @@ namespace custom_study_plan_generator.Controllers
                     select dp;
 
                 /* join the units from the seesionList to units in the database to get additional details */
-                var query = sessionList.Join(db.Units, sl => sl, u => u.name,
+                var query = unitList.Join(db.Units, sl => sl, u => u.name,
                     (unitSL, unitDB) => new {unitDB.unit_code, name = unitSL});
                 
                 /* join the units in the previous query to units in the default plan to get the semester details */
@@ -1403,8 +1375,9 @@ namespace custom_study_plan_generator.Controllers
 
                 /* Loop through the sessionList to add units to the studentPlan in the correct order, 
                  * with the approproate details */
+
                 var count = 1;
-                foreach (var unit in sessionList)  
+                foreach (var unit in unitList)  
                 {
                     if (unit != null)
                     {
@@ -1414,15 +1387,92 @@ namespace custom_study_plan_generator.Controllers
                         spu.unit_code = query2.Where(u => u.name == unit.ToString()).FirstOrDefault().unit_code;
                         spu.unit_no = count;
                         spu.semester = query2.Where(u => u.name == unit.ToString()).FirstOrDefault().semester;
+                     
                         db.StudentPlanUnits.Add(spu);
-                       
 
                     }
+               
                     count++;
                 }
 
                 /* NEED TO ADD A TRY-CATCH */
                 db.SaveChanges();
+
+                /* ***** Create the CoursePlan sessionList needed for uploading the plan ***** */
+
+                /* Get the matching course and put it into a meta object */
+                var course = (from c in db.Courses
+                              where c.name == sp.course_code
+                              select new CourseDTO
+                              {
+                                  course_code = c.course_code,
+                                  duration = c.duration,
+                                  name = c.name,
+                                  num_units = c.num_units,
+                                  max_credit = c.max_credit
+                              }).FirstOrDefault();
+
+                var defaultPlans = from plan in db.DefaultPlans
+                            select plan;
+                
+                /* Select the plan that matches the meta course */
+                /*defaultPlans = defaultPlans.Where(u => u.course_code == course.course_code).OrderBy(u => u.unit_no);*/
+
+                var spu2 = from spu in db.StudentPlanUnits
+                           where spu.plan_id == planID
+                           select spu;
+                
+                var sessionQuery = db.Units.Join(spu2, u => u.unit_code, p => p.unit_code,
+                        (order, plan) =>
+                            new CoursePlan
+                            {
+                                position = plan.unit_no,
+                                semester = plan.semester,
+                                unit_code = order.unit_code,
+                                name = order.name,
+                                type_code = order.type_code,
+                                semester1 = order.semester1,
+                                semester2 = order.semester2,
+                                exempt = false,
+                                preferred_year = order.preferred_year,
+                            });
+
+                sessionQuery = sessionQuery.OrderBy(u => u.position);
+
+                
+                /* Convert the query to be stored in the session to a list of CoursePlan objects */
+                List<CoursePlan> sessionList = new List<CoursePlan>(sessionQuery);
+
+                /* Get a list of prerequisites for each unit and add it to the CoursePlan object */
+                /* for (var x = 0; x < sessionList.Count(); x++)
+                {
+                    var unitCode = sessionList[x].unit_code;
+
+                    var prerequisites = from p in db.UnitPrerequisites
+                        where p.course_code == course.course_code
+                        where p.unit_code.Equals(unitCode)
+                        select p.prereq_code;
+
+                     ( Convert the prerequisites for this unitCode into as List<string> 
+                    List<string> prereqList = prerequisites.ToList();
+
+                     Modiy the original list for the session to include the list of prereqs for this unit 
+                    sessionList[x].prerequisites = new List<string>(prereqList);
+                } */
+                 
+
+                var uploadable = new StudyPlanModel();
+
+                uploadable.CourseCode = sp.course_code;
+                uploadable.StudentPlan = sessionList;
+                uploadable.StudentId = Session["StudentID"].ToString();
+                uploadable.BeginningSemester = sp.start_semester;
+
+                Session["StudyPlan"] = uploadable;
+
+                /* see submitplanasync
+                 * using session["StudyPlan"]
+                 */
 
             }
 
