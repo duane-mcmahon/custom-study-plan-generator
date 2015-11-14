@@ -1412,8 +1412,8 @@ namespace custom_study_plan_generator.Controllers
                                   max_credit = c.max_credit
                               }).FirstOrDefault();
 
-                var defaultPlans = from plan in db.DefaultPlans
-                            select plan;
+                /*var defaultPlans = from plan in db.DefaultPlans
+                            select plan;*/
                 
                 /* Select the plan that matches the meta course */
                 /*defaultPlans = defaultPlans.Where(u => u.course_code == course.course_code).OrderBy(u => u.unit_no);*/
@@ -1459,6 +1459,21 @@ namespace custom_study_plan_generator.Controllers
                      Modiy the original list for the session to include the list of prereqs for this unit 
                     sessionList[x].prerequisites = new List<string>(prereqList);
                 } */
+
+                var numDefaultUnits = db.Courses.Where(c => c.course_code == courseCode).FirstOrDefault().num_units;
+                for (var x = 0; x < numDefaultUnits; x++)
+                {
+
+                    if (x + 1 > sessionList.Count())
+                    {
+                        sessionList.Add(null);
+                    }
+                    
+                    else if (sessionList[x].position != x + 1)
+                    { 
+                        sessionList.Insert(x, null);
+                    }
+                }
                  
 
                 var uploadable = new StudyPlanModel();
