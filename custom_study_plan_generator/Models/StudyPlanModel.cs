@@ -324,18 +324,18 @@ namespace custom_study_plan_generator.Models
                     // a JSON JArray allows the trace elements to be accessed
                     // directly.
                     IDictionary<string, object> error = op.Error.Details[0];
-                    Console.WriteLine(
+                    Debug.WriteLine(
                         "Script error message: {0}", error["errorMessage"]);
                     if (error["scriptStackTraceElements"] != null)
                     {
                         // There may not be a stacktrace if the script didn't
                         // start executing.
-                        Console.WriteLine("Script error stacktrace:");
+                        Debug.WriteLine("Script error stacktrace:");
                         Newtonsoft.Json.Linq.JArray st =
                             (Newtonsoft.Json.Linq.JArray) error["scriptStackTraceElements"];
                         foreach (var trace in st)
                         {
-                            Console.WriteLine(
+                            Debug.WriteLine(
                                 "\t{0}: {1}",
                                 trace["function"],
                                 trace["lineNumber"]);
@@ -358,7 +358,7 @@ namespace custom_study_plan_generator.Models
             {
                 // The API encountered a problem before the script
                 // started executing.
-                Console.WriteLine("Error calling API:\n{0}", e);
+                Debug.WriteLine("Error calling API:\n{0}", e);
             }
 
 
