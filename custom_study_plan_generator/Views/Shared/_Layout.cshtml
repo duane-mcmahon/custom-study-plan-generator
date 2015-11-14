@@ -20,29 +20,29 @@
                         <nav class="global-nav" role="navigation" aria-label="Global navigation">
                             <ul>
 
-                            <li class="first">@Html.ActionLink("Home", "Index", "Home")<span class="icon arrow-down-light-grey"></span></li>
-                            <li>@Html.ActionLink("View Drive", "driveAsync", "Home")</li>
-                            <li>@Html.ActionLink("Upload to Drive", "submitPlan", "Home")</li>
-                                </ul>
-                        
+                                <li class="first">@Html.ActionLink("Home", "Index", "Home")<span class="icon arrow-down-light-grey"></span></li>
+                                <li>@Html.ActionLink("View Drive", "driveAsync", "Home")</li>
+                                <li>@Html.ActionLink("Upload to Drive", "submitPlan", "Home")</li>
+                            </ul>
+
                         </nav>
                     </div>
 
-                                
-                                <div class="large-6 columns">
-                                <nav class="user-nav">
 
-                                    <ul>
-                                        @Html.Partial("_LoginPartial")
-                                    </ul>                                                  
-                           
+                    <div class="large-6 columns">
+                        <nav class="user-nav">
+
+                            <ul>
+                                @Html.Partial("_LoginPartial")
+                            </ul>
+
                         </nav>
                     </div>
-                
-                    </div><!-- /.row -->
+
+                </div><!-- /.row -->
             </div><!-- /.global -->
         </div>
-    
+    </div>
     <header id="header" class="header">
         <div class="pageTitle">
             Custom Study Plan Generator
@@ -54,6 +54,20 @@
     <footer id="footer" class="footer">
         <div>&copy; @DateTime.Now.Year - Custom Study Plan Generator</div>
     </footer>
+
+
+    @{
+        if (TempData["msg"] != null && TempData["msg"].ToString() == "false")
+        {
+            @Scripts.Render("~/bundles/Unauth");
+        }
+        else
+        {
+            
+        }
+
+
+    }
 </body>
 
 </html>

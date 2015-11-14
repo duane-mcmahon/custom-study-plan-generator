@@ -85,6 +85,10 @@
       <HintPath>..\packages\Google.Apis.1.9.2\lib\net40\Google.Apis.PlatformServices.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Google.Apis.Script.v1">
+      <HintPath>..\packages\Google.Apis.Script.v1.1.9.2.10\lib\portable-net40+sl50+win+wpa81+wp80\Google.Apis.Script.v1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Google.GData.Client">
       <HintPath>..\packages\Google.GData.Client.2.2.0.0\lib\Google.GData.Client.dll</HintPath>
       <Private>True</Private>
@@ -427,6 +431,7 @@
     <Content Include="Scripts\Modify.js" />
     <Content Include="Scripts\StudentCreate.js" />
     <Content Include="Scripts\StudentIndex.js" />
+    <Content Include="Scripts\Unauth.js" />
     <Content Include="Scripts\UnitCreate.js" />
     <Content Include="Scripts\UnitEdit.js" />
     <Content Include="Scripts\UnitIndex.js" />

@@ -7,8 +7,11 @@ using Google.Apis.Drive.v2;
 using Google.Apis.Drive.v2.Data;
 using File = Google.Apis.Drive.v2.Data.File;
 using System.Diagnostics;
+using System.Web.Script.Services;
 using Google.GData.Spreadsheets;
 using custom_study_plan_generator.MetaObjects;
+using Google.Apis.Script.v1;
+using Google.Apis.Script.v1.Data;
 using Google.Apis.Services;
 using Google.GData.Client;
 
@@ -285,6 +288,83 @@ namespace custom_study_plan_generator.Models
             sheetsService.Batch(batchRequest, new Uri(cellFeed.Batch));
 
         }
+
+        //format the spreadsheet using Google Apps Script
+        public static bool? curateGoogleSpreadSheet(string fileID, string scriptID, ScriptService service)
+        {
+
+            List<object> arg = new List<object>();
+            arg.Add(fileID);
+
+            bool? success = null;
+
+
+
+            //todo
+            // Create an execution request object.
+            ExecutionRequest request = new ExecutionRequest();
+            request.Function = "setDefaultTab";
+            request.Parameters = arg;
+            ScriptsResource.RunRequest runReq =
+                    service.Scripts.Run(request, scriptID);
+
+            try
+            {
+                // Make the API request.
+                Operation op = runReq.Execute();
+
+                if (op.Error != null)
+                {
+                    // The API executed, but the script returned an error.
+
+                    // Extract the first (and only) set of error details
+                    // as a IDictionary. The values of this dictionary are
+                    // the script's 'errorMessage' and 'errorType', and an
+                    // array of stack trace elements. Casting the array as
+                    // a JSON JArray allows the trace elements to be accessed
+                    // directly.
+                    IDictionary<string, object> error = op.Error.Details[0];
+                    Console.WriteLine(
+                        "Script error message: {0}", error["errorMessage"]);
+                    if (error["scriptStackTraceElements"] != null)
+                    {
+                        // There may not be a stacktrace if the script didn't
+                        // start executing.
+                        Console.WriteLine("Script error stacktrace:");
+                        Newtonsoft.Json.Linq.JArray st =
+                            (Newtonsoft.Json.Linq.JArray) error["scriptStackTraceElements"];
+                        foreach (var trace in st)
+                        {
+                            Console.WriteLine(
+                                "\t{0}: {1}",
+                                trace["function"],
+                                trace["lineNumber"]);
+                        }
+                    }
+
+                    success = false;
+                }
+                else
+                {
+
+                    success = true;
+
+                }
+                
+                    
+                
+            }
+            catch (Google.GoogleApiException e)
+            {
+                // The API encountered a problem before the script
+                // started executing.
+                Console.WriteLine("Error calling API:\n{0}", e);
+            }
+
+
+            return success;
+        }
+
 
         // Adds a permission to a file. i.e. Allows sharing
         public static void addPermission(DriveService service, string fileID, string type, string role, StudyPlanModel uploadable)

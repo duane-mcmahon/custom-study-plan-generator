@@ -383,3 +383,6 @@ C:\Users\Duane\Documents\Visual Studio 2013\Projects\production_branch\custom-st
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\production_branch\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.dll
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\production_branch\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.pdb
 C:\Users\Duane\Documents\Visual Studio 2013\Projects\production_branch\custom-study-plan-generator\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csprojResolveAssemblyReference.cache
+C:\Users\Duane\Documents\Visual Studio 2013\Projects\development_branch\custom_study_plan_generator\bin\Google.Apis.Script.v1.dll
+C:\Users\Duane\Documents\Visual Studio 2013\Projects\development_branch\custom_study_plan_generator\bin\Google.Apis.Script.v1.pdb
+C:\Users\Duane\Documents\Visual Studio 2013\Projects\development_branch\custom_study_plan_generator\bin\Google.Apis.Script.v1.xml

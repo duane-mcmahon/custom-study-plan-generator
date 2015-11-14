@@ -13,6 +13,7 @@ using custom_study_plan_generator.App_Start;
 using Google.Apis.Auth.OAuth2.Mvc;
 using Google.Apis.Drive.v2;
 using Google.Apis.Drive.v2.Data;
+using Google.Apis.Script.v1;
 using Google.Apis.Services;
 using File = Google.Apis.Drive.v2.Data.File;
 using Google.GData.Client;
@@ -1616,7 +1617,7 @@ namespace custom_study_plan_generator.Controllers
             if (Session["StudyPlan"] == null)
             {
 
-                TempData["msg"] = "<script>alert('Please create a course to upload!');</script>";
+                TempData["msg"] = "false";
 
                 return View();
             }
@@ -1681,6 +1682,8 @@ namespace custom_study_plan_generator.Controllers
 
 
             File returnedFile = null;
+
+            bool? returnedResult = null;
             
             // Creating spreadsheets api service
             // Spreadsheet api test
@@ -1696,6 +1699,21 @@ namespace custom_study_plan_generator.Controllers
                 RequestFactory = requestFactory
             };
 
+            // Create Google Apps Script Execution API service.
+
+
+
+            //project key in project properties
+            string scriptId = "M9QBeBg3n43dSAbJG6RDbedJ7ZTkmZeIJ";
+           
+            var sservice = new ScriptService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = result.Credential,
+                ApplicationName = "custom-study-plan-generator"
+            });
+
+
+
             if (folderList.Items.Count >= 1)
             {
                 // If multiple folders with StudyPlanModel.StudyPlanDirectory title always choose first one
@@ -1710,6 +1728,7 @@ namespace custom_study_plan_generator.Controllers
 
                 returnedFile = StudyPlanModel.generateGoogleSpreadSheet(driveService, sheetsService, step1.Title, studyPlanFolder.Id, fileList, step2);
 
+                returnedResult = StudyPlanModel.curateGoogleSpreadSheet(returnedFile.Id, scriptId, sservice);
 
             }
             else
@@ -1719,10 +1738,13 @@ namespace custom_study_plan_generator.Controllers
 
                 returnedFile = StudyPlanModel.generateGoogleSpreadSheet(driveService, sheetsService, step1.Title, folder.Id, step2);
 
+                returnedResult = StudyPlanModel.curateGoogleSpreadSheet(returnedFile.Id, scriptId, sservice);
+
             }
-            // Permission args are currently hardcoded. Uncomment and replace STUDENTNUMBER to enable sharing of the file.
 
             
+            // Permission args are currently hardcoded. Uncomment and replace STUDENTNUMBER to enable sharing of the file.
+           
 
             StudyPlanModel.addPermission(driveService, returnedFile.Id, "user", "reader", step2);
             // For javascript sharing popup
