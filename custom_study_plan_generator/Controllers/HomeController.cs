@@ -302,7 +302,7 @@ namespace custom_study_plan_generator.Controllers
                 /* Sort the list alphabetically */
                 list.Sort();
                 /* Pass the list to the view */
-                ViewBag.unitList = new SelectList(list);
+                ViewBag.unitList = new MultiSelectList(list);
 
                 return View();
             }

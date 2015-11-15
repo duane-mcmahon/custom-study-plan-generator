@@ -1,10 +1,13 @@
-﻿var dragParentId;
+﻿var TOTAL_SWAP_SPACES = 12;
+var dragParentId;
 var preventProgress = false;
 
 $(document).ready(function () {
+    // Hide Modal Window Errors.
+    $('#dialog-unitsnotadded').hide();
+    $('#dialog-confirm').hide();
 
     /* Dynamic sizing of background divs and table height */
-
     var heightTable = $('#planTable').height();
     $('#textDefault').css("height", heightTable * 3.1);
     $('#backerDefault').css("height", heightTable * 3.3);
@@ -65,9 +68,7 @@ $(document).ready(function () {
 
     /* Delete a unit from the page */
     $('.delete').click(function () {
-        
         deleteInnerCell(this);
-
     });
 
     /* Add a unit to the swap space */
@@ -80,7 +81,7 @@ $(document).ready(function () {
         var ssA;
         var ssB;
 
-        /* Get all the parent cells in the swap space and sort them by ID */
+        // Get all the parent cells in the swap space and sort them by ID.
         var elements = $('.swapSpaceCell').sort(function (a, b) {
             idAString = (a.id).toString();
             idBString = (b.id).toString();
@@ -89,64 +90,192 @@ $(document).ready(function () {
             return parseInt(ssA) - parseInt(ssB);
         })
 
-        var unit = $('#unitDropDown :selected').text();
-        var swapSpaceFull = 0;
-        var duplicate = false;
+        var units = [];
+        var duplicateUnits = [];
+        var validUnits = [];
+        var excessUnits = [];
+        var finalUnits = [];
+        var countSelected = 0;
+        var swapSpacesFull = 0;
+        var countValid = 0;
+        var countDuplicates = 0;
 
-        /* Check if the unit already exists, if it does give an error  */
-        $('.innerCell').each(function () {
-            if ($(this).html() == unit) {
-                duplicate = true;
-                $('#errors').html("Error, unit is already on plan. Please select a different unit");
-                $('#errors').show();
-
-            }
+        // Retrieve all selected units from the Multiselect List.
+        $('#unitDropDown :selected').each(function (i, selected) {
+            units[countSelected] = $(selected).text();
+            countSelected++;
         });
 
-        /* If the unit doesn't exist, cycle through the swap space parent cells and add to the first empty one */
-        /* Generate a unique id */
-        var id = "id" + Math.random().toString(16).slice(2)
-        var innerCellId = "#" + id;
-
-        if (duplicate == false) {
-            for (var x = 0; x < elements.length; x++) {
-                if ($(elements[x]).children().length == 0) {
-
-                    $(elements[x]).append("<div id = '" + id + "' class = 'innerCell active' draggable = 'true' ondragstart = 'drag(event)' ondragend = 'dragend(event, this)'></div>");
-                    $(innerCellId).text(unit);
-
-                    /* Create hover icon */
-                    var hoverId = 'hover' + id;
-                    $(innerCellId).append("<img id = '" + hoverId + "' class = 'hover' src = '../Content/Images/hover.png' />");
-                    var jId = "#" + hoverId;
-                    tooltip(jId, "tooltip");
-
-                    /* Create delete icon */
-                    var deleteId = 'delete' + count;
-                    $(innerCellId).append("<img id = '" + deleteId + "' class = 'delete' src = '../Content/Images/delete.png' />");
-
-                    break;
-                }
-                else {
-                    swapSpaceFull += 1;
-                }
-
+        // Check current capacity of Swap Space.
+        for (var x = 0; x < elements.length; x++) {
+            if ($(elements[x]).children().length != 0) {
+                swapSpacesFull++;
             }
         }
 
-        /* If the swap space was full, give an error */
-        if (swapSpaceFull == 12) {
+        // Check Units have been slected to add to the Plan.
+        if (units.length == 0)
+        {
+            // User did not select any units to add - display error message.
+            $('#errors').html("Please select a unit to add");
+            $('#errors').show();
+        }
+        else if (swapSpacesFull == TOTAL_SWAP_SPACES)
+        {
+            // If the swap space was full, give an error.
             $('#errors').html("Error, swap space is full. Please clear some space first.");
             $('#errors').show();
         }
+        else
+        {
+            // Check if the unit already exists, if it does give an error.
+            for (var x = 0; x < units.length; x++)
+            {
+                // Loop through existing units and check for duplicates.
+                var duplicate = false;
+                
+                $('.innerCell').each(function () {
 
-        /* Reset the delete cell click functiuon to include this unit */
-        $('.delete').click(function () {
+                    //if (($(this).text()).indexOf(units[x]) > -1) {
+                    if (($(this).text()) == units[x]) {
+                        // Match found, mark as duplicate.
+                        duplicate = true;
+                        duplicateUnits[countDuplicates] = units[x];
+                        countDuplicates++;
+                    }
+                });
 
-            deleteInnerCell(this);
+                // Add non-duplicates to the list of valid units to add.
+                if (!duplicate)
+                {
+                    validUnits[countValid] = units[x];
+                    countValid++;
+                }
+            }
 
-        });
+            // Proceed if Valid units are selected.
+            if (validUnits.length != 0)
+            {
+                // Check how many units can fit into the available space.
+                var excess = 0;
+                var availableSwapSpace = 0;
+                availableSwapSpace = (TOTAL_SWAP_SPACES - swapSpacesFull);
 
+                // Make list of units that aren't going to fit.
+                if (validUnits.length > availableSwapSpace)
+                {
+                    // Find position of first excess unit.
+                    excess = (validUnits.length - availableSwapSpace);
+                    
+                    // Loop from start of excess to end of selected units.
+                    for (var x = 0; x < excess; x++) {
+                        var pos = (availableSwapSpace + x);
+                        excessUnits[x] = validUnits[pos];
+                    }
+                }
+                
+                // Find final number of valid units that will fit.
+                var finalLength = (validUnits.length - excess);
+
+                // Create final list of valid units to be Added, minus the duplicates and any excess.
+                for (var x = 0; x < finalLength; x++)
+                {
+                    finalUnits[x] = validUnits[x];
+                }
+            }
+
+            // Create list of available blank spaces in the Swap Space.
+            var spaces = [];
+            var countSpaces = 0;
+
+            for (var x = 0; x < elements.length; x++) {
+                if ($(elements[x]).children().length == 0) {
+                    spaces[countSpaces] = x;
+                    countSpaces++;
+                }
+            }
+
+            // Loop through the valid final units and add them into empty Swap Spaces.
+            for (var y = 0; y < finalUnits.length; y++)
+            {
+                var id = "id" + Math.random().toString(16).slice(2)
+                var innerCellId = "#" + id;
+
+                $(elements[spaces[y]]).append("<div id = '" + id + "' class = 'innerCell active' draggable = 'true' ondragstart = 'drag(event)' ondragend = 'dragend(event, this)'></div>");
+                $(innerCellId).text(finalUnits[y]);
+
+                // Create hover icon.
+                var hoverId = 'hover' + id;
+                $(innerCellId).append("<img id = '" + hoverId + "' class = 'hover' src = '../Content/Images/hover.png' />");
+                var jId = "#" + hoverId;
+                tooltip(jId, "tooltip");
+
+                // Create delete icon.
+                var deleteId = 'delete' + id;
+                $(innerCellId).append("<img id = '" + deleteId + "' class = 'delete' src = '../Content/Images/delete.png' />");
+
+                // Reset the delete cell click function to include this unit.
+                $('.delete').click(function () {
+                    deleteInnerCell(this);
+                });
+            }
+        }
+
+        // Show error message if there were duplicates or excess units that could not fit into Swap Space.
+        if (duplicateUnits.length > 0 || excessUnits.length > 0)
+        {
+            // Reset any previous messages.
+            $('.duplicates').hide();
+            $('.excess').hide();
+
+            // Add Duplicate units to the message window.
+            if (duplicateUnits.length > 0)
+            {
+                var duplicateMsg = ""
+
+                for (var x = 0; x < duplicateUnits.length; x++) {
+                    var listItem = "<li>" + duplicateUnits[x] + "</li>"
+                    duplicateMsg += listItem;
+                }
+
+                $('#duplicates').html(duplicateMsg);
+                $('.duplicates').show();
+            }
+
+            // Add Excess units to message window.
+            if (excessUnits.length > 0)
+            {
+                var excessMsg = "";
+
+                for (var x = 0; x < excessUnits.length; x++) {
+                    var listItem = "<li>" + excessUnits[x] + "</li>"
+                    excessMsg += listItem;
+                }
+
+                $('#excess').html(excessMsg);
+                $('.excess').show();
+            }
+
+            // Display the Error Message.
+            $('.unitsNotAdded').show();
+
+            $(function () {
+                $("#dialog-unitsnotadded").dialog({
+                    resizable: false,
+                    height: 550,
+                    width: 550,
+                    modal: true,
+                    buttons: {
+                        Okay: function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            });
+        }
+
+        // Deselect all items in the MultiSelectList.
+        $('#unitDropDown option').removeAttr("selected");
     });
 
     $('#savePlan').click(function () {
@@ -454,7 +583,7 @@ function deleteInnerCell(xThis) {
             height: 200,
             modal: true,
             buttons: {
-                "Delete unit": function () {
+                "Delete Unit": function () {
 
                     if ($(target).hasClass("planCell")) {
                         /* Set the prevent other actions settings to on */

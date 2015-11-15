@@ -298,10 +298,10 @@
                 </div>
                 <div class="swapSpaceHolder">
                     <div>
-                        @Html.DropDownList("List", ViewBag.unitList as MultiSelectList, new { id = "unitDropDown", style = "width: 15%; font-size: 1vw" })
+                        @Html.ListBox("List", ViewBag.unitList as MultiSelectList, new { id = "unitDropDown", style = "width: 40%; font-size: 1vw" })
                     </div>
                     <div>
-                        <button id ="addUnit" type="button" class="modifyButton" name="addUnit" value="addUnit" title="Add a Unit">AddUnit</button><br />
+                        <button id ="addUnit" type="button" class="modifyButton" name="addUnit" value="addUnit" title="Add a Unit">Add Units</button><br />
                     </div>
                 </div>
 
@@ -358,5 +358,13 @@
 </div>
 
 <div id="dialog-confirm" title="Delete Unit?">
-    <p class ="dialogConfirm"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0"></span>This unit will be deleted from the plan. Are you sure?</p>
+    <p class="dialogConfirm"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0"></span>This unit will be deleted from the plan. Are you sure?</p>
+</div>
+
+<div id="dialog-unitsnotadded" title="Could Not Add Units">
+    <p class="unitsNotAdded"><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0"></span>The following units could not be added:</p>
+    <p class="duplicates">Duplicates:</p>
+    <ul id="duplicates" class="duplicates"></ul>
+    <p class="excess">Not Enough Space:</p>
+    <ul id="excess" class="excess"></ul>
 </div>
