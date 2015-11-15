@@ -407,14 +407,25 @@ function dragend(ev, target) {
         $('.innerCell').attr("draggable", "false");
         preventProgress = true;
 
-        
+        var PLAN_CELL = 'p';
+        var SWAP_CELL = 's';
+
+        // If moved WITHIN the swap space, move it to its new position in the session swap list.
+        if ($(target).parent().hasClass('swapSpaceCell') &&
+            (dragParentId.indexOf(SWAP_CELL) === 0))
+        {
+            $('.innerCell').attr("draggable", "true");
+            $('.prevent').css("display", "none");
+            preventProgress = false;
+        }
 
         /* If moved TO the swap space, remove unit from session plan */
-        if ($(target).parent().hasClass('swapSpaceCell')) {
+        if ($(target).parent().hasClass('swapSpaceCell') &&
+            (dragParentId.indexOf(PLAN_CELL) === 0)) {
 
             var idRaw = dragParentId;
             var idString = idRaw.toString();
-            var id = idString.substring(1);
+            var id = idString.replace(/\D/g, '');
 
             dataRemove = id;
 
@@ -439,7 +450,7 @@ function dragend(ev, target) {
 
             var idRaw = $(target).parent().attr('id');
             var idString = idRaw.toString();
-            var id = idString.substring(1);
+            var id = idString.replace(/\D/g, '');
 
             var unit = $(target).text();
 
