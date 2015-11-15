@@ -383,6 +383,7 @@ function savePlan() {
         url: "../Home/EditSave",
         type: "POST",
         success: function (data) {
+            planSaved = true;
             $('#error2').html("Plan saved and uploaded");
             $('#error2').delay(5000).fadeOut('slow').css("color", "green");
             $('#error2').delay(5000).queue(function (next) {

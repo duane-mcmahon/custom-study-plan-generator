@@ -22,17 +22,15 @@
     var count = 1;
     if (studentPlan != null) {
         studentPlan.forEach(function (entry) {
+
+            var innerCellId = "#" + count;
+
             if (entry != "") {
                 idCont = "#p" + count;
-                jQuery('<div/>', {
-                    id: count,
-                    class: 'innerCell active',
-                    draggable: 'true',
-                    ondragstart: 'drag(event)',
-                    ondragend: 'dragend(event, this)',
-                    text: entry.name
 
-                }).appendTo(idCont);
+                $(idCont).append("<div id = '" + count + "' class = 'innerCell active' draggable = 'true' ondragstart = 'drag(event)' ondragend = 'dragend(event, this)'></div>");
+                $(innerCellId).text(entry.name);
+
             }
             count++
         });

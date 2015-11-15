@@ -22,29 +22,20 @@
     var count = 1;
     if (studentPlan != null) {
         studentPlan.forEach(function (entry) {
+
+            var innerCellId = "#" + count;
+
             if (entry != "" && entry.exempt == false) {
                 idCont = "#p" + count;
-                jQuery('<div/>', {
-                    id: count,
-                    class: 'innerCell active',
-                    draggable: 'true',
-                    ondragstart: 'drag(event)',
-                    ondragend: 'dragend(event, this)',
-                    text: entry.name
+               
+                $(idCont).append("<div id = '" + count + "' class = 'innerCell active' draggable = 'true' ondragstart = 'drag(event)' ondragend = 'dragend(event, this)'></div>");
+                $(innerCellId).text(entry.name);
 
-                }).appendTo(idCont);
             }
             else if (entry != "" && entry.exempt == true) {
                 idCont = "#p" + count;
-                jQuery('<div/>', {
-                    id: count,
-                    class: 'innerCell active marked',
-                    draggable: 'true',
-                    ondragstart: 'drag(event)',
-                    ondragend: 'dragend(event, this)',
-                    text: entry.name
-
-                }).appendTo(idCont);
+                $(idCont).append("<div id = '" + count + "' class = 'innerCell active marked' draggable = 'true' ondragstart = 'drag(event)' ondragend = 'dragend(event, this)'></div>");
+                $(innerCellId).text(entry.name);
             }
             count++
         });
