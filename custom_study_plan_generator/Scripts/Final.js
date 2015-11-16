@@ -70,13 +70,26 @@ function savePlan() {
         url: "../Home/FinalSave",
         type: "POST",
         success: function (data) {
-            planSaved = true;
-            $('#error2').html("Plan saved and uploaded");
-            $('#error2').delay(5000).fadeOut('slow').css("color", "green");
-            $('#error2').delay(5000).queue(function (next) {
-                $(this).css("color", "red");
-                next();
-            });
+
+            if (data == "success") {
+                planSaved = true;
+                $('#error2').html("Plan saved");
+                $('#error2').delay(5000).fadeOut('slow').css("color", "green");
+                $('#error2').delay(5000).queue(function (next) {
+                    $(this).css("color", "red");
+                    next();
+                });
+            }
+            else {
+                $('#error2').html("Error saving plan, contact administrator");
+                $('#error2').delay(5000).fadeOut('slow').css("color", "red");
+                $('#error2').delay(5000).queue(function (next) {
+                    $(this).css("color", "red");
+                    next();
+                });
+            }
+
+            
         },
         error: function (data) {
             alert("Error saving plan");

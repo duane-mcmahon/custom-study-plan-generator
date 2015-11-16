@@ -1318,7 +1318,7 @@ namespace custom_study_plan_generator.Controllers
             Session["FromIndex"] = "true";
         }
 
-        public void EditSave()
+        public string EditSave()
         {
 
 
@@ -1392,99 +1392,94 @@ namespace custom_study_plan_generator.Controllers
                     count++;
                 }
 
-                /* NEED TO ADD A TRY-CATCH */
-                db.SaveChanges();
-
-                /* ***** Create the CoursePlan sessionList needed for uploading the plan ***** */
-
-                /* Get the matching course and put it into a meta object */
-                var course = (from c in db.Courses
-                              where c.name == sp.course_code
-                              select new CourseDTO
-                              {
-                                  course_code = c.course_code,
-                                  name = c.name,
-                                  num_units = c.num_units,
-                                  max_credit = c.max_credit
-                              }).FirstOrDefault();
-
-                /*var defaultPlans = from plan in db.DefaultPlans
-                            select plan;*/
-                
-                /* Select the plan that matches the meta course */
-                /*defaultPlans = defaultPlans.Where(u => u.course_code == course.course_code).OrderBy(u => u.unit_no);*/
-
-                var spu2 = from spu in db.StudentPlanUnits
-                           where spu.plan_id == planID
-                           select spu;
-                
-                var sessionQuery = db.Units.Join(spu2, u => u.unit_code, p => p.unit_code,
-                        (order, plan) =>
-                            new CoursePlan
-                            {
-                                position = plan.unit_no,
-                                semester = plan.semester,
-                                unit_code = order.unit_code,
-                                name = order.name,
-                                type_code = order.type_code,
-                                semester1 = order.semester1,
-                                semester2 = order.semester2,
-                                exempt = false,
-                            });
-
-                sessionQuery = sessionQuery.OrderBy(u => u.position);
-
-                
-                /* Convert the query to be stored in the session to a list of CoursePlan objects */
-                List<CoursePlan> sessionList = new List<CoursePlan>(sessionQuery);
-
-                /* Get a list of prerequisites for each unit and add it to the CoursePlan object */
-                /* for (var x = 0; x < sessionList.Count(); x++)
-                {
-                    var unitCode = sessionList[x].unit_code;
-
-                    var prerequisites = from p in db.UnitPrerequisites
-                        where p.course_code == course.course_code
-                        where p.unit_code.Equals(unitCode)
-                        select p.prereq_code;
-
-                     ( Convert the prerequisites for this unitCode into as List<string> 
-                    List<string> prereqList = prerequisites.ToList();
-
-                     Modiy the original list for the session to include the list of prereqs for this unit 
-                    sessionList[x].prerequisites = new List<string>(prereqList);
-                } */
-
-                var numDefaultUnits = db.Courses.Where(c => c.course_code == courseCode).FirstOrDefault().num_units;
-                for (var x = 0; x < numDefaultUnits; x++)
+                try
                 {
 
-                    if (x + 1 > sessionList.Count())
+                    /* NEED TO ADD A TRY-CATCH */
+                    db.SaveChanges();
+
+                    /* ***** Create the CoursePlan sessionList needed for uploading the plan ***** */
+
+                    /* Get the matching course and put it into a meta object */
+                    var course = (from c in db.Courses
+                                  where c.name == sp.course_code
+                                  select new CourseDTO
+                                  {
+                                      course_code = c.course_code,
+                                      name = c.name,
+                                      num_units = c.num_units,
+                                      max_credit = c.max_credit
+                                  }).FirstOrDefault();
+
+                    /*var defaultPlans = from plan in db.DefaultPlans
+                                select plan;*/
+
+                    /* Select the plan that matches the meta course */
+                    /*defaultPlans = defaultPlans.Where(u => u.course_code == course.course_code).OrderBy(u => u.unit_no);*/
+
+                    var spu2 = from spu in db.StudentPlanUnits
+                               where spu.plan_id == planID
+                               select spu;
+
+                    var sessionQuery = db.Units.Join(spu2, u => u.unit_code, p => p.unit_code,
+                            (order, plan) =>
+                                new CoursePlan
+                                {
+                                    position = plan.unit_no,
+                                    semester = plan.semester,
+                                    unit_code = order.unit_code,
+                                    name = order.name,
+                                    type_code = order.type_code,
+                                    semester1 = order.semester1,
+                                    semester2 = order.semester2,
+                                    exempt = false,
+                                });
+
+                    sessionQuery = sessionQuery.OrderBy(u => u.position);
+
+
+                    /* Convert the query to be stored in the session to a list of CoursePlan objects */
+                    List<CoursePlan> sessionList = new List<CoursePlan>(sessionQuery);
+
+                    /* Fill out the sessionList with nulls where there are no units in the corresponding position */
+                    var numDefaultUnits = db.Courses.Where(c => c.course_code == courseCode).FirstOrDefault().num_units;
+                    for (var x = 0; x < numDefaultUnits; x++)
                     {
-                        sessionList.Add(null);
+
+                        if (x + 1 > sessionList.Count())
+                        {
+                            sessionList.Add(null);
+                        }
+
+                        else if (sessionList[x].position != x + 1)
+                        {
+                            sessionList.Insert(x, null);
+                        }
                     }
-                    
-                    else if (sessionList[x].position != x + 1)
-                    { 
-                        sessionList.Insert(x, null);
-                    }
+
+
+                    var uploadable = new StudyPlanModel();
+
+                    uploadable.CourseCode = sp.course_code;
+                    uploadable.StudentPlan = sessionList;
+                    uploadable.StudentId = Session["StudentID"].ToString();
+                    uploadable.BeginningSemester = sp.start_semester;
+
+                    Session["StudyPlan"] = uploadable;
+
+                    /* see submitplanasync
+                     * using session["StudyPlan"]
+                     */
                 }
-                 
 
-                var uploadable = new StudyPlanModel();
-
-                uploadable.CourseCode = sp.course_code;
-                uploadable.StudentPlan = sessionList;
-                uploadable.StudentId = Session["StudentID"].ToString();
-                uploadable.BeginningSemester = sp.start_semester;
-
-                Session["StudyPlan"] = uploadable;
-
-                /* see submitplanasync
-                 * using session["StudyPlan"]
-                 */
+                catch (Exception ex)
+                {
+                    return "failure";
+                }
 
             }
+
+            return "success";
 
         }
 
@@ -1510,7 +1505,7 @@ namespace custom_study_plan_generator.Controllers
             return View();
         }
 
-        public void FinalSave()
+        public string FinalSave()
         {
 
 
@@ -1585,23 +1580,31 @@ namespace custom_study_plan_generator.Controllers
                     }
                 }
 
+                try
+                {
+                    db.SaveChanges();
 
-                db.SaveChanges();
+                    var uploadable = new StudyPlanModel();
 
-                var uploadable = new StudyPlanModel();
+                    uploadable.CourseCode = sp.course_code;
+                    uploadable.StudentPlan = sessionList;
+                    uploadable.StudentId = Session["StudentID"].ToString();
+                    uploadable.BeginningSemester = sp.start_semester;
 
-                uploadable.CourseCode = sp.course_code;
-                uploadable.StudentPlan = sessionList;
-                uploadable.StudentId = Session["StudentID"].ToString();
-                uploadable.BeginningSemester = sp.start_semester;
-                
-                Session["StudyPlan"] = uploadable;
+                    Session["StudyPlan"] = uploadable;
 
-                /* see submitplanasync
-                 * using session["StudyPlan"]
-                 */
+                    /* see submitplanasync
+                     * using session["StudyPlan"]
+                     */
+                }
+                catch (Exception ex)
+                {
+                    return "failure";
+                }
 
             }
+
+            return "success";
 
         }
 
