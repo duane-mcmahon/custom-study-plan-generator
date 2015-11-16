@@ -24,8 +24,8 @@ namespace custom_study_plan_generator.Models
         public string course_code { get; set; }
         public Nullable<int> start_semester { get; set; }
     
-        public virtual Course Course { get; set; }
         public virtual Student Student { get; set; }
         public virtual ICollection<StudentPlanUnit> StudentPlanUnits { get; set; }
+        public virtual Course Course { get; set; }
     }
 }

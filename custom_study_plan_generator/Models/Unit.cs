@@ -16,11 +16,11 @@ namespace custom_study_plan_generator.Models
     {
         public Unit()
         {
+            this.DefaultPlans = new HashSet<DefaultPlan>();
             this.StudentExemptions = new HashSet<StudentExemption>();
+            this.StudentPlanUnits = new HashSet<StudentPlanUnit>();
             this.UnitPrerequisites = new HashSet<UnitPrerequisite>();
             this.UnitPrerequisites1 = new HashSet<UnitPrerequisite>();
-            this.DefaultPlans = new HashSet<DefaultPlan>();
-            this.StudentPlanUnits = new HashSet<StudentPlanUnit>();
         }
     
         public string unit_code { get; set; }
@@ -28,13 +28,12 @@ namespace custom_study_plan_generator.Models
         public string type_code { get; set; }
         public bool semester1 { get; set; }
         public bool semester2 { get; set; }
-        public Nullable<int> preferred_year { get; set; }
     
+        public virtual ICollection<DefaultPlan> DefaultPlans { get; set; }
         public virtual ICollection<StudentExemption> StudentExemptions { get; set; }
+        public virtual ICollection<StudentPlanUnit> StudentPlanUnits { get; set; }
         public virtual UnitType UnitType { get; set; }
         public virtual ICollection<UnitPrerequisite> UnitPrerequisites { get; set; }
         public virtual ICollection<UnitPrerequisite> UnitPrerequisites1 { get; set; }
-        public virtual ICollection<DefaultPlan> DefaultPlans { get; set; }
-        public virtual ICollection<StudentPlanUnit> StudentPlanUnits { get; set; }
     }
 }

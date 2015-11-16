@@ -35,7 +35,7 @@ namespace custom_study_plan_generator.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "unit_code,name,type_code,semester1,semester2,preferred_year")] UnitMeta unit)
+        public ActionResult Create([Bind(Include = "unit_code,name,type_code,semester1,semester2")] UnitMeta unit)
         {
 
             var unitCheck = from un in db.Units
@@ -54,9 +54,6 @@ namespace custom_study_plan_generator.Controllers
             unitAdd.type_code = unit.type_code;
             unitAdd.semester1 = unit.semester1;
             unitAdd.semester2 = unit.semester2;
-
-            /* Remove once database is updated */
-            unitAdd.preferred_year = 0;
 
             ViewBag.type_code = new SelectList(db.UnitTypes, "type_code", "Description");
             
@@ -100,7 +97,7 @@ namespace custom_study_plan_generator.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "unit_code,name,type_code,semester1,semester2,preferred_year")] Unit unit)
+        public ActionResult Edit([Bind(Include = "unit_code,name,type_code,semester1,semester2")] Unit unit)
         {
             if (ModelState.IsValid)
             {

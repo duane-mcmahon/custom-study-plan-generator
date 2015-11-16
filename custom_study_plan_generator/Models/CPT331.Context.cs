@@ -25,11 +25,9 @@ namespace custom_study_plan_generator.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Course> Courses { get; set; }
         public virtual DbSet<Student> Students { get; set; }
         public virtual DbSet<StudentExemption> StudentExemptions { get; set; }
         public virtual DbSet<StudentPlan> StudentPlans { get; set; }
-        public virtual DbSet<Unit> Units { get; set; }
         public virtual DbSet<UnitPrerequisite> UnitPrerequisites { get; set; }
         public virtual DbSet<UnitType> UnitTypes { get; set; }
         public virtual DbSet<DefaultPlan> DefaultPlans { get; set; }
@@ -39,5 +37,7 @@ namespace custom_study_plan_generator.Models
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; }
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
+        public virtual DbSet<Course> Courses { get; set; }
+        public virtual DbSet<Unit> Units { get; set; }
     }
 }

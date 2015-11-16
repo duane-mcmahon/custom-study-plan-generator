@@ -1,17 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="custom_study_plan_generatorModelStoreContainer" CdmEntityContainer="custom_study_plan_generatorEntities">
-    <EntitySetMapping Name="Courses">
-      <EntityTypeMapping TypeName="custom_study_plan_generatorModel.Course">
-        <MappingFragment StoreEntitySet="Course">
-          <ScalarProperty Name="max_credit" ColumnName="max_credit" />
-          <ScalarProperty Name="course_code" ColumnName="course_code" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="num_units" ColumnName="num_units" />
-          <ScalarProperty Name="duration" ColumnName="duration" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Students">
       <EntityTypeMapping TypeName="custom_study_plan_generatorModel.Student">
         <MappingFragment StoreEntitySet="Student">
@@ -37,18 +26,6 @@
           <ScalarProperty Name="student_id" ColumnName="student_id" />
           <ScalarProperty Name="course_code" ColumnName="course_code" />
           <ScalarProperty Name="start_semester" ColumnName="start_semester" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Units">
-      <EntityTypeMapping TypeName="custom_study_plan_generatorModel.Unit">
-        <MappingFragment StoreEntitySet="Unit">
-          <ScalarProperty Name="unit_code" ColumnName="unit_code" />
-          <ScalarProperty Name="name" ColumnName="name" />
-          <ScalarProperty Name="type_code" ColumnName="type_code" />
-          <ScalarProperty Name="semester1" ColumnName="semester1" />
-          <ScalarProperty Name="semester2" ColumnName="semester2" />
-          <ScalarProperty Name="preferred_year" ColumnName="preferred_year" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -153,5 +130,26 @@
         <ScalarProperty Name="Id" ColumnName="RoleId" />
       </EndProperty>
     </AssociationSetMapping>
+    <EntitySetMapping Name="Courses">
+      <EntityTypeMapping TypeName="custom_study_plan_generatorModel.Course">
+        <MappingFragment StoreEntitySet="Course">
+          <ScalarProperty Name="max_credit" ColumnName="max_credit" />
+          <ScalarProperty Name="num_units" ColumnName="num_units" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="course_code" ColumnName="course_code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Units">
+      <EntityTypeMapping TypeName="custom_study_plan_generatorModel.Unit">
+        <MappingFragment StoreEntitySet="Unit">
+          <ScalarProperty Name="semester2" ColumnName="semester2" />
+          <ScalarProperty Name="semester1" ColumnName="semester1" />
+          <ScalarProperty Name="type_code" ColumnName="type_code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="unit_code" ColumnName="unit_code" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

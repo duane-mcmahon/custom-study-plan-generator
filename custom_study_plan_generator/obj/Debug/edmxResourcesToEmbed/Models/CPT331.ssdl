@@ -68,7 +68,6 @@
     <Property Name="course_code" Type="nvarchar" MaxLength="10" Nullable="false" />
     <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="num_units" Type="int" Nullable="false" />
-    <Property Name="duration" Type="int" Nullable="false" />
     <Property Name="max_credit" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="DefaultPlan">
@@ -126,7 +125,6 @@
     <Property Name="type_code" Type="nvarchar" MaxLength="10" Nullable="false" />
     <Property Name="semester1" Type="bit" Nullable="false" />
     <Property Name="semester2" Type="bit" Nullable="false" />
-    <Property Name="preferred_year" Type="int" />
   </EntityType>
   <EntityType Name="UnitPrerequisites">
     <Key>

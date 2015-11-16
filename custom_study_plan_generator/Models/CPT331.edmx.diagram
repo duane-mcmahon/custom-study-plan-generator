@@ -5,27 +5,16 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="f42dd61440304a7581a6ab68d8f9b794" Name="Diagram1">
-        <EntityTypeShape EntityType="custom_study_plan_generatorModel.Course" Width="1.5" PointX="11.25" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="custom_study_plan_generatorModel.Student" Width="1.5" PointX="2.75" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="custom_study_plan_generatorModel.StudentExemption" Width="1.75" PointX="5.25" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="custom_study_plan_generatorModel.StudentPlan" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="custom_study_plan_generatorModel.Unit" Width="1.5" PointX="7.25" PointY="0.5" IsExpanded="true" />
         <EntityTypeShape EntityType="custom_study_plan_generatorModel.UnitPrerequisite" Width="1.5" PointX="9.25" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="custom_study_plan_generatorModel.UnitType" Width="1.5" PointX="1" PointY="2.25" IsExpanded="true" />
-        <AssociationConnector Association="custom_study_plan_generatorModel.FK__StudentPl__cours__32E0915F" ManuallyRouted="false" />
         <AssociationConnector Association="custom_study_plan_generatorModel.FK__StudentEx__stude__30F848ED" ManuallyRouted="false" />
         <AssociationConnector Association="custom_study_plan_generatorModel.FK__StudentPl__stude__33D4B598" ManuallyRouted="false" />
-        <AssociationConnector Association="custom_study_plan_generatorModel.FK__StudentEx__unit___31EC6D26" ManuallyRouted="false" />
-        <AssociationConnector Association="custom_study_plan_generatorModel.FK__Unit__type_code__36B12243" ManuallyRouted="false" />
-        <AssociationConnector Association="custom_study_plan_generatorModel.FK__UnitPrere__prere__38996AB5" />
-        <AssociationConnector Association="custom_study_plan_generatorModel.FK__UnitPrere__unit___37A5467C" />
-        <AssociationConnector Association="custom_study_plan_generatorModel.FK__UnitPrere__cours__4316F928" />
         <EntityTypeShape EntityType="custom_study_plan_generatorModel.DefaultPlan" Width="1.5" PointX="5.25" PointY="2.75" />
-        <AssociationConnector Association="custom_study_plan_generatorModel.FK__DefaultPl__cours__3B75D760" />
-        <AssociationConnector Association="custom_study_plan_generatorModel.FK__DefaultPl__unit___3C69FB99" />
         <EntityTypeShape EntityType="custom_study_plan_generatorModel.StudentPlanUnit" Width="1.75" PointX="7.375" PointY="4.625" />
         <AssociationConnector Association="custom_study_plan_generatorModel.FK__StudentPl__plan___3F466844" />
-        <AssociationConnector Association="custom_study_plan_generatorModel.FK__StudentPl__unit___403A8C7D" />
         <EntityTypeShape EntityType="custom_study_plan_generatorModel.C__MigrationHistory" Width="1.5" PointX="7.75" PointY="7.75" />
         <EntityTypeShape EntityType="custom_study_plan_generatorModel.AspNetRole" Width="1.5" PointX="0.75" PointY="9.5" />
         <EntityTypeShape EntityType="custom_study_plan_generatorModel.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="10.625" />
@@ -34,6 +23,17 @@
         <AssociationConnector Association="custom_study_plan_generatorModel.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="custom_study_plan_generatorModel.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" />
         <AssociationConnector Association="custom_study_plan_generatorModel.AspNetUserRoles" />
+        <EntityTypeShape EntityType="custom_study_plan_generatorModel.Course" Width="1.5" PointX="0.75" PointY="4.75" />
+        <AssociationConnector Association="custom_study_plan_generatorModel.FK__DefaultPl__cours__3B75D760" />
+        <AssociationConnector Association="custom_study_plan_generatorModel.FK__StudentPl__cours__32E0915F" />
+        <AssociationConnector Association="custom_study_plan_generatorModel.FK__UnitPrere__cours__4316F928" />
+        <EntityTypeShape EntityType="custom_study_plan_generatorModel.Unit" Width="1.5" PointX="3.25" PointY="13.5" />
+        <AssociationConnector Association="custom_study_plan_generatorModel.FK__DefaultPl__unit___3C69FB99" />
+        <AssociationConnector Association="custom_study_plan_generatorModel.FK__StudentEx__unit___31EC6D26" />
+        <AssociationConnector Association="custom_study_plan_generatorModel.FK__StudentPl__unit___403A8C7D" />
+        <AssociationConnector Association="custom_study_plan_generatorModel.FK__Unit__type_code__36B12243" />
+        <AssociationConnector Association="custom_study_plan_generatorModel.FK__UnitPrere__prere__44FF419A" />
+        <AssociationConnector Association="custom_study_plan_generatorModel.FK__UnitPrere__unit___440B1D61" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

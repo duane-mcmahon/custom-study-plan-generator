@@ -33,7 +33,7 @@ namespace custom_study_plan_generator.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "course_code,name,num_units,duration,max_credit")] CourseMeta course)
+        public ActionResult Create([Bind(Include = "course_code,name,num_units, max_credit")] CourseMeta course)
         {
 
             var courseCheck = from crs in db.Courses
@@ -54,9 +54,6 @@ namespace custom_study_plan_generator.Controllers
                 courseAdd.name = course.name;
                 courseAdd.num_units = course.num_units;
                 courseAdd.max_credit = course.max_credit;
-
-                /* Remove once database property is removed */
-                courseAdd.duration = 0;
                 
                 db.Courses.Add(courseAdd);
                 db.SaveChanges();
@@ -93,7 +90,7 @@ namespace custom_study_plan_generator.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "course_code,name,num_units,duration,max_credit")] CourseMeta course)
+        public ActionResult Edit([Bind(Include = "course_code,name,num_units, max_credit")] CourseMeta course)
         {
             if (ModelState.IsValid)
             {
@@ -103,9 +100,6 @@ namespace custom_study_plan_generator.Controllers
                 courseEdit.name = course.name;
                 courseEdit.num_units = course.num_units;
                 courseEdit.max_credit = course.max_credit;
-
-                /* Remove once database property is removed */
-                courseEdit.duration = 0;
 
                 db.Entry(courseEdit).State = EntityState.Modified;
                 db.SaveChanges();

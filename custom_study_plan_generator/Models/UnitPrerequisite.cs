@@ -19,8 +19,8 @@ namespace custom_study_plan_generator.Models
         public bool mutiple_required { get; set; }
         public string course_code { get; set; }
     
+        public virtual Course Course { get; set; }
         public virtual Unit Unit { get; set; }
         public virtual Unit Unit1 { get; set; }
-        public virtual Course Course { get; set; }
     }
 }
