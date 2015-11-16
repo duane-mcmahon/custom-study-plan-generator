@@ -524,7 +524,12 @@ html body {
 }
 
 .prerequisitesIndexCRUDHeading {
+    margin-left: 5%;
+}
+
+.submitHeading {
     padding-left: 5%;
+    padding-bottom: 20px;
 }
 
 .prerequisitesCRUDLink {
