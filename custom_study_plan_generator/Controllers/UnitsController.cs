@@ -23,21 +23,6 @@ namespace custom_study_plan_generator.Controllers
             return View(units.ToList());
         }
 
-        // GET: Units/Details/5
-        public ActionResult Details(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Unit unit = db.Units.Find(id);
-            if (unit == null)
-            {
-                return HttpNotFound();
-            }
-            return View(unit);
-        }
-
         // GET: Units/Create
         public ActionResult Create()
         {

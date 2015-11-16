@@ -43,9 +43,9 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
                     semester = "Feb";
                 // Checking that preferredYear is not null and converting to string for algorithm.
                 // XYZ TODO check preferred year is in appropriate range? Is it even needed??????
-                string preferredYear = "1"; 
-                if (unit.preferred_year != null)
-                    preferredYear = unit.preferred_year.ToString();
+                string preferred_year = "1"; 
+                /*if (unit.preferred_year != null)
+                    preferredYear = unit.preferred_year.ToString();*/
 
                 /*
                  * XYZ TO DO OLD WAY. remove when happy
@@ -82,7 +82,7 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
                 bool isPreReq = false;
 
                 // Create Unit object suitable for the algorithm.
-                Unit tempUnit = new Unit(unit.name, unit.unit_code, unit.type_code, semester, preferredYear, preReqs, isPreReq, unit.exempt);
+                Unit tempUnit = new Unit(unit.name, unit.unit_code, unit.type_code, semester, preferred_year, preReqs, isPreReq, unit.exempt);
 
                 // Add unit object to end of linked list.
                 courseStructure.AddLast(tempUnit);

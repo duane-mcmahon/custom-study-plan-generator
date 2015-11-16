@@ -178,7 +178,6 @@ namespace custom_study_plan_generator.Controllers
                         select new CourseDTO
                         {
                             course_code = c.course_code,
-                            duration = c.duration,
                             name = c.name,
                             num_units = c.num_units,
                             max_credit = c.max_credit
@@ -535,7 +534,6 @@ namespace custom_study_plan_generator.Controllers
                         select new CourseDTO
                         {
                             course_code = c.course_code,
-                            duration = c.duration,
                             name = c.name,
                             num_units = c.num_units,
                             max_credit = c.max_credit
@@ -586,7 +584,6 @@ namespace custom_study_plan_generator.Controllers
                                 semester1 = order.semester1,
                                 semester2 = order.semester2,
                                 exempt = false,
-                                preferred_year = order.preferred_year
                             });
 
                     sessionQuery = sessionQuery.OrderBy(u => u.position);
@@ -790,7 +787,6 @@ namespace custom_study_plan_generator.Controllers
                                         semester1 = unit.semester1,
                                         semester2 = unit.semester2,
                                         exempt = unit.exempt,
-                                        preferred_year = unit.preferred_year,
                                         prerequisites = unit.prerequisites,
                                         start_semester = unit.start_semester
                                     }).ToList();
@@ -1407,7 +1403,6 @@ namespace custom_study_plan_generator.Controllers
                               select new CourseDTO
                               {
                                   course_code = c.course_code,
-                                  duration = c.duration,
                                   name = c.name,
                                   num_units = c.num_units,
                                   max_credit = c.max_credit
@@ -1435,7 +1430,6 @@ namespace custom_study_plan_generator.Controllers
                                 semester1 = order.semester1,
                                 semester2 = order.semester2,
                                 exempt = false,
-                                preferred_year = order.preferred_year,
                             });
 
                 sessionQuery = sessionQuery.OrderBy(u => u.position);

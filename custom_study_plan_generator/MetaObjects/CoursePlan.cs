@@ -20,7 +20,6 @@ namespace custom_study_plan_generator.MetaObjects
         public bool semester1 { get; set; }
         public bool semester2 { get; set; }
         public bool exempt { get; set; }
-        public Nullable<int> preferred_year { get; set; }
         public List<string> prerequisites { get; set; }
         public Nullable<int> start_semester { get; set; }
 

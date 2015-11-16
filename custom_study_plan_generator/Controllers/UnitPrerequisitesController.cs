@@ -23,21 +23,6 @@ namespace custom_study_plan_generator.Controllers
             return View(unitPrerequisites.ToList());
         }
 
-        // GET: UnitPrerequisites/Details/5
-        public ActionResult Details(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            UnitPrerequisite unitPrerequisite = db.UnitPrerequisites.Find(id);
-            if (unitPrerequisite == null)
-            {
-                return HttpNotFound();
-            }
-            return View(unitPrerequisite);
-        }
-
         // GET: UnitPrerequisites/Create
         public ActionResult Create()
         {
