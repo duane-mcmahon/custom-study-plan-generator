@@ -61,7 +61,17 @@ namespace custom_study_plan_generator.Controllers
             {
 
                 db.Units.Add(unitAdd);
-                db.SaveChanges();
+                
+                try
+                {
+                    db.SaveChanges();
+                }
+
+                catch (Exception ex)
+                {
+                    Session["SaveDBError"] = true;
+                }
+
                 return RedirectToAction("Index");
             }
 
@@ -102,7 +112,17 @@ namespace custom_study_plan_generator.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(unit).State = EntityState.Modified;
-                db.SaveChanges();
+                
+                try
+                {
+                    db.SaveChanges();
+                }
+
+                catch (Exception ex)
+                {
+                    Session["SaveDBError"] = true;
+                }
+
                 return RedirectToAction("Index");
             }
             ViewBag.type_code = new SelectList(db.UnitTypes, "type_code", "Description", unit.type_code);
@@ -141,6 +161,10 @@ namespace custom_study_plan_generator.Controllers
                 if (ex.InnerException.ToString().Contains("The DELETE statement conflicted with the REFERENCE constraint"))
                 {
                     Session["ForeignKeyConstraint"] = "true";
+                }
+                else
+                {
+                    Session["SaveDBError"] = true;
                 }
             }
             return RedirectToAction("Index");

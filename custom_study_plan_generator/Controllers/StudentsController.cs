@@ -57,8 +57,19 @@ namespace custom_study_plan_generator.Controllers
                 studentAdd.lastname = student.lastname;
                 
                 db.Students.Add(studentAdd);
-                db.SaveChanges();
+                
+                try
+                {
+                    db.SaveChanges();
+                }
+                
+                catch (Exception ex)
+                {
+                    Session["SaveDBError"] = true;
+                }
+
                 return RedirectToAction("Index");
+
             }
 
             return View(student);
@@ -101,7 +112,17 @@ namespace custom_study_plan_generator.Controllers
                 studentEdit.lastname = student.lastname;
 
                 db.Entry(studentEdit).State = EntityState.Modified;
-                db.SaveChanges();
+
+                try
+                {
+                    db.SaveChanges();
+                }
+
+                catch (Exception ex)
+                {
+                    Session["SaveDBError"] = true;
+                }
+                
                 return RedirectToAction("Index");
             }
             return View(student);
@@ -139,7 +160,12 @@ namespace custom_study_plan_generator.Controllers
                 {
                     Session["ForeignKeyConstraint"] = "true";
                 }
+                else
+                {
+                    Session["SaveDBError"] = true;
+                }
             }
+   
             return RedirectToAction("Index");
         }
 

@@ -9,6 +9,12 @@
 <div class="prerequisitesIndexCRUDHeading">
     <h3 class="CRUDFont">Prerequisites List</h3>
 
+    @if (Session["SaveDBError"] != null)
+    {
+        <div id="SaveDBError" class="error3">Error saving changes, please contact administrator.</div>
+        Session["SaveDBError"] = null;
+    }
+
     <p>
         @Html.ActionLink("Create New", "Create", null, null, new { @class = "prerequisitesCRUDLink CRUDFont" })
     </p>

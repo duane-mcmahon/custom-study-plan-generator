@@ -56,7 +56,17 @@ namespace custom_study_plan_generator.Controllers
                 courseAdd.max_credit = course.max_credit;
                 
                 db.Courses.Add(courseAdd);
-                db.SaveChanges();
+                
+                try
+                {
+                    db.SaveChanges();
+                }
+
+                catch (Exception ex)
+                {
+                    Session["SaveDBError"] = true;
+                }
+
                 return RedirectToAction("Index");
             }
 
@@ -102,7 +112,17 @@ namespace custom_study_plan_generator.Controllers
                 courseEdit.max_credit = course.max_credit;
 
                 db.Entry(courseEdit).State = EntityState.Modified;
-                db.SaveChanges();
+                
+                try
+                {
+                    db.SaveChanges();
+                }
+
+                catch (Exception ex)
+                {
+                    Session["SaveDBError"] = true;
+                }
+
                 return RedirectToAction("Index");
             }
             return View(course);
@@ -140,6 +160,10 @@ namespace custom_study_plan_generator.Controllers
                 if (ex.InnerException.ToString().Contains("The DELETE statement conflicted with the REFERENCE constraint"))
                 {
                     Session["ForeignKeyConstraint"] = "true";
+                }
+                else
+                {
+                    Session["SaveDBError"] = true;
                 }
             }
 

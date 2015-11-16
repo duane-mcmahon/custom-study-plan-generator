@@ -104,7 +104,17 @@ namespace custom_study_plan_generator.Controllers
                 {
                     Session["prereqExists"] = null;
                     db.UnitPrerequisites.Add(unitPrerequisite);
-                    db.SaveChanges();
+
+                    try
+                    {
+                        db.SaveChanges();
+                    }
+
+                    catch (Exception ex)
+                    {
+                        Session["SaveDBError"] = true;
+                    }
+
                 }
 
                 return RedirectToAction("Index");
@@ -127,7 +137,16 @@ namespace custom_study_plan_generator.Controllers
                                    select up;
 
             db.UnitPrerequisites.Remove(unitPrerequisite.FirstOrDefault());
-            db.SaveChanges();
+
+            try
+            {
+                db.SaveChanges();
+            }
+
+            catch (Exception ex)
+            {
+                Session["SaveDBError"] = true;
+            }
 
             return RedirectToAction("Index");
         }

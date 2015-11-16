@@ -14,6 +14,12 @@
         <div id="FKConstraint" class="error3">Error, this student already exists in student plans, and as such, cannot be deleted.</div>
         Session["ForeignKeyConstraint"] = null;
     }
+    
+    @if (Session["SaveDBError"] != null)
+    {
+        <div id="SaveDBError" class="error3">Error saving changes, please contact administrator.</div>
+        Session["SaveDBError"] = null;
+    }
 
     <p>
         @Html.ActionLink("Create New", "Create", null, null, new { @class = "prerequisitesCRUDLink CRUDFont" })
