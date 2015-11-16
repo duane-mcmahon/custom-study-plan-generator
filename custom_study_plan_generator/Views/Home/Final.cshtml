@@ -40,6 +40,11 @@
                 <button id = "savePlan" type="button" class="CPButton" name="savePlan" value="savePlan" title="Save Plan">Save Plan</button><br />
                 <button id = "home" type="button" class="CPButton2" name="home" value="home" title="Return Home">Home</button><br />
                 <div id="error2" class="errors"></div>
+                @if (Session["Error"] != null)
+                {
+                    <div id="error4">Error uploading plan, <br/>please save and try again</div>
+                    Session["Error"] = null;
+                }
                 
             </div>
 

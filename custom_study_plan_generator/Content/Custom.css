@@ -243,6 +243,11 @@ html body {
     display: none;
 }
 
+#error4 {
+    color: red;
+    font-size: 1vw;
+}
+
 .modeHolder {
     text-align: center;
 }
@@ -545,10 +550,6 @@ html body {
 .prerequsiteCRUDCreateRow {
     padding-bottom: 1%;
     padding-top: 0.5%;
-}
-
-.prerequsiteCRUDCreateDropdownList {
-    min-width;
 }
 
 .prerequisiteCRUDCreateButton {

@@ -1,5 +1,7 @@
 ﻿$(document).ready(function () {
 
+    $('#error4').delay(3000).fadeOut(2000);
+
     /* Dynamic sizing of background divs and table height */
     var heightTable = $('#planTable').height();
     $('#textEdit').css("height", heightTable * 1.9);
