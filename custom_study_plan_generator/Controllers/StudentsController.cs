@@ -14,17 +14,20 @@ using custom_study_plan_generator.MetaObjects;
 
 namespace custom_study_plan_generator.Controllers
 {
+  
     public class StudentsController : Controller
     {
         private custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities();
 
         // GET: Students
+        [Authorize]
         public ActionResult Index()
         {
             return View(db.Students.ToList());
         }
 
         // GET: Students/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -76,6 +79,7 @@ namespace custom_study_plan_generator.Controllers
         }
 
         // GET: Students/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -101,6 +105,7 @@ namespace custom_study_plan_generator.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit([Bind(Include = "student_id,firstname,lastname")] StudentMeta student)
         {
             if (ModelState.IsValid)
@@ -129,6 +134,7 @@ namespace custom_study_plan_generator.Controllers
         }
 
         // GET: Students/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -146,6 +152,7 @@ namespace custom_study_plan_generator.Controllers
         // POST: Students/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult DeleteConfirmed(int id)
         {
             Student student = db.Students.Find(id);

@@ -17,6 +17,7 @@ namespace custom_study_plan_generator.Controllers
         private custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities();
 
         // GET: Units
+        [Authorize]
         public ActionResult Index()
         {
             var units = db.Units.Include(u => u.UnitType);
@@ -24,6 +25,7 @@ namespace custom_study_plan_generator.Controllers
         }
 
         // GET: Units/Create
+        [Authorize]
         public ActionResult Create()
         {
             ViewBag.type_code = new SelectList(db.UnitTypes, "type_code", "Description");
@@ -35,6 +37,7 @@ namespace custom_study_plan_generator.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Create([Bind(Include = "unit_code,name,type_code,semester1,semester2")] UnitMeta unit)
         {
 
@@ -79,6 +82,7 @@ namespace custom_study_plan_generator.Controllers
         }
 
         // GET: Units/Edit/5
+        [Authorize]
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -107,6 +111,7 @@ namespace custom_study_plan_generator.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit([Bind(Include = "unit_code,name,type_code,semester1,semester2")] Unit unit)
         {
             if (ModelState.IsValid)
@@ -130,6 +135,7 @@ namespace custom_study_plan_generator.Controllers
         }
 
         // GET: Units/Delete/5
+        [Authorize]
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -147,6 +153,7 @@ namespace custom_study_plan_generator.Controllers
         // POST: Units/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult DeleteConfirmed(string id)
         {
             Unit unit = db.Units.Find(id);

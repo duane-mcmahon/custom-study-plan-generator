@@ -17,12 +17,14 @@ namespace custom_study_plan_generator.Controllers
         private custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities();
 
         // GET: Courses
+        [Authorize]
         public ActionResult Index()
         {
             return View(db.Courses.ToList());
         }
 
         // GET: Courses/Create
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -33,6 +35,7 @@ namespace custom_study_plan_generator.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Create([Bind(Include = "course_code,name,num_units, max_credit")] CourseMeta course)
         {
 
@@ -74,6 +77,7 @@ namespace custom_study_plan_generator.Controllers
         }
 
         // GET: Courses/Edit/5
+        [Authorize]
         public ActionResult Edit(string id)
         {
             if (id == null)
@@ -100,6 +104,7 @@ namespace custom_study_plan_generator.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit([Bind(Include = "course_code,name,num_units, max_credit")] CourseMeta course)
         {
             if (ModelState.IsValid)
@@ -129,6 +134,7 @@ namespace custom_study_plan_generator.Controllers
         }
 
         // GET: Courses/Delete/5
+        [Authorize]
         public ActionResult Delete(string id)
         {
             if (id == null)
@@ -146,6 +152,7 @@ namespace custom_study_plan_generator.Controllers
         // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult DeleteConfirmed(string id)
         {
             Course course = db.Courses.Find(id);

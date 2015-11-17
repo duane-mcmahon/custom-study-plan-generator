@@ -17,6 +17,7 @@ namespace custom_study_plan_generator.Controllers
         private custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities();
 
         // GET: UnitPrerequisites
+        [Authorize]
         public ActionResult Index()
         {
             var unitPrerequisites = db.UnitPrerequisites.Include(u => u.Unit).Include(u => u.Unit1).Include(u => u.Course);
@@ -24,6 +25,7 @@ namespace custom_study_plan_generator.Controllers
         }
 
         // GET: UnitPrerequisites/Create
+        [Authorize]
         public ActionResult Create()
         {
 
@@ -41,6 +43,7 @@ namespace custom_study_plan_generator.Controllers
 
         [HttpPost]
         [MultipleButton(Name = "action", Argument = "Select")]
+        [Authorize]
         public ActionResult Select(string course_code)
         {
 
@@ -85,6 +88,7 @@ namespace custom_study_plan_generator.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [MultipleButton(Name = "action", Argument = "CreateSubmit")]
+        [Authorize]
         public ActionResult CreateSubmit([Bind(Include = "unit_code,prereq_code,mutiple_required,course_code")] UnitPrerequisite unitPrerequisite)
         {
             if (ModelState.IsValid)
@@ -127,6 +131,7 @@ namespace custom_study_plan_generator.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public ActionResult Delete(string course_code, string unit_code, string prereq_code)
         {
 
