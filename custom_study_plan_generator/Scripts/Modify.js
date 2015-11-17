@@ -2,7 +2,7 @@
 var preventProgress = false;
 
 $(document).ready(function () {
-
+    
     /* Dynamic sizing of background divs and table height */
 
     var heightTable = $('#planTable').height();
