@@ -31,7 +31,7 @@
             <div class="CPcol3 inline">
                 <div class="inline">
                     @ViewBag.courseName
-                </div>
+                </div> 
                 <div class="inline">
 
                 </div>
@@ -51,6 +51,11 @@
                 <button id="checkPrereqs" type="button" class="CPButton2" name="checkPrereqs" value="checkPrereqs" title="Check Prerequisites">Check Prerequisites</button><br />
                 <button id="savePlan" type="button" class="CPButton2" name="savePlan" value="savePlan" title="Save Plan">Save Plan</button><br />
                 <div id="error2" class="errors"></div>
+                @if (Session["Error"] != null)
+                {
+                    <div id="error4">Error uploading plan, <br />please save and try again</div>
+                    Session["Error"] = null;
+                }
                
             </div>
 
