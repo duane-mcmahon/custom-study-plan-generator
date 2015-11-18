@@ -7,6 +7,8 @@ $(document).ready(function () {
     $('#dialog-unitsnotadded').hide();
     $('#dialog-confirm').hide();
 
+    var lastValidUnitSelections = null;
+
     /* Dynamic sizing of background divs and table height */
     var heightTable = $('#planTable').height();
     $('#textDefault').css("height", heightTable * 3.1);
@@ -25,7 +27,7 @@ $(document).ready(function () {
         $('.cell').css("width", percString);
         $('.planHeader').css("width", percString)
     }
-    
+
 
     /* Create plan table inner divs for list of units received from controller */
     var count = 1;
@@ -33,9 +35,9 @@ $(document).ready(function () {
         unitListSelected.forEach(function (entry) {
 
             var innerCellId = "#" + count;
-            
+
             /* Create inner cell */
-            if (entry != "") {
+            if (entry != "" && entry != null) {
                 idCont = "#p" + count;
 
                 $(idCont).append("<div id = '" + count + "' class = 'innerCell active' draggable = 'true' ondragstart = 'drag(event)' ondragend = 'dragend(event, this)'></div>");
@@ -66,9 +68,88 @@ $(document).ready(function () {
         });
     }
 
+    /* Create swap space inner divs for list of units received from controller */
+    var count = 1;
+    if (defaultPlanSwap != null) {
+        defaultPlanSwap.forEach(function (entry) {
+
+            if (entry != null) {
+                var id = "id" + Math.random().toString(16).slice(2)
+                var innerCellId = "#" + id;
+
+                // Create inner cell.
+                if (entry != "") {
+                    idCont = "#ss" + count;
+
+                    $(idCont).append("<div id = '" + id + "' class = 'innerCell active' draggable = 'true' ondragstart = 'drag(event)' ondragend = 'dragend(event, this)'></div>");
+                    $(innerCellId).text(entry);
+
+                    // Create hover icon.
+                    var hoverId = 'hover' + count;
+                    $(innerCellId).append("<img id = '" + hoverId + "' class = 'hover' src = '../Content/Images/hover.png' />");
+
+                    // Create prevent icon.
+                    var preventId = 'prevent' + count;
+                    $(innerCellId).append("<img id = '" + preventId + "' class = 'prevent' src = '../Content/Images/prevent.png' />");
+
+                    // Create delete icon.
+                    var deleteId = 'delete' + count;
+                    $(innerCellId).append("<img id = '" + deleteId + "' class = 'delete' src = '../Content/Images/delete.png' />");
+                }
+
+            }
+            count++;
+
+        });
+    }
+
     /* Delete a unit from the page */
     $('.delete').click(function () {
         deleteInnerCell(this);
+    });
+
+    // Set Limitation on the MultiSelect Box, so that the user cannot select more Units than the available Swap Space.
+    $('#unitDropDown').click(function (event) {
+        // Check current capacity of Swap Space.
+        var availableSpaces = 0;
+        var swapSpaces = $(".swapSpaceCell");
+
+        // Count available spaces.
+        for (var x = 0; x < swapSpaces.length; x++) {
+            if ($(swapSpaces[x]).children().length == 0) {
+                availableSpaces++;
+            }
+        }
+
+        // Compare available space against the number of selected Units.
+        if ($(this).val().length > availableSpaces) {
+            // Too many units selected - not enough space available. Revert to previous selections, display an error to the user.
+            $(this).val(lastValidUnitSelections);
+            $('#errors').html("Error, too many units selected.");
+            $('#errors').show();
+            $('#errors').delay(5000).fadeOut('slow');
+        }
+        else {
+            // Valid selections - update the list of currently selected Units.
+            lastValidUnitSelections = $(this).val();
+        }
+    });
+
+    /* Reset Swap Space. */
+    $('#resetSwapSpace').click(function () {
+
+        // Reset the Swap Space Session variable.
+        $.ajax({
+            url: "../Home/DefaultPlanResetSwapSpace",
+            type: "POST",
+            success: function () {
+                location.reload();
+            },
+            error: function (data) {
+
+            }
+        });
+
     });
 
     /* Add a unit to the swap space */
@@ -114,26 +195,22 @@ $(document).ready(function () {
         }
 
         // Check Units have been slected to add to the Plan.
-        if (units.length == 0)
-        {
+        if (units.length == 0) {
             // User did not select any units to add - display error message.
             $('#errors').html("Please select a unit to add");
             $('#errors').show();
         }
-        else if (swapSpacesFull == TOTAL_SWAP_SPACES)
-        {
+        else if (swapSpacesFull == TOTAL_SWAP_SPACES) {
             // If the swap space was full, give an error.
             $('#errors').html("Error, swap space is full. Please clear some space first.");
             $('#errors').show();
         }
-        else
-        {
+        else {
             // Check if the unit already exists, if it does give an error.
-            for (var x = 0; x < units.length; x++)
-            {
+            for (var x = 0; x < units.length; x++) {
                 // Loop through existing units and check for duplicates.
                 var duplicate = false;
-                
+
                 $('.innerCell').each(function () {
 
                     //if (($(this).text()).indexOf(units[x]) > -1) {
@@ -146,91 +223,110 @@ $(document).ready(function () {
                 });
 
                 // Add non-duplicates to the list of valid units to add.
-                if (!duplicate)
-                {
+                if (!duplicate) {
                     validUnits[countValid] = units[x];
                     countValid++;
                 }
             }
 
             // Proceed if Valid units are selected.
-            if (validUnits.length != 0)
-            {
+            if (validUnits.length != 0) {
                 // Check how many units can fit into the available space.
                 var excess = 0;
                 var availableSwapSpace = 0;
                 availableSwapSpace = (TOTAL_SWAP_SPACES - swapSpacesFull);
 
                 // Make list of units that aren't going to fit.
-                if (validUnits.length > availableSwapSpace)
-                {
+                if (validUnits.length > availableSwapSpace) {
                     // Find position of first excess unit.
                     excess = (validUnits.length - availableSwapSpace);
-                    
+
                     // Loop from start of excess to end of selected units.
                     for (var x = 0; x < excess; x++) {
                         var pos = (availableSwapSpace + x);
                         excessUnits[x] = validUnits[pos];
                     }
                 }
-                
+
                 // Find final number of valid units that will fit.
                 var finalLength = (validUnits.length - excess);
 
                 // Create final list of valid units to be Added, minus the duplicates and any excess.
-                for (var x = 0; x < finalLength; x++)
-                {
+                for (var x = 0; x < finalLength; x++) {
                     finalUnits[x] = validUnits[x];
                 }
-            }
 
-            // Create list of available blank spaces in the Swap Space.
-            var spaces = [];
-            var countSpaces = 0;
+                // Create list of available blank spaces in the Swap Space.
+                var spaces = [];
+                var countSpaces = 0;
 
-            for (var x = 0; x < elements.length; x++) {
-                if ($(elements[x]).children().length == 0) {
-                    spaces[countSpaces] = x;
-                    countSpaces++;
+                for (var x = 0; x < elements.length; x++) {
+                    if ($(elements[x]).children().length == 0) {
+                        spaces[countSpaces] = x;
+                        countSpaces++;
+                    }
                 }
-            }
 
-            // Loop through the valid final units and add them into empty Swap Spaces.
-            for (var y = 0; y < finalUnits.length; y++)
-            {
-                var id = "id" + Math.random().toString(16).slice(2)
-                var innerCellId = "#" + id;
+                // Data string to pass via AJAX to the Controller.
+                var units = "";
 
-                $(elements[spaces[y]]).append("<div id = '" + id + "' class = 'innerCell active' draggable = 'true' ondragstart = 'drag(event)' ondragend = 'dragend(event, this)'></div>");
-                $(innerCellId).text(finalUnits[y]);
+                // Loop through the valid final units and add them into empty Swap Spaces.
+                for (var y = 0; y < finalUnits.length; y++) {
+                    var id = "id" + Math.random().toString(16).slice(2)
+                    var innerCellId = "#" + id;
 
-                // Create hover icon.
-                var hoverId = 'hover' + id;
-                $(innerCellId).append("<img id = '" + hoverId + "' class = 'hover' src = '../Content/Images/hover.png' />");
-                var jId = "#" + hoverId;
-                tooltip(jId, "tooltip");
+                    $(elements[spaces[y]]).append("<div id = '" + id + "' class = 'innerCell active' draggable = 'true' ondragstart = 'drag(event)' ondragend = 'dragend(event, this)'></div>");
+                    $(innerCellId).text(finalUnits[y]);
 
-                // Create delete icon.
-                var deleteId = 'delete' + id;
-                $(innerCellId).append("<img id = '" + deleteId + "' class = 'delete' src = '../Content/Images/delete.png' />");
+                    // Add unit to Data string.
+                    units += spaces[y] + "," + finalUnits[y];
 
-                // Reset the delete cell click function to include this unit.
-                $('.delete').click(function () {
-                    deleteInnerCell(this);
+                    // Add second delimiter between units if it is not the last unit.
+                    if (y != (finalUnits.length - 1)) {
+                        units += "|";
+                    }
+
+                    // Create hover icon.
+                    var hoverId = 'hover' + id;
+                    $(innerCellId).append("<img id = '" + hoverId + "' class = 'hover' src = '../Content/Images/hover.png' />");
+                    var jId = "#" + hoverId;
+                    tooltip(jId, "tooltip");
+
+                    // Create delete icon.
+                    var deleteId = 'delete' + id;
+                    $(innerCellId).append("<img id = '" + deleteId + "' class = 'delete' src = '../Content/Images/delete.png' />");
+
+                    // Reset the delete cell click function to include this unit.
+                    $('.delete').click(function () {
+                        deleteInnerCell(this);
+                    });
+                }
+
+                // Add the units to the session variable for the Swap Space List.
+                $.ajax({
+                    url: "../Home/DefaultPlanBulkAddToSwapSpace",
+                    type: "POST",
+                    data: { data: units },
+                    success: function (data) {
+                        $('.innerCell').attr("draggable", "true");
+                        $('.prevent').css("display", "none");
+                        preventProgress = false;
+                    },
+                    error: function (data) {
+                        alert("Error adding unit, please refresh the page.");
+                    }
                 });
             }
         }
 
         // Show error message if there were duplicates or excess units that could not fit into Swap Space.
-        if (duplicateUnits.length > 0 || excessUnits.length > 0)
-        {
+        if (duplicateUnits.length > 0 || excessUnits.length > 0) {
             // Reset any previous messages.
             $('.duplicates').hide();
             $('.excess').hide();
 
             // Add Duplicate units to the message window.
-            if (duplicateUnits.length > 0)
-            {
+            if (duplicateUnits.length > 0) {
                 var duplicateMsg = ""
 
                 for (var x = 0; x < duplicateUnits.length; x++) {
@@ -243,8 +339,7 @@ $(document).ready(function () {
             }
 
             // Add Excess units to message window.
-            if (excessUnits.length > 0)
-            {
+            if (excessUnits.length > 0) {
                 var excessMsg = "";
 
                 for (var x = 0; x < excessUnits.length; x++) {
@@ -292,7 +387,7 @@ $(document).ready(function () {
                 location.reload();
             },
             error: function (data) {
-                
+
             }
         });
 
@@ -329,7 +424,7 @@ $(window).on('resize', function () {
 function allowDrop(ev) {
 
     ev.preventDefault();
-    if ($(ev.target).children().length > 0) 
+    if ($(ev.target).children().length > 0)
         ev.dataTransfer.dropEffect = "none"; // dropping is not allowed
     else if ($(ev.target).hasClass('hover'))
         ev.dataTransfer.dropEffect = "none"; // dropping is not allowed
@@ -339,7 +434,7 @@ function allowDrop(ev) {
         ev.dataTransfer.dropEffect = "none"; // dropping is not allowed
     else
         ev.dataTransfer.dropEffect = "all"; // drop
-    
+
 }
 
 /* This funtions runs when the drag begins */
@@ -397,7 +492,7 @@ function dragend(ev, target) {
 
     /* Hide any previous errors */
     $('#errors').hide();
-    
+
 
 
     /* Drag successful */
@@ -410,24 +505,20 @@ function dragend(ev, target) {
         var PLAN_CELL = 'p';
         var SWAP_CELL = 's';
 
-        // If moved WITHIN the swap space, move it to its new position in the session swap list.
-        if ($(target).parent().hasClass('swapSpaceCell') &&
-            (dragParentId.indexOf(SWAP_CELL) === 0))
-        {
-            $('.innerCell').attr("draggable", "true");
-            $('.prevent').css("display", "none");
-            preventProgress = false;
-        }
 
         /* If moved TO the swap space, remove unit from session plan */
         if ($(target).parent().hasClass('swapSpaceCell') &&
             (dragParentId.indexOf(PLAN_CELL) === 0)) {
 
-            var idRaw = dragParentId;
-            var idString = idRaw.toString();
-            var id = idString.replace(/\D/g, '');
+            var idRawFrom = dragParentId;
+            var idString = idRawFrom.toString();
+            var idFrom = idString.replace(/\D/g, '');
 
-            dataRemove = id;
+            var idRawTo = $(target).parent().attr('id');
+            var idStringTo = idRawTo.toString();
+            var idTo = idStringTo.replace(/\D/g, '');
+
+            dataRemove = idFrom + "," + idTo;
 
             $.ajax({
                 url: "../Home/DefaultPlanRemove",
@@ -445,16 +536,19 @@ function dragend(ev, target) {
 
         }
 
-        /* If moved TO the plan, add unit to session plan */
-        else if ($(target).parent().hasClass('planCell')) {
+            // If moved TO the plan, add unit to session plan.
+        else if ($(target).parent().hasClass('planCell') &&
+            (dragParentId.indexOf(SWAP_CELL) === 0)) {
 
-            var idRaw = $(target).parent().attr('id');
-            var idString = idRaw.toString();
-            var id = idString.replace(/\D/g, '');
+            var idRawFrom = dragParentId;
+            var idString = idRawFrom.toString();
+            var idFrom = idString.replace(/\D/g, '');
 
-            var unit = $(target).text();
+            var idRawTo = $(target).parent().attr('id');
+            var idStringTo = idRawTo.toString();
+            var idTo = idStringTo.replace(/\D/g, '');
 
-            var data = id + "," + unit;
+            var data = idFrom + "," + idTo;
 
 
             $.ajax({
@@ -473,7 +567,66 @@ function dragend(ev, target) {
 
         }
 
-        
+            // If moved WITHIN the Default Plan, update the unit positions in the plan.
+        else if ($(target).parent().hasClass('planCell') &&
+            (dragParentId.indexOf(PLAN_CELL) === 0)) {
+
+            var idRawFrom = dragParentId;
+            var idString = idRawFrom.toString();
+            var idFrom = idString.replace(/\D/g, '');
+
+            var idRawTo = $(target).parent().attr('id');
+            var idStringTo = idRawTo.toString();
+            var idTo = idStringTo.replace(/\D/g, '');
+
+            var data = idFrom + "," + idTo;
+
+
+            $.ajax({
+                url: "../Home/DefaultPlanMove",
+                type: "POST",
+                data: { data: data },
+                success: function (data) {
+                    $('.innerCell').attr("draggable", "true");
+                    $('.prevent').css("display", "none");
+                    preventProgress = false;
+                },
+                error: function (data) {
+                    alert("Error adding unit, please refresh the page.");
+                }
+            });
+
+        }
+
+            // If moved WITHIN the swap space, move it to its new position in the session swap list.
+        else if ($(target).parent().hasClass('swapSpaceCell') &&
+                  (dragParentId.indexOf(SWAP_CELL) === 0)) {
+
+            var idRawFrom = dragParentId;
+            var idStringFrom = idRawFrom.toString();
+            var idFrom = idStringFrom.replace(/\D/g, '');
+
+            var idRawTo = $(target).parent().attr('id');
+            var idStringTo = idRawTo.toString();
+            var idTo = idStringTo.replace(/\D/g, '');
+
+            dataAdd = idFrom + "," + idTo;
+
+            $.ajax({
+                url: "../Home/DefaultPlanSwap",
+                type: "POST",
+                data: { data: dataAdd },
+                success: function (data) {
+                    $('.innerCell').attr("draggable", "true");
+                    $('.prevent').css("display", "none");
+                    preventProgress = false;
+                },
+                error: function (data) {
+                    alert("Error moving unit, please refresh the page.");
+                }
+            });
+
+        }
 
     }
         /* Drag failed */
@@ -488,7 +641,7 @@ function tooltip(target, name) {
 
     /* Loop through all targets */
     $(target).each(function (i) {
-        
+
 
         /* Create the id and the jquery readable id */
         var id = name + i;
@@ -514,7 +667,7 @@ function tooltip(target, name) {
             type: "POST",
             data: { data: data },
             success: function (data) {
-                
+
                 /* If no prereqs */
                 if (data.length == 0) {
                     $(jId).text("Prerequsites: None");
@@ -523,15 +676,15 @@ function tooltip(target, name) {
                 else {
                     $(jId).text("Prerequsites: " + data);
                 }
-                
+
 
             },
             error: function (data) {
-            
+
             }
         });
-    
-        
+
+
     });
 }
 
@@ -564,7 +717,7 @@ function savePlan() {
                     });
                 },
                 error: function (data) {
-               
+
                 }
             });
         }
@@ -596,7 +749,7 @@ function deleteInnerCell(xThis) {
             buttons: {
                 "Delete Unit": function () {
 
-                    if ($(target).hasClass("planCell")) {
+                    if ($(target).hasClass("planCell") || $(target).hasClass("swapSpaceCell")) {
                         /* Set the prevent other actions settings to on */
                         $('.prevent').css("display", "block");
                         $('.innerCell').attr("draggable", "false");
@@ -604,12 +757,21 @@ function deleteInnerCell(xThis) {
 
                         /* convert the id to a number that will match the session plan */
                         var idString = targetId.toString();
-                        var id = idString.substring(1);
-                        dataRemove = id;
+                        var id = idString.replace(/\D/g, '');
+                        var type = "";
+
+                        if ($(target).hasClass("planCell")) {
+                            type = "p";
+                        }
+                        else if ($(target).hasClass("swapSpaceCell")) {
+                            type = "s";
+                        }
+
+                        dataRemove = id + "," + type;
 
                         /* Delete the unit */
                         $.ajax({
-                            url: "../Home/DefaultPlanRemove",
+                            url: "../Home/DefaultPlanDelete",
                             type: "POST",
                             data: { data: dataRemove },
                             success: function (data) {

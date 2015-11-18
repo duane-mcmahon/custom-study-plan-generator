@@ -280,6 +280,28 @@ namespace custom_study_plan_generator.Controllers
 
                     }
 
+                    // If there are units in the Swap Space and a different course is selected, remove any duplicates from Swap Space.
+                    if (Session["DefaultPlanSwap"] != null)
+                    {
+                        var swapSpace = Session["DefaultPlanSwap"] as List<string>;
+
+                        // Loop through Default Plan Unit list.
+                        for (var i = 0; i < unitList.Count; i++)
+                        {
+                            for (var j = 0; j < swapSpace.Count; j++)
+                            {
+                                // Check Plan unit against each Swap Space Unit.
+                                if (unitList[i] == swapSpace[j])
+                                {
+                                    // Duplicate Unit - remove it from Swap Space.
+                                    swapSpace[j] = null;
+                                }
+                            }
+                        }
+
+                        // Update session variable.
+                        Session["DefaultPlanSwap"] = swapSpace;
+                    }
                 }
 
                 else
@@ -309,44 +331,227 @@ namespace custom_study_plan_generator.Controllers
 
         }
 
+
         [HttpPost]
         public void DefaultPlanAdd()
         {
-
+            // Retrieve data from POST string array and process it.
             var data = Request["data"].ToString();
-            string[] values = data.Split(',');
-            var element = Convert.ToInt32(values[0]) - 1;
-            var unitName = values[1].ToString();
+            var dataSplit = data.Split(',');
+            var from = dataSplit[0];
+            var fromInt = Convert.ToInt32(from) - 1;
+            var to = dataSplit[1];
+            var toInt = Convert.ToInt32(to) - 1;
 
             var unitList = Session["DefaultPlanList"] as List<string>;
+            var defaultPlanSwap = new List<string>();
 
-            unitList[element] = unitName;
+            // Initialise all spaces in the Swap Space List if it doesn't already exist.
+            if (Session["DefaultPlanSwap"] == null)
+            {
+                for (var x = 0; x < 12; x++)
+                {
+                    defaultPlanSwap.Add(null);
+                }
 
+                Session["DefaultPlanSwap"] = defaultPlanSwap;
+            }
+
+            defaultPlanSwap = Session["DefaultPlanSwap"] as List<string>;
+
+            // Move the unit from Swap Space to the selected position in the Student Plan.
+            unitList[toInt] = defaultPlanSwap[fromInt];
+
+            // Reset the previous/from position as null.
+            defaultPlanSwap[fromInt] = null;
+
+            // Update Session variables.
             Session["DefaultPlanList"] = unitList;
-
+            Session["DefaultPlanSwap"] = defaultPlanSwap;
         }
 
         [HttpPost]
         public void DefaultPlanRemove()
         {
-
+            // Remove the unit from the Default Plan and place it into Swap Space.
+            // Retrieve data from POST string array and process it.
             var data = Request["data"].ToString();
-            var element = Convert.ToInt32(data) - 1;
+            var dataSplit = data.Split(',');
+            var from = dataSplit[0];
+            var fromInt = Convert.ToInt32(from) - 1;
+            var to = dataSplit[1];
+            var toInt = Convert.ToInt32(to) - 1;
+
+            var unitList = Session["DefaultPlanList"] as List<string>;
+            var defaultPlanSwap = new List<string>();
+
+            // Initialise all spaces in the Swap Space List if it doesn't already exist.
+            if (Session["DefaultPlanSwap"] == null)
+            {
+                for (var x = 0; x < 12; x++)
+                {
+                    defaultPlanSwap.Add(null);
+                }
+
+                Session["DefaultPlanSwap"] = defaultPlanSwap;
+            }
+
+            defaultPlanSwap = Session["DefaultPlanSwap"] as List<string>;
+
+            // Move the unit from Default Plan to the selected Swap Space.
+            defaultPlanSwap[toInt] = unitList[fromInt];
+
+            // Reset the previous/from position as null.
+            unitList[fromInt] = null;
+
+            // Update Session variable.
+            Session["DefaultPlanList"] = unitList;
+            Session["DefaultPlanSwap"] = defaultPlanSwap;
+        }
+
+        [HttpPost]
+        public void DefaultPlanDelete()
+        {
+            // Delete the Unit completely from either the Default Plan or Swap Space.
+            // Retrieve data from POST string array and process it. 
+            var data = Request["data"].ToString();
+            var dataSplit = data.Split(',');
+            var idString = dataSplit[0];
+            var id = Convert.ToInt32(idString) - 1;
+            var type = dataSplit[1];
+
+            // Check origin of unit and delete from the corresponding Session list - either from the Plan or Swap Space.
+            if (type == "p")
+            {
+                // Retrieve Session Variable.
+                var unitList = Session["DefaultPlanList"] as List<string>;
+
+                // Delete the unit from the Default Plan.
+                unitList[id] = null;
+
+                // Update Session variable.
+                Session["DefaultPlanList"] = unitList;
+            }
+            else if (type == "s")
+            {
+                // Retrieve Session Variable.
+                var defaultPlanSwap = Session["DefaultPlanSwap"] as List<string>;
+
+                // Delete the unit from the Swap Space.
+                defaultPlanSwap[id] = null;
+
+                // Update Session variable.
+                Session["DefaultPlanSwap"] = defaultPlanSwap;
+            }
+        }
+
+        [HttpPost]
+        public void DefaultPlanMove()
+        {
+            // Retrieve data from POST string array and process it. 
+            var data = Request["data"].ToString();
+            var dataSplit = data.Split(',');
+            var from = dataSplit[0];
+            var fromInt = Convert.ToInt32(from) - 1;
+            var to = dataSplit[1];
+            var toInt = Convert.ToInt32(to) - 1;
 
             var unitList = Session["DefaultPlanList"] as List<string>;
 
-            unitList[element] = "";
+            // Move the unit to its new position in the Default Plan.
+            unitList[toInt] = unitList[fromInt];
 
+            // Reset the previous/from position as null.
+            unitList[fromInt] = null;
+
+            // Update Session variable.
             Session["DefaultPlanList"] = unitList;
+        }
 
+        [HttpPost]
+        public void DefaultPlanBulkAddToSwapSpace()
+        {
+            // Retrieve data from POST string array and process it.
+            var data = Request["data"].ToString();
+            var dataSplit = data.Split('|');
+
+            var defaultPlanSwap = new List<string>();
+
+            // Initialise all spaces in the Swap Space List if it doesn't already exist.
+            if (Session["DefaultPlanSwap"] == null)
+            {
+                for (var x = 0; x < 12; x++)
+                {
+                    defaultPlanSwap.Add(null);
+                }
+
+                Session["DefaultPlanSwap"] = defaultPlanSwap;
+            }
+
+            defaultPlanSwap = Session["DefaultPlanSwap"] as List<string>;
+
+            // Add each unit to the correct position in the Default Plan Swap Space List.
+            for (var i = 0; i < dataSplit.Length; i++)
+            {
+                var unitSplit = dataSplit[i].Split(',');
+                var idString = unitSplit[0];
+                var id = Convert.ToInt32(idString);
+                var unitName = unitSplit[1];
+
+                defaultPlanSwap[id] = unitName;
+            }
+
+            // Update Session variable.
+            Session["DefaultPlanSwap"] = defaultPlanSwap;
+        }
+
+        [HttpPost]
+        public void DefaultPlanSwap()
+        {
+            // Retrieve data from POST string array and process it.
+            var data = Request["data"].ToString();
+            var dataSplit = data.Split(',');
+            var from = dataSplit[0];
+            var fromInt = Convert.ToInt32(from) - 1;
+            var to = dataSplit[1];
+            var toInt = Convert.ToInt32(to) - 1;
+
+            var unitList = Session["DefaultPlanList"] as List<string>;
+            var defaultPlanSwap = new List<string>();
+
+            // Initialise all spaces in the Swap Space List if it doesn't already exist.
+            if (Session["DefaultPlanSwap"] == null)
+            {
+                for (var x = 0; x < 12; x++)
+                {
+                    defaultPlanSwap.Add(null);
+                }
+
+                Session["DefaultPlanSwap"] = defaultPlanSwap;
+            }
+
+            defaultPlanSwap = Session["DefaultPlanSwap"] as List<string>;
+
+            // Move the unit within the Swap Space, mark the old position as null.
+            defaultPlanSwap[toInt] = defaultPlanSwap[fromInt];
+            defaultPlanSwap[fromInt] = null;
+
+            // Update Session variable.
+            Session["DefaultPlanSwap"] = defaultPlanSwap;
         }
 
         [HttpPost]
         public void DefaultPlanReset()
         {
-
+            // Reset the Default Plan List Session Variable to remove all units.
             Session["DefaultPlanList"] = null;
+        }
 
+        [HttpPost]
+        public void DefaultPlanResetSwapSpace()
+        {
+            // Reset the Default Plan Swap Space Session Variable to remove all units.
+            Session["DefaultPlanSwap"] = null;
         }
 
         [HttpPost]

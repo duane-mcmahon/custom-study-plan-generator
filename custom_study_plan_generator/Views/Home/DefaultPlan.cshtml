@@ -14,7 +14,7 @@
     <div id="backerDefault" class="backerCP">
         <div id="textDefault" class="textCP">
             <div class="CPcol1 inline">
-                
+
                 <div class="inline">
                     
                 </div>
@@ -62,6 +62,7 @@
 
             @{
                 List<string> defaultPlanList = (List<string>)Session["DefaultPlanList"];
+                List<string> defaultPlanSwap = (List<string>)Session["DefaultPlanSwap"];
                 List<string> violatedList = (List<string>)ViewBag.violatedList;
                 bool courseSelected = ViewBag.courseSelected;
             }
@@ -71,6 +72,9 @@
                 var numUnits = '@(ViewBag.numUnits)';
                 if ('@(defaultPlanList)' != null) {
                     var unitListSelected = JSON.parse('@Html.Raw(Json.Encode(defaultPlanList))');
+                }
+                if ('@(defaultPlanSwap)' != null) {
+                    var defaultPlanSwap = JSON.parse('@Html.Raw(Json.Encode(defaultPlanSwap))');
                 }
                 if ('@(violatedList)' != null) {
                     var violatedListConverted = JSON.parse('@Html.Raw(Json.Encode(violatedList))');
@@ -294,22 +298,28 @@
 
 
                 <div class="swapSpaceHeader pagewideFont">
-                    Unit Swap Space
+                    <div>
+                        Unit Swap Space
+                    </div>
                 </div>
+                
                 <div class="swapSpaceHolder">
                     <div>
-                        @Html.ListBox("List", ViewBag.unitList as MultiSelectList, new { id = "unitDropDown", style = "width: 40%; font-size: 1vw" })
+                        <button id="resetSwapSpace" type="button" class="modifyButton" name="resetSwapSpace" value="resetSwapSpace" title="Reset Swap Space">Reset Swap Space</button><br />
                     </div>
                     <div>
-                        <button id ="addUnit" type="button" class="modifyButton" name="addUnit" value="addUnit" title="Add a Unit">Add Units</button><br />
+                        <button id="addUnit" type="button" class="modifyButton" name="addUnit" value="addUnit" title="Add a Unit">Add Units</button><br />
+                    </div>
+                    <div>
+                        <div>
+                            @Html.ListBox("List", ViewBag.unitList as MultiSelectList, new { id = "unitDropDown", style = "width: 40%; height: 150px; font-size: 1vw" })
+                        </div>
                     </div>
                 </div>
-
-
 
                 <div class="planTable">
                     <div class="row1">
-                        <div id ="ss1" class="inlineGrid col1 cell target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
+                        <div id="ss1" class="inlineGrid col1 cell target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
 
                         </div>
                         <div id="ss2" class="inlineGrid col cell target swapSpaceCell" ondragover="allowDrop(event)" ondrop="drop(event, this)">
@@ -353,8 +363,8 @@
                     <div id="errors" class="errors"></div>
                 </div>
 
-            </div>
-</div>
+        </div>
+    </div>
 </div>
 
 <div id="dialog-confirm" title="Delete Unit?">
