@@ -1596,6 +1596,7 @@ namespace custom_study_plan_generator.Controllers
                     uploadable.BeginningSemester = sp.start_semester;
 
                     Session["StudyPlan"] = uploadable;
+                    TempData["StudyPlan"] = uploadable;
 
                     /* see submitplanasync
                      * using session["StudyPlan"]
@@ -1640,7 +1641,8 @@ namespace custom_study_plan_generator.Controllers
 
             if (ModelState.IsValid)
             {
-                Session["Step1"] = model;
+                //Session["Step1"] = model;
+                TempData["Step1"] = model;
 
                 return RedirectToAction("submitPlanAsync");
             }
@@ -1656,13 +1658,14 @@ namespace custom_study_plan_generator.Controllers
         {
             ViewBag.Message = "Plan Submission Page.";
 
-            var step1 = Session["Step1"] as FileModel;
+            //var step1 = Session["Step1"] as FileModel;
+            var step1 = TempData["Step1"] as FileModel;
+            //var step2 = Session["StudyPlan"] as StudyPlanModel;
+            var step2 = TempData["StudyPlan"] as StudyPlanModel;
 
-            var step2 = Session["StudyPlan"] as StudyPlanModel;
+            //Session.Remove("Step1");
 
-            Session.Remove("Step1");
-
-            Session.Remove("StudyPlan");
+            //Session.Remove("StudyPlan");
 
             var result = await new AuthorizationCodeMvcApp(this, new AppAuthFlowMetadata()).
                     AuthorizeAsync(cancellationToken);
