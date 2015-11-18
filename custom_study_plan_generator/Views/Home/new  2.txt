@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -14,7 +14,6 @@ using Google.Apis.Script.v1;
 using Google.Apis.Script.v1.Data;
 using Google.Apis.Services;
 using Google.GData.Client;
-using Microsoft.Ajax.Utilities;
 
 namespace custom_study_plan_generator.Models
 {
@@ -22,33 +21,28 @@ namespace custom_study_plan_generator.Models
     {
         public const string StudyPlanDirectory = "RMITStudentStudyPlans";
 
-        public List<CoursePlan> StudentPlan
-        {
+        public List<CoursePlan> StudentPlan {
 
-            get;
-            set;
+            get; set;
         }
 
         public string StudentId
         {
-            get;
-            set;
+            get; set;
         }
 
         public string CourseCode
         {
-
-            get;
-            set;
+           
+            get; set;
 
         }
 
         public List<ExemptionModel> Exemptions
         {
 
-            get;
-            set;
-
+            get; set;
+        
         }
 
         public int? BeginningSemester { get; set; }
@@ -99,9 +93,9 @@ namespace custom_study_plan_generator.Models
             file.Title = studentID;
             file.Description = string.Format("Created via {0} at {1}", service.ApplicationName, DateTime.Now.ToString());
             file.MimeType = "application/vnd.google-apps.spreadsheet";
-
+            
             File result = null;
-
+           
             // Set the parent folder.
 
             file.Parents = new List<ParentReference>() { new ParentReference() { Id = fileID } };
@@ -120,11 +114,11 @@ namespace custom_study_plan_generator.Models
                     // File exists in the drive already!
                     // Yes... overwrite the file
 
+                 
 
+                   // var request = service.Files.Update(file, list.Items[i].Id);
 
-                    // var request = service.Files.Update(file, list.Items[i].Id);
-
-                    var delete_requested = service.Files.Delete(list.Items[i].Id);
+                    var delete_requested = service.Files.Delete(list.Items[i].Id); 
 
                     delete_requested.Execute();
 
@@ -172,14 +166,14 @@ namespace custom_study_plan_generator.Models
 
         }
 
-
+        
         //Filling the Spreadsheet
         public static void populateGoogleSpreadSheet(File file, StudyPlanModel uploadable, SpreadsheetsService sheetsService)
         {
-
-
+        
+             
             // Instantiate a SpreadsheetQuery object to retrieve spreadsheets.
-
+            
             SpreadsheetQuery query = new SpreadsheetQuery();
 
             query.Title = file.Title;
@@ -193,22 +187,24 @@ namespace custom_study_plan_generator.Models
             WorksheetFeed wsFeed = spreadsheet.Worksheets;
             // Create a local representation of the new worksheet.
             WorksheetEntry worksheet = (WorksheetEntry)wsFeed.Entries[0];
-
+            
             worksheet.Title.Text = "Study Plan";
 
-
+            
             //real model: 4 units per semester (= 4 columns), 2 semesters per year (list of courses is sorted in that way)
-
+            
+            //the following works, just need to pass the correct model data to it and tweak other spects of the spreadsheet
+            
             //hardcoded: 
             worksheet.Cols = 5;
 
 
             worksheet.Rows = 6;
-
+                 
 
             //updating the worksheet to contain the feedlinks, etc.
             var updated = sheetsService.Insert(wsFeed, worksheet);
-
+            
             CellQuery cellquery = new CellQuery(updated.CellFeedLink);
 
             CellFeed cellFeed = sheetsService.Query(cellquery);
@@ -240,7 +236,7 @@ namespace custom_study_plan_generator.Models
             foreach (CellEntry entry in queryBatchResponse.Entries)
             {
                 cellEntries.Add(entry.BatchData.Id, entry);
-
+               
             }
 
 
@@ -266,102 +262,39 @@ namespace custom_study_plan_generator.Models
                 {
                     if (uploadable.StudentPlan[index] != null)
                     {
-
+                    
                         CellEntry batchEntry = cellEntries[cellAddr.IdString];
-                        batchEntry.InputValue = uploadable.StudentPlan[index].unit_code + ": " + uploadable.StudentPlan[index].name;
+                        batchEntry.InputValue = uploadable.StudentPlan[index].unit_code;
                         batchEntry.BatchData = new GDataBatchEntryData(cellAddr.IdString, GDataBatchOperationType.update);
                         batchRequest.Entries.Add(batchEntry);
                         index++;
 
-                    }
-                    else
-                    {
-
-                        CellEntry batchEntry = cellEntries[cellAddr.IdString];
-                        batchEntry.InputValue = "No enrollment";
-                        batchEntry.BatchData = new GDataBatchEntryData(cellAddr.IdString, GDataBatchOperationType.update);
-                        batchRequest.Entries.Add(batchEntry);
-                        index++;
-
-
-                    }
                 }
+                    else
+                {
+
+                    CellEntry batchEntry = cellEntries[cellAddr.IdString];
+                    batchEntry.InputValue = "Void";
+                    batchEntry.BatchData = new GDataBatchEntryData(cellAddr.IdString, GDataBatchOperationType.update);
+                    batchRequest.Entries.Add(batchEntry);
+                    index++;
 
 
+                }
             }
+        }
 
             // Submit the update
             sheetsService.Batch(batchRequest, new Uri(cellFeed.Batch));
 
-
-
-
-            // Add column
-
-
-            foreach (SpreadsheetEntry ss in feed.Entries)
-            {
-                if (ss.Title.Text == uploadable.StudentId)
-                {
-                    WorksheetFeed nextWsFeed = ss.Worksheets;
-                    WorksheetEntry active_worksheet = (WorksheetEntry)nextWsFeed.Entries[1];
-
-                    // add column to the worksheet via the API.
-                    active_worksheet.Cols += 1;
-
-                    active_worksheet.Update();
-
-                    string course_name = uploadable.StudentId + ": " + uploadable.CourseCode;
-
-                    string date_created = "Created on " + DateTime.Today;
-
-                    updateCell(sheetsService, 1, 6, course_name, active_worksheet);
-
-                    updateCell(sheetsService, 3, 6, date_created, active_worksheet);
-
-                }
-
-
-            }
-
-
-            //delete Sheet1 (autogenerated sheet that opens as default)
-
-            foreach (SpreadsheetEntry nextSpreadsheet in feed.Entries)
-            {
-                if (nextSpreadsheet.Title.Text == uploadable.StudentId)
-                {
-                    Debug.WriteLine(nextSpreadsheet.Title.Text);
-
-                    // Get the first worksheet of the first spreadsheet.
-
-                    WorksheetFeed nextWsFeed = nextSpreadsheet.Worksheets;
-                    WorksheetEntry default_worksheet = (WorksheetEntry)nextWsFeed.Entries[0];
-
-                    // Delete the worksheet via the API.
-                    default_worksheet.Delete();
-
-                }
-
-            }
-
-
-
-
-
         }
 
         //format the spreadsheet using Google Apps Script
-        public static bool? curateGoogleSpreadSheet(File file, string scriptID, ScriptService service)
+        public static bool? curateGoogleSpreadSheet(string fileID, string scriptID, ScriptService service)
         {
 
-            string spreadsheetID = file.AlternateLink.Split('/')[5];
-
-            Debug.WriteLine(spreadsheetID);
-
             List<object> arg = new List<object>();
-
-            arg.Add(spreadsheetID);
+            arg.Add(fileID);
 
             bool? success = null;
 
@@ -399,7 +332,7 @@ namespace custom_study_plan_generator.Models
                         // start executing.
                         Debug.WriteLine("Script error stacktrace:");
                         Newtonsoft.Json.Linq.JArray st =
-                            (Newtonsoft.Json.Linq.JArray)error["scriptStackTraceElements"];
+                            (Newtonsoft.Json.Linq.JArray) error["scriptStackTraceElements"];
                         foreach (var trace in st)
                         {
                             Debug.WriteLine(
@@ -417,9 +350,9 @@ namespace custom_study_plan_generator.Models
                     success = true;
 
                 }
-
-
-
+                
+                    
+                
             }
             catch (Google.GoogleApiException e)
             {
@@ -441,26 +374,7 @@ namespace custom_study_plan_generator.Models
             service.Permissions.Insert(permission, fileID).Execute();
         }
 
-        private static void updateCell(SpreadsheetsService service, uint row, uint col, string inputvalue, WorksheetEntry entry)
-        {
-
-            CellQuery query = new CellQuery(entry.CellFeedLink);
-
-            query.ReturnEmpty = ReturnEmptyCells.yes;
-
-            query.MinimumRow = query.MaximumRow = row;
-            query.MinimumColumn = query.MaximumColumn = col;
-
-            CellFeed feed = service.Query(query);
-
-            CellEntry cell = new CellEntry(row, col);
-
-            cell.Cell.InputValue = inputvalue;
-
-            feed.Insert(cell);
-
-            Debug.WriteLine("Successfully updated cell");
-        }
+       
 
     }
 

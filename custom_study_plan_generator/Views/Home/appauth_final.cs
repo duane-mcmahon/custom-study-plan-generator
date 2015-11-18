@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Google.Apis.Auth.OAuth2;

@@ -1,0 +1,16 @@
+  if (Session["StudyPlan"] == null)
+            {
+
+                TempData["msg"] = "false";
+
+            }
+			
+			
+			
+			  if (Session["StudyPlan"] == null)
+            {
+
+                TempData["msg"] = "false";
+
+    
+            }

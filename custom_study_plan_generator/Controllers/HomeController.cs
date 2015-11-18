@@ -1621,7 +1621,9 @@ namespace custom_study_plan_generator.Controllers
 
                 TempData["msg"] = "false";
 
+
                 return View();
+
             }
 
             FileModel m = new FileModel();
@@ -1680,100 +1682,79 @@ namespace custom_study_plan_generator.Controllers
             // Set query
             folderListReq.Q = "mimeType = 'application/vnd.google-apps.folder' and title ='" + StudyPlanModel.StudyPlanDirectory + "' and trashed = false";
 
-            try
+            FileList folderList = await folderListReq.ExecuteAsync();
+
+
+            File returnedFile = null;
+
+            bool? returnedResult = null;
+
+            // Creating spreadsheets api service
+            // Spreadsheet api test
+            OAuth2Parameters parameters = new OAuth2Parameters()
             {
+                AccessToken = result.Credential.Token.AccessToken
+            };
 
-                FileList folderList = await folderListReq.ExecuteAsync();
+            GOAuth2RequestFactory requestFactory = new GOAuth2RequestFactory(null, driveService.ApplicationName, parameters);
 
+            SpreadsheetsService sheetsService = new SpreadsheetsService(driveService.ApplicationName)
+            {
+                RequestFactory = requestFactory
+            };
 
-
-                File returnedFile = null;
-
-                bool? returnedResult = null;
-
-                // Creating spreadsheets api service
-                // Spreadsheet api test
-                OAuth2Parameters parameters = new OAuth2Parameters()
-                {
-                    AccessToken = result.Credential.Token.AccessToken
-                };
-
-                GOAuth2RequestFactory requestFactory = new GOAuth2RequestFactory(null, driveService.ApplicationName, parameters);
-
-                SpreadsheetsService sheetsService = new SpreadsheetsService(driveService.ApplicationName)
-                {
-                    RequestFactory = requestFactory
-                };
-
-                // Create Google Apps Script Execution API service.
+            // Create Google Apps Script Execution API service.
 
 
 
-                //project key in project properties
-                string scriptId = "M9QBeBg3n43dSAbJG6RDbedJ7ZTkmZeIJ";
+            //project key in project properties
+            string scriptId = "M9QBeBg3n43dSAbJG6RDbedJ7ZTkmZeIJ";
 
-                var sservice = new ScriptService(new BaseClientService.Initializer()
-                {
-                    HttpClientInitializer = result.Credential,
-                    ApplicationName = "custom-study-plan-generator"
-                });
-
-
-
-                if (folderList.Items.Count >= 1)
-                {
-                    // If multiple folders with StudyPlanModel.StudyPlanDirectory title always choose first one
-                    File studyPlanFolder = folderList.Items.First();
-
-                    // TODO figure out if page token is necessary here
-                    var fileListReq = driveService.Files.List();
-                    fileListReq.Fields = "items/title,items/id";
-                    // Get all spreadsheets in the studyPlanFolder
-                    fileListReq.Q = "'" + studyPlanFolder.Id + "' in parents and mimeType = 'application/vnd.google-apps.spreadsheet' and trashed = false";
-                    FileList fileList = await fileListReq.ExecuteAsync();
-
-                    try
-                    {
-                        returnedFile = StudyPlanModel.generateGoogleSpreadSheet(driveService, sheetsService, step1.Title, studyPlanFolder.Id, fileList, step2);
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.WriteLine("Catching exception returnedFile");
-                        return RedirectToAction("Final", new { error = "error" });
-                    }
-                    returnedResult = StudyPlanModel.curateGoogleSpreadSheet(returnedFile.Id, scriptId, sservice);
-
-                }
-                else
-                {
-
-                    var folder = StudyPlanModel.createDirectory(driveService, StudyPlanModel.StudyPlanDirectory, "RMIT", "root");
-
-                    returnedFile = StudyPlanModel.generateGoogleSpreadSheet(driveService, sheetsService, step1.Title, folder.Id, step2);
-
-                    returnedResult = StudyPlanModel.curateGoogleSpreadSheet(returnedFile.Id, scriptId, sservice);
-
-                }
+            var sservice = new ScriptService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = result.Credential,
+                ApplicationName = "custom-study-plan-generator"
+            });
 
 
-                // Permission args are currently hardcoded. Uncomment and replace STUDENTNUMBER to enable sharing of the file.
 
+            if (folderList.Items.Count >= 1)
+            {
+                // If multiple folders with StudyPlanModel.StudyPlanDirectory title always choose first one
+                File studyPlanFolder = folderList.Items.First();
 
-                StudyPlanModel.addPermission(driveService, returnedFile.Id, "user", "reader", step2);
-                // For javascript sharing popup
-                ViewBag.UserAccessToken = result.Credential.Token.AccessToken;
-                ViewBag.FileId = returnedFile.Id;
-                ViewBag.AlternateLink = returnedFile.AlternateLink;
+                // TODO figure out if page token is necessary here
+                var fileListReq = driveService.Files.List();
+                fileListReq.Fields = "items/title,items/id";
+                // Get all spreadsheets in the studyPlanFolder
+                fileListReq.Q = "'" + studyPlanFolder.Id + "' in parents and mimeType = 'application/vnd.google-apps.spreadsheet' and trashed = false";
+                FileList fileList = await fileListReq.ExecuteAsync();
 
-                return View(step1);
+                returnedFile = StudyPlanModel.generateGoogleSpreadSheet(driveService, sheetsService, step1.Title, studyPlanFolder.Id, fileList, step2);
+
+                returnedResult = StudyPlanModel.curateGoogleSpreadSheet(returnedFile, scriptId, sservice);
 
             }
-            catch (Exception ex)
+            else
             {
-                Debug.WriteLine("Catching second exception");
-                return RedirectToAction("Final", new { error = "error" });
+
+                var folder = StudyPlanModel.createDirectory(driveService, StudyPlanModel.StudyPlanDirectory, "RMIT", "root");
+
+                returnedFile = StudyPlanModel.generateGoogleSpreadSheet(driveService, sheetsService, step1.Title, folder.Id, step2);
+
+                returnedResult = StudyPlanModel.curateGoogleSpreadSheet(returnedFile, scriptId, sservice);
+
             }
-            Debug.WriteLine("Running blank view");
+
+
+            // Permission args are currently hardcoded. Uncomment and replace STUDENTNUMBER to enable sharing of the file.
+
+
+            StudyPlanModel.addPermission(driveService, returnedFile.Id, "user", "reader", step2);
+            // For javascript sharing popup
+            ViewBag.UserAccessToken = result.Credential.Token.AccessToken;
+            ViewBag.FileId = returnedFile.Id;
+            ViewBag.AlternateLink = returnedFile.AlternateLink;
 
             return View();
 
