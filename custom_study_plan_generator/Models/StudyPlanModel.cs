@@ -320,7 +320,7 @@ namespace custom_study_plan_generator.Models
 
                     active_worksheet.Update();
 
-                    string course_name = uploadable.StudentId + ": " + uploadable.CourseCode;
+                    string course_name = "Course Code: " + uploadable.CourseCode;
 
                     string date_created = "Created on " + DateTime.Today;
 
