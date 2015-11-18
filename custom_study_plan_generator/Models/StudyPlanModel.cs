@@ -43,6 +43,15 @@ namespace custom_study_plan_generator.Models
 
         }
 
+
+        public string CourseTitle
+        {
+
+            get;
+            set;
+
+        }
+
         public List<ExemptionModel> Exemptions
         {
 
@@ -296,7 +305,7 @@ namespace custom_study_plan_generator.Models
 
 
 
-            // Add column
+            // Add row
 
 
             foreach (SpreadsheetEntry ss in feed.Entries)
@@ -307,7 +316,7 @@ namespace custom_study_plan_generator.Models
                     WorksheetEntry active_worksheet = (WorksheetEntry)nextWsFeed.Entries[1];
 
                     // add column to the worksheet via the API.
-                    active_worksheet.Cols += 1;
+                    active_worksheet.Rows += 3;
 
                     active_worksheet.Update();
 
@@ -315,9 +324,11 @@ namespace custom_study_plan_generator.Models
 
                     string date_created = "Created on " + DateTime.Today;
 
-                    updateCell(sheetsService, 1, 6, course_name, active_worksheet);
+                    updateCell(sheetsService, 9, 1, uploadable.CourseTitle, active_worksheet);
 
-                    updateCell(sheetsService, 3, 6, date_created, active_worksheet);
+                    updateCell(sheetsService, 9, 2, course_name, active_worksheet);
+
+                    updateCell(sheetsService, 9, 3, date_created, active_worksheet);
 
                 }
 

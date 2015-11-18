@@ -1590,6 +1590,7 @@ namespace custom_study_plan_generator.Controllers
 
                     var uploadable = new StudyPlanModel();
 
+                    uploadable.CourseTitle = ((CourseDTO) Session["Course"]).name;
                     uploadable.CourseCode = sp.course_code;
                     uploadable.StudentPlan = sessionList;
                     uploadable.StudentId = Session["StudentID"].ToString();
@@ -1617,15 +1618,15 @@ namespace custom_study_plan_generator.Controllers
         public ActionResult submitPlan()
         {
 
-            if (Session["StudyPlan"] == null)
-            {
+        /*  if (Session["StudyPlan"] == null)
+          {
 
-                TempData["msg"] = "false";
-
-
-                return View();
+              TempData["msg"] = "false";
+         
+               return View();
 
             }
+            */
 
             FileModel m = new FileModel();
 
@@ -1634,6 +1635,15 @@ namespace custom_study_plan_generator.Controllers
             return View(m);
 
         }
+
+        /*
+         * 
+         * using tempdata to provisionally address
+         * issue of google permissions accesses unsetting 
+         * the session variables
+         */
+
+
 
         [HttpPost]
         public ActionResult submitPlan(FileModel model)
