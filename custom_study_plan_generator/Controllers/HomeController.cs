@@ -279,29 +279,6 @@ namespace custom_study_plan_generator.Controllers
                         ViewBag.violatedList = violatedList;
 
                     }
-
-                    // If there are units in the Swap Space and a different course is selected, remove any duplicates from Swap Space.
-                    if (Session["DefaultPlanSwap"] != null)
-                    {
-                        var swapSpace = Session["DefaultPlanSwap"] as List<string>;
-
-                        // Loop through Default Plan Unit list.
-                        for (var i = 0; i < unitList.Count; i++)
-                        {
-                            for (var j = 0; j < swapSpace.Count; j++)
-                            {
-                                // Check Plan unit against each Swap Space Unit.
-                                if (unitList[i] == swapSpace[j])
-                                {
-                                    // Duplicate Unit - remove it from Swap Space.
-                                    swapSpace[j] = null;
-                                }
-                            }
-                        }
-
-                        // Update session variable.
-                        Session["DefaultPlanSwap"] = swapSpace;
-                    }
                 }
 
                 else
@@ -617,48 +594,54 @@ namespace custom_study_plan_generator.Controllers
         [HttpPost]
         public string GetPrerequisites()
         {
-
-            using (custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities())
+            // Check that a course has been selected first before checking prerequisites, as the checks are Course-based.
+            if (Session["CourseCode"] != null)
             {
-
-                /* Get unit name from ajax POST */
-                var unit = Request["data"].ToString();
-
-                var courseCode = Session["CourseCode"].ToString();
-
-                /* Get the unit code of the unit */
-                var unitToCheck = from u in db.Units
-                    where u.name == unit
-                    select u.unit_code;
-
-                /* Get the unit prereq codes of the unit being checked (if any) */
-                var prereqs = from p in db.UnitPrerequisites
-                    where unitToCheck.Contains(p.unit_code)
-                    where courseCode.Contains(p.course_code)
-                    select p.prereq_code;
-
-                /* Convert the prereq codes to unit names */
-                var prereqNames = from u in db.Units
-                    where prereqs.Contains(u.unit_code)
-                    select u.name;
-
-                var prereqList = "";
-                var count = 0;
-                foreach (var prereq in prereqNames)
+                using (custom_study_plan_generatorEntities db = new custom_study_plan_generatorEntities())
                 {
-                    if (count == 0)
+                    /* Get unit name from ajax POST */
+                    var unit = Request["data"].ToString();
+
+                    var courseCode = Session["CourseCode"].ToString();
+
+                    /* Get the unit code of the unit */
+                    var unitToCheck = from u in db.Units
+                                      where u.name == unit
+                                      select u.unit_code;
+
+                    /* Get the unit prereq codes of the unit being checked (if any) */
+                    var prereqs = from p in db.UnitPrerequisites
+                                  where unitToCheck.Contains(p.unit_code)
+                                  where courseCode.Contains(p.course_code)
+                                  select p.prereq_code;
+
+                    /* Convert the prereq codes to unit names */
+                    var prereqNames = from u in db.Units
+                                      where prereqs.Contains(u.unit_code)
+                                      select u.name;
+
+                    var prereqList = "";
+                    var count = 0;
+                    foreach (var prereq in prereqNames)
                     {
-                        prereqList += prereq.ToString();
-                    }
-                    if (count > 0)
-                    {
-                        prereqList = prereqList + "," + prereq.ToString();
+                        if (count == 0)
+                        {
+                            prereqList += prereq.ToString();
+                        }
+                        if (count > 0)
+                        {
+                            prereqList = prereqList + "," + prereq.ToString();
+                        }
+
+                        count++;
                     }
 
-                    count++;
+                    return prereqList;
                 }
-
-                return prereqList;
+            }
+            else
+            {
+                return "";
             }
         }
 

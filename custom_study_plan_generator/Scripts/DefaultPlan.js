@@ -206,54 +206,31 @@ $(document).ready(function () {
             $('#errors').show();
         }
         else {
-            // Check if the unit already exists, if it does give an error.
-            for (var x = 0; x < units.length; x++) {
-                // Loop through existing units and check for duplicates.
-                var duplicate = false;
-
-                $('.innerCell').each(function () {
-
-                    //if (($(this).text()).indexOf(units[x]) > -1) {
-                    if (($(this).text()) == units[x]) {
-                        // Match found, mark as duplicate.
-                        duplicate = true;
-                        duplicateUnits[countDuplicates] = units[x];
-                        countDuplicates++;
-                    }
-                });
-
-                // Add non-duplicates to the list of valid units to add.
-                if (!duplicate) {
-                    validUnits[countValid] = units[x];
-                    countValid++;
-                }
-            }
-
             // Proceed if Valid units are selected.
-            if (validUnits.length != 0) {
+            if (units.length != 0) {
                 // Check how many units can fit into the available space.
                 var excess = 0;
                 var availableSwapSpace = 0;
                 availableSwapSpace = (TOTAL_SWAP_SPACES - swapSpacesFull);
 
                 // Make list of units that aren't going to fit.
-                if (validUnits.length > availableSwapSpace) {
+                if (units.length > availableSwapSpace) {
                     // Find position of first excess unit.
-                    excess = (validUnits.length - availableSwapSpace);
+                    excess = (units.length - availableSwapSpace);
 
                     // Loop from start of excess to end of selected units.
                     for (var x = 0; x < excess; x++) {
                         var pos = (availableSwapSpace + x);
-                        excessUnits[x] = validUnits[pos];
+                        excessUnits[x] = units[pos];
                     }
                 }
 
                 // Find final number of valid units that will fit.
-                var finalLength = (validUnits.length - excess);
+                var finalLength = (units.length - excess);
 
                 // Create final list of valid units to be Added, minus the duplicates and any excess.
                 for (var x = 0; x < finalLength; x++) {
-                    finalUnits[x] = validUnits[x];
+                    finalUnits[x] = units[x];
                 }
 
                 // Create list of available blank spaces in the Swap Space.
@@ -320,23 +297,9 @@ $(document).ready(function () {
         }
 
         // Show error message if there were duplicates or excess units that could not fit into Swap Space.
-        if (duplicateUnits.length > 0 || excessUnits.length > 0) {
+        if (excessUnits.length > 0) {
             // Reset any previous messages.
-            $('.duplicates').hide();
             $('.excess').hide();
-
-            // Add Duplicate units to the message window.
-            if (duplicateUnits.length > 0) {
-                var duplicateMsg = ""
-
-                for (var x = 0; x < duplicateUnits.length; x++) {
-                    var listItem = "<li>" + duplicateUnits[x] + "</li>"
-                    duplicateMsg += listItem;
-                }
-
-                $('#duplicates').html(duplicateMsg);
-                $('.duplicates').show();
-            }
 
             // Add Excess units to message window.
             if (excessUnits.length > 0) {
@@ -357,8 +320,8 @@ $(document).ready(function () {
             $(function () {
                 $("#dialog-unitsnotadded").dialog({
                     resizable: false,
-                    height: 550,
-                    width: 550,
+                    height: 400,
+                    width: 400,
                     modal: true,
                     buttons: {
                         Okay: function () {
