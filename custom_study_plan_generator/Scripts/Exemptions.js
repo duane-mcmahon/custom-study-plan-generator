@@ -72,16 +72,15 @@
 
         $.ajax({
             url: 'RemoveExemptions',
-            error: function (data) {
-                alert("Error processing RemoveExemptions ajax request");
-            },
             type: "POST",
             data: { data: array },
             success: function (response) {
+                // Success - Redirect to the Algorithm.
                 location.href = 'Modify';
             },
-            error: function (response) {
-                $('#error2').html(response.responseText);
+            error: function (data) {
+                // Exemption limit exceeded - display error.
+                $('#error2').html("Exemption Limit exceeded: Please select less units.");
                 $('#error2').show();
                 $('#error2').delay(5000).fadeOut('slow');
             }

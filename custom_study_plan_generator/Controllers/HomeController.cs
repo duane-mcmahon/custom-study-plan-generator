@@ -860,6 +860,7 @@ namespace custom_study_plan_generator.Controllers
             // Pass Student Details to the View.
             ViewBag.studentID = Session["StudentID"].ToString();
             ViewBag.studentName = Session["StudentName"].ToString();
+            ViewBag.startSem = Session["StartSemester"].ToString();
             ViewBag.courseName = ((CourseDTO)Session["Course"]).name.ToString();
 
             return View();
@@ -878,7 +879,7 @@ namespace custom_study_plan_generator.Controllers
                 exemptions = data.Split(',').ToList();
 
                 // Make sure Exemption Limit has not been reached. 
-                if (exemptions.Count > 0 && exemptions.Count <= ((CourseDTO)Session["Course"]).max_credit)
+                if (exemptions.Count <= ((CourseDTO)Session["Course"]).max_credit)
                 {
                     // Valid number of Exemptions has been selected - mark the Exemptions in the session variable. 
                     foreach (CoursePlan unit in Session["StudentPlanInitial"] as List<CoursePlan>)
@@ -921,21 +922,39 @@ namespace custom_study_plan_generator.Controllers
                         Session["Rerun"] = "false";
                     }
 
+                    // Note that Exemptions have been selected.
+                    Session["BasePlan"] = "false";
+
                     // Return Success.
-                    return Content("Exemptions successfully removed.", MediaTypeNames.Text.Plain);
+                    return Content("", MediaTypeNames.Text.Plain);
                 }
                 else
                 {
                     // Exemption Limit has been exceeded.
-                    Response.StatusCode = (int) HttpStatusCode.BadRequest;
+                    Response.StatusCode = (int)HttpStatusCode.BadRequest;
                     return Content("Exemption Limit exceeded: Please select less units.", MediaTypeNames.Text.Plain);
                 }
             }
             else
             {
-                // No Exemptions selected.
-                Response.StatusCode = (int) HttpStatusCode.BadRequest;
-                return Content("Please select exemptions to remove.", MediaTypeNames.Text.Plain);
+                // Zero Exemptions - Skip algorithm with base Default Plan, unless it is Semester 2 intake.
+                if (Session["StartSemester"].ToString() == "2")
+                {
+                    // Semester 2 intake - Still run the algorithm on Default Plan to account for unit scheduling.
+                    Session["BasePlan"] = "true";
+                    Session["AlgorithmRun"] = "false";
+                    Session["Rerun"] = "true";
+                }
+                else
+                {
+                    // Semester 1 intake - Do not run algorithm on Default Plan with zero selected exemptions.
+                    Session["BasePlan"] = "true";
+                    Session["AlgorithmRun"] = "true";
+                    Session["Rerun"] = "false";
+                }
+
+                // Continue with Default Plan.
+                return Content("", MediaTypeNames.Text.Plain);
             }
         }
 
@@ -1013,6 +1032,29 @@ namespace custom_study_plan_generator.Controllers
 
                 Session["AlgorithmRun"] = "true";
             }
+            else if (Session["BasePlan"] == "true" && Session["StartSemester"].ToString() == "1")
+            {
+                // Semester 1 intake Base Default Plan selected with no exemptions - Copy plan directly from the Default plan.
+                List<CoursePlan> sessionList = new List<CoursePlan>();
+                sessionList = ((List<CoursePlan>)Session["StudentPlanInitial"]).Select(unit =>
+                                    new CoursePlan
+                                    {
+                                        position = unit.position,
+                                        semester = unit.semester,
+                                        unit_code = unit.unit_code,
+                                        name = unit.name,
+                                        type_code = unit.type_code,
+                                        semester1 = unit.semester1,
+                                        semester2 = unit.semester2,
+                                        exempt = unit.exempt,
+                                        prerequisites = unit.prerequisites,
+                                        start_semester = unit.start_semester
+                                    }).ToList();
+
+                // Update the Session variable.
+                Session["StudentPlan"] = new List<CoursePlan>();
+                Session["StudentPlan"] = sessionList.ToList();
+            }
 
             /* Check if any of the current units in the unit list are missing their prerequisites */
             /* ********************************************************************************** */
@@ -1030,10 +1072,13 @@ namespace custom_study_plan_generator.Controllers
                 List<CoursePlan> sessionList = (List<CoursePlan>) Session["StudentPlan"];
 
                 /* If there are any exempt units, add them to list of units that have been checked for violations */
-                foreach (var exemption in exemptionsList)
+                if (exemptionsList != null)
                 {
-                    unitsChecked.Add(exemption);
+                    foreach (var exemption in exemptionsList)
+                    {
+                        unitsChecked.Add(exemption);
 
+                    }
                 }
 
                 /* Loop through the unit list */
@@ -1081,6 +1126,7 @@ namespace custom_study_plan_generator.Controllers
             // Pass Student Details to the View.
             ViewBag.studentID = Session["StudentID"].ToString();
             ViewBag.studentName = Session["StudentName"].ToString();
+            ViewBag.startSem = Session["StartSemester"].ToString();
             ViewBag.courseName = ((CourseDTO)Session["Course"]).name.ToString();
 
             return View();
@@ -1692,6 +1738,7 @@ namespace custom_study_plan_generator.Controllers
             // Pass Student Details to the View.
             ViewBag.studentID = Session["StudentID"].ToString();
             ViewBag.studentName = Session["StudentName"].ToString();
+            ViewBag.startSem = Session["StartSemester"].ToString();
             ViewBag.courseName = ((CourseDTO)Session["Course"]).name.ToString();
 
             return View();
