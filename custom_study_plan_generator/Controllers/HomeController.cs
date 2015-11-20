@@ -1973,9 +1973,13 @@ namespace custom_study_plan_generator.Controllers
                 }
 
                 /* Create a list of the new exemptions */
-                List<ExemptionModel> studentExemptions = (from unit in db.Units
-                    where RemovedExemptions.Contains(unit.name)
-                    select new ExemptionModel() {name = unit.name, unit_code = unit.unit_code}).ToList();
+                List<ExemptionModel> studentExemptions = new List<ExemptionModel>();
+                if (RemovedExemptions != null)
+                {
+                    studentExemptions = (from unit in db.Units
+                                                              where RemovedExemptions.Contains(unit.name)
+                                                              select new ExemptionModel() { name = unit.name, unit_code = unit.unit_code }).ToList();
+                }
 
                 /* Populate the properties of the new exemptions list and add each exemption to the database */
                 foreach (var exemption in studentExemptions)
