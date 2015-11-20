@@ -360,7 +360,7 @@ function tooltip(target, name) {
                 }
                     /* If prereqs */
                 else {
-                    $(jId).text("Prerequsites: " + data);
+                    $(jId).text(data);
                 }
 
 

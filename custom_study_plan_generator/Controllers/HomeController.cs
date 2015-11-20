@@ -241,43 +241,97 @@ namespace custom_study_plan_generator.Controllers
                         select c.course_code;
 
                     /* Loop through the unit list */
+                    var count = 1;
+                    var semCount = 1;
                     foreach (var unit in unitList)
                     {
 
-                        /* Add current unit to the list of units that have been checked for violations */
-                        unitsChecked.Add(unit);
-
-                        /* Get the unit code of the unit currently being checked */
-                        var unitToCheck = from u in db.Units
-                            where u.name == unit
-                            select u.unit_code;
-
-                        /* Get the unit prereq codes of the unit being checked (if any) */
-                        var prereqs = from p in db.UnitPrerequisites
-                            where unitToCheck.Contains(p.unit_code)
-                            where courseCode.Contains(p.course_code)
-                            select p.prereq_code;
-
-                        /* Convert the prereq codes to unit names */
-                        var prereqNames = from u in db.Units
-                            where prereqs.Contains(u.unit_code)
-                            select u.name;
-
-                        /* If the unit has both it's prereqs before it, do nothing, else add it to the violated list */
-                        if (prereqNames.Count() > 0)
+                        if (unit != null)
                         {
-                            if (!prereqNames.Except(unitsChecked).Any())
-                            {
+                            /* Add current unit to the list of units that have been checked for violations */
+                            unitsChecked.Add(unit);
 
+                            /* Get the unit code of the unit currently being checked */
+                            var unitToCheck = from u in db.Units
+                                              where u.name == unit
+                                              select u;
+
+                            /* Get the unit prereq codes of the unit being checked (if any) */
+                            var prereqs = from p in db.UnitPrerequisites
+                                          where unitToCheck.FirstOrDefault().unit_code == p.unit_code
+                                          where courseCode.Contains(p.course_code)
+                                          select p.prereq_code;
+
+                            /* Convert the prereq codes to unit names */
+                            var prereqNames = from u in db.Units
+                                              where prereqs.Contains(u.unit_code)
+                                              select u.name;
+
+                            /* Get the semester availaibility */
+                            bool sem1 = unitToCheck.FirstOrDefault().semester1;
+                            bool sem2 = unitToCheck.FirstOrDefault().semester2;
+                            bool addedToList = false;
+
+                            /* Set initial semester checking variables */
+                            string semAvailable = "both";
+                            string thisSemester = "";
+
+                            /* Set this semester to odd or even based on the plan table headings */
+                            if (semCount % 2 == 0)
+                            {
+                                thisSemester = "even";
                             }
                             else
                             {
-                                violatedList.Add(unit);
+                                thisSemester = "odd";
                             }
+
+                            /* Set the semester availaible for the unit based on the unit and the starting semester (If not set will be "both") */
+                            if (sem1 == true && sem2 == false)
+                            {
+                                semAvailable = "odd";
+                            }
+                            if (sem1 == false && sem2 == true)
+                            {
+                                semAvailable = "even";
+                            }
+                     
+                            /* If the unit has both it's prereqs before it, do nothing, else add it to the violated list */
+                            if (prereqNames.Count() > 0)
+                            {
+                                if (!prereqNames.Except(unitsChecked).Any())
+                                {
+
+                                }
+                                else
+                                {
+                                    violatedList.Add(unit);
+                                }
+                            }
+
+                            /* If not already added to list */
+                            if (addedToList == false)
+                            {
+                                /* If not available both semesters */
+                                if (semAvailable != "both")
+                                {
+
+                                    /* If not in the correct semester */
+                                    if (thisSemester != semAvailable)
+                                    {
+                                        violatedList.Add(unit);
+                                    }
+                                }
+                            }
+
+                            ViewBag.violatedList = violatedList;
                         }
 
-                        ViewBag.violatedList = violatedList;
-
+                        if (count % 4 == 0)
+                        {
+                            semCount++;
+                        }
+                        count++;
                     }
                 }
 
@@ -607,11 +661,11 @@ namespace custom_study_plan_generator.Controllers
                     /* Get the unit code of the unit */
                     var unitToCheck = from u in db.Units
                                       where u.name == unit
-                                      select u.unit_code;
+                                      select u;
 
                     /* Get the unit prereq codes of the unit being checked (if any) */
                     var prereqs = from p in db.UnitPrerequisites
-                                  where unitToCheck.Contains(p.unit_code)
+                                  where unitToCheck.FirstOrDefault().unit_code == p.unit_code
                                   where courseCode.Contains(p.course_code)
                                   select p.prereq_code;
 
@@ -620,13 +674,29 @@ namespace custom_study_plan_generator.Controllers
                                       where prereqs.Contains(u.unit_code)
                                       select u.name;
 
+                    /* Get the available semesters for the unit */
+                    bool sem1 = unitToCheck.FirstOrDefault().semester1;
+                    bool sem2 = unitToCheck.FirstOrDefault().semester2;
+
                     var prereqList = "";
+
+                    if (sem1 == true && sem2 == false)
+                    {
+                        prereqList += "Semester: Odd Only ";
+                    }
+                    
+                    if (sem1 == false && sem2 == true)
+                    {
+                        prereqList += "Semester: Even Only ";
+                    }
+                    
+
                     var count = 0;
                     foreach (var prereq in prereqNames)
                     {
                         if (count == 0)
                         {
-                            prereqList += prereq.ToString();
+                            prereqList = prereqList + "| Prerequisites: " + prereq.ToString();
                         }
                         if (count > 0)
                         {
@@ -857,6 +927,8 @@ namespace custom_study_plan_generator.Controllers
                 Session["StartSemester"] = startSemester;
             }
 
+            
+
             // Pass Student Details to the View.
             ViewBag.studentID = Session["StudentID"].ToString();
             ViewBag.studentName = Session["StudentName"].ToString();
@@ -1032,7 +1104,7 @@ namespace custom_study_plan_generator.Controllers
 
                 Session["AlgorithmRun"] = "true";
             }
-            else if (Session["BasePlan"] == "true" && Session["StartSemester"].ToString() == "1")
+            else if (Session["BasePlan"].ToString() == "true" && Session["StartSemester"].ToString() == "1")
             {
                 // Semester 1 intake Base Default Plan selected with no exemptions - Copy plan directly from the Default plan.
                 List<CoursePlan> sessionList = new List<CoursePlan>();
@@ -1068,6 +1140,9 @@ namespace custom_study_plan_generator.Controllers
                 /* Get the course code from the session stored selected course */
                 var courseCode = Session["CourseCode"].ToString();
 
+                /* Get the start semester from session */
+                var startSemester = Convert.ToInt32(Session["StartSemester"]);
+
                 List<string> exemptionsList = (List<string>) Session["RemovedExemptions"];
                 List<CoursePlan> sessionList = (List<CoursePlan>) Session["StudentPlan"];
 
@@ -1082,6 +1157,8 @@ namespace custom_study_plan_generator.Controllers
                 }
 
                 /* Loop through the unit list */
+                var count = 1;
+                var semCount = 1;
                 foreach (var unit in sessionList)
                 {
                     if (unit != null)
@@ -1092,11 +1169,11 @@ namespace custom_study_plan_generator.Controllers
                         /* Get the unit code of the unit currently being checked */
                         var unitToCheck = from u in db.Units
                             where u.name == unit.name
-                            select u.unit_code;
+                            select u;
 
                         /* Get the unit prereq codes of the unit being checked (if any) */
                         var prereqs = from p in db.UnitPrerequisites
-                            where unitToCheck.Contains(p.unit_code)
+                            where unitToCheck.FirstOrDefault().unit_code == p.unit_code
                             where p.course_code == courseCode
                             select p.prereq_code;
 
@@ -1105,6 +1182,43 @@ namespace custom_study_plan_generator.Controllers
                             where prereqs.Contains(u.unit_code)
                             select u.name;
 
+                        /* Get the semester availaibility */
+                        bool sem1 = unitToCheck.FirstOrDefault().semester1;
+                        bool sem2 = unitToCheck.FirstOrDefault().semester2;
+                        bool addedToList = false;
+
+                        /* Set initial semester checking variables */
+                        string semAvailable = "both";
+                        string thisSemester = "";
+
+                        /* Set this semester to odd or even based on the plan table headings */
+                        if (semCount % 2 == 0)
+                        {
+                            thisSemester = "even";
+                        }
+                        else
+                        {
+                            thisSemester = "odd";
+                        }
+
+                        /* Set the semester availaible for the unit based on the unit and the starting semester (If not set will be "both") */
+                        if (sem1 == true && sem2 == false && startSemester == 1)
+                        {
+                            semAvailable = "odd";
+                        }
+                        if (sem1 == true && sem2 == false && startSemester == 2)
+                        {
+                            semAvailable = "even";
+                        }
+                        if (sem1 == false && sem2 == true && startSemester == 1)
+                        {
+                            semAvailable = "even";
+                        }
+                        if (sem1 == false && sem2 == true && startSemester == 2)
+                        {
+                            semAvailable = "odd";
+                        }
+                
                         /* If the unit has both it's prereqs before it, do nothing, else add it to the violated list */
                         if (prereqNames.Count() > 0)
                         {
@@ -1115,11 +1229,31 @@ namespace custom_study_plan_generator.Controllers
                             else
                             {
                                 violatedList.Add(unit.name);
+                                addedToList = true;
+                            }
+                        }
+
+                        /* If not already added to list */
+                        if (addedToList == false)
+                        {
+                            /* If not available both semesters */
+                            if (semAvailable != "both") {
+                                
+                                /* If not in the correct semester */
+                                if (thisSemester != semAvailable)
+                                {
+                                    violatedList.Add(unit.name);
+                                }
                             }
                         }
 
                         ViewBag.violatedList = violatedList;
                     }
+                    if (count % 4 == 0)
+                    {
+                        semCount++;
+                    }
+                    count++;
                 }
             }
 
@@ -1391,7 +1525,13 @@ namespace custom_study_plan_generator.Controllers
                 /* Get the updated session list from session */
                 sessionList = (List<string>) Session["StudentPlan"];
 
+                var startSemester = Convert.ToInt32(plan.start_semester);
+
+
+                
                 /* Loop through the unit list */
+                var count = 1;
+                var semCount = 1;
                 foreach (var unit in sessionList)
                 {
 
@@ -1404,11 +1544,11 @@ namespace custom_study_plan_generator.Controllers
                         /* Get the unit code of the unit currently being checked */
                         var unitToCheck = from u in db.Units
                             where u.name == unit
-                            select u.unit_code;
+                            select u;
 
                         /* Get the unit prereq codes of the unit being checked (if any) */
                         var prereqs = from p in db.UnitPrerequisites
-                            where unitToCheck.Contains(p.unit_code)
+                            where unitToCheck.FirstOrDefault().unit_code == p.unit_code
                             where p.course_code == courseCode
                             select p.prereq_code;
 
@@ -1416,6 +1556,43 @@ namespace custom_study_plan_generator.Controllers
                         var prereqNames = from u in db.Units
                             where prereqs.Contains(u.unit_code)
                             select u.name;
+
+                        /* Get the semester availaibility */
+                        bool sem1 = unitToCheck.FirstOrDefault().semester1;
+                        bool sem2 = unitToCheck.FirstOrDefault().semester2;
+                        bool addedToList = false;
+
+                        /* Set initial semester checking variables */
+                        string semAvailable = "both";
+                        string thisSemester = "";
+
+                        /* Set this semester to odd or even based on the plan table headings */
+                        if (semCount % 2 == 0)
+                        {
+                            thisSemester = "even";
+                        }
+                        else
+                        {
+                            thisSemester = "odd";
+                        }
+
+                        /* Set the semester availaible for the unit based on the unit and the starting semester (If not set will be "both") */
+                        if (sem1 == true && sem2 == false && startSemester == 1)
+                        {
+                            semAvailable = "odd";
+                        }
+                        if (sem1 == true && sem2 == false && startSemester == 2)
+                        {
+                            semAvailable = "even";
+                        }
+                        if (sem1 == false && sem2 == true && startSemester == 1)
+                        {
+                            semAvailable = "even";
+                        }
+                        if (sem1 == false && sem2 == true && startSemester == 2)
+                        {
+                            semAvailable = "odd";
+                        }
 
                         /* If the unit has both it's prereqs before it, do nothing, else add it to the violated list */
                         if (prereqNames.Count() > 0)
@@ -1430,8 +1607,31 @@ namespace custom_study_plan_generator.Controllers
                             }
                         }
 
+                        /* If not already added to list */
+                        if (addedToList == false)
+                        {
+                            /* If not available both semesters */
+                            if (semAvailable != "both")
+                            {
+
+                                /* If not in the correct semester */
+                                if (thisSemester != semAvailable)
+                                {
+                                    violatedList.Add(unit);
+                                }
+                            }
+                        }
+
+
+
                         ViewBag.violatedList = violatedList;
                     }
+
+                    if (count % 4 == 0)
+                    {
+                        semCount++;
+                    }
+                    count++;
 
                 }
 

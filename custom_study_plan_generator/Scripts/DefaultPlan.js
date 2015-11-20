@@ -11,8 +11,8 @@ $(document).ready(function () {
 
     /* Dynamic sizing of background divs and table height */
     var heightTable = $('#planTable').height();
-    $('#textDefault').css("height", heightTable * 3.1);
-    $('#backerDefault').css("height", heightTable * 3.3);
+    $('#textDefault').css("height", heightTable * 3.6);
+    $('#backerDefault').css("height", heightTable * 3.8);
 
     var heightTopCell = $('#topCell').height();
     var heightp1 = $('#p1').height();
@@ -637,7 +637,7 @@ function tooltip(target, name) {
                 }
                     /* If prereqs */
                 else {
-                    $(jId).text("Prerequsites: " + data);
+                    $(jId).text(data);
                 }
 
 
