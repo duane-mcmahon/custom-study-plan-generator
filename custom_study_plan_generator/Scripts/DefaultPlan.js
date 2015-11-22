@@ -562,66 +562,7 @@ function dragend(ev, target) {
 
         }
 
-            // If moved WITHIN the Default Plan, update the unit positions in the plan.
-        /*else if ($(target).parent().hasClass('planCell') &&
-            (dragParentId.indexOf(PLAN_CELL) === 0)) {
-
-            var idRawFrom = dragParentId;
-            var idString = idRawFrom.toString();
-            var idFrom = idString.replace(/\D/g, '');
-
-            var idRawTo = $(target).parent().attr('id');
-            var idStringTo = idRawTo.toString();
-            var idTo = idStringTo.replace(/\D/g, '');
-
-            var data = idFrom + "," + idTo;
-
-
-            $.ajax({
-                url: "../Home/DefaultPlanMove",
-                type: "POST",
-                data: { data: data },
-                success: function (data) {
-                    $('.innerCell').attr("draggable", "true");
-                    $('.prevent').css("display", "none");
-                    preventProgress = false;
-                },
-                error: function (data) {
-                    alert("Error adding unit, please refresh the page.");
-                }
-            });
-
-        }*/
-
-            // If moved WITHIN the swap space, move it to its new position in the session swap list.
-        /*else if ($(target).parent().hasClass('swapSpaceCell') &&
-                  (dragParentId.indexOf(SWAP_CELL) === 0)) {
-
-            var idRawFrom = dragParentId;
-            var idStringFrom = idRawFrom.toString();
-            var idFrom = idStringFrom.replace(/\D/g, '');
-
-            var idRawTo = $(target).parent().attr('id');
-            var idStringTo = idRawTo.toString();
-            var idTo = idStringTo.replace(/\D/g, '');
-
-            dataAdd = idFrom + "," + idTo;
-
-            $.ajax({
-                url: "../Home/DefaultPlanSwap",
-                type: "POST",
-                data: { data: dataAdd },
-                success: function (data) {
-                    $('.innerCell').attr("draggable", "true");
-                    $('.prevent').css("display", "none");
-                    preventProgress = false;
-                },
-                error: function (data) {
-                    alert("Error moving unit, please refresh the page.");
-                }
-            });
-
-        }*/
+      
 
     }
         /* Drag failed */

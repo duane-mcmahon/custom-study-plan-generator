@@ -332,7 +332,7 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
                     var hasPrereqNode = node;
                     System.Diagnostics.Debug.WriteLine("node looking at is:");
                     System.Diagnostics.Debug.Write(node.Value.UnitName);
-                    string preReq = node.Value.PreReq.First();
+                    string preReq = getLatestPrereqInCourse(node.Value.PreReq);
 
                     // Looping forward in the list
                     while (node != null)
@@ -449,11 +449,12 @@ namespace custom_study_plan_generator.StudyPlanAlgorithm
             var currentLatestPreqIndex = 0;
             var foundPrereqIndex = 0;
 
-            var node = course.courseStructure.First;
+            
             // Check through all the prereqs in the list to find
             // the lowest one in the course structure
             foreach (string preReq in prereqList)
             {
+                var node = course.courseStructure.First;
                 while (node != null)
                 {
                     var nextNode = node.Next;
