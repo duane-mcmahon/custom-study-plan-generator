@@ -121,6 +121,7 @@ namespace custom_study_plan_generator.Controllers
 
         public ActionResult DefaultPlan(string courseSelect)
         {
+            
             /* Reset the unit list if the course dropdown list changes */
             if (Session["CurrentCourse"] != null)
             {
@@ -192,6 +193,7 @@ namespace custom_study_plan_generator.Controllers
                     /* Select the plan that matches the meta course */
                     plans = plans.Where(u => u.course_code == course.course_code).OrderBy(u => u.unit_no);
 
+
                     /* join the units and plans tables to make them sortable by semester */
                     var query = db.Units.Join(plans, u => u.unit_code, p => p.unit_code,
                         (order, plan) => new {plan.unit_no, order.name});
@@ -211,7 +213,7 @@ namespace custom_study_plan_generator.Controllers
                     {
                         if (selectedList.ElementAtOrDefault(x) == null)
                         {
-                            selectedList.Insert(x, "");
+                            selectedList.Insert(x, null);
                         }
                     }
 
@@ -243,6 +245,7 @@ namespace custom_study_plan_generator.Controllers
                     /* Loop through the unit list */
                     var count = 1;
                     var semCount = 1;
+                 
                     foreach (var unit in unitList)
                     {
 
@@ -370,9 +373,10 @@ namespace custom_study_plan_generator.Controllers
             var data = Request["data"].ToString();
             var dataSplit = data.Split(',');
             var from = dataSplit[0];
-            var fromInt = Convert.ToInt32(from) - 1;
+            var fromInt = Convert.ToInt32(from) -1;
             var to = dataSplit[1];
-            var toInt = Convert.ToInt32(to) - 1;
+            var toInt = Convert.ToInt32(to) -1;
+            var fromCell = dataSplit[2];
 
             var unitList = Session["DefaultPlanList"] as List<string>;
             var defaultPlanSwap = new List<string>();
@@ -390,11 +394,17 @@ namespace custom_study_plan_generator.Controllers
 
             defaultPlanSwap = Session["DefaultPlanSwap"] as List<string>;
 
-            // Move the unit from Swap Space to the selected position in the Student Plan.
-            unitList[toInt] = defaultPlanSwap[fromInt];
+            if (fromCell == "fromPlan")
+            {
+                unitList[toInt] = unitList[fromInt];
+                unitList[fromInt] = null;
 
-            // Reset the previous/from position as null.
-            defaultPlanSwap[fromInt] = null;
+            }
+            else if (fromCell == "fromSwap")
+            {
+                unitList[toInt] = defaultPlanSwap[fromInt];
+                defaultPlanSwap[fromInt] = null;
+            }
 
             // Update Session variables.
             Session["DefaultPlanList"] = unitList;
@@ -412,6 +422,7 @@ namespace custom_study_plan_generator.Controllers
             var fromInt = Convert.ToInt32(from) - 1;
             var to = dataSplit[1];
             var toInt = Convert.ToInt32(to) - 1;
+            var fromCell = dataSplit[2];
 
             var unitList = Session["DefaultPlanList"] as List<string>;
             var defaultPlanSwap = new List<string>();
@@ -429,11 +440,16 @@ namespace custom_study_plan_generator.Controllers
 
             defaultPlanSwap = Session["DefaultPlanSwap"] as List<string>;
 
-            // Move the unit from Default Plan to the selected Swap Space.
-            defaultPlanSwap[toInt] = unitList[fromInt];
-
-            // Reset the previous/from position as null.
-            unitList[fromInt] = null;
+            if (fromCell == "fromPlan")
+            {
+                defaultPlanSwap[toInt] = unitList[fromInt];
+                unitList[fromInt] = null;
+            }
+            else if (fromCell == "fromSwap")
+            {
+                defaultPlanSwap[toInt] = defaultPlanSwap[fromInt];
+                defaultPlanSwap[fromInt] = null;
+            }
 
             // Update Session variable.
             Session["DefaultPlanList"] = unitList;

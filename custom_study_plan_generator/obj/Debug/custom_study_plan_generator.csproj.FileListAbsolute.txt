@@ -388,4 +388,3 @@ C:\Users\Duane\Documents\Visual Studio 2013\Projects\development_branch\custom_s
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Script.v1.dll
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Script.v1.pdb
 D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\bin\Google.Apis.Script.v1.xml
-D:\Users\Michael\DocumentsD\Programming\Repositories\ProgrammingProject\custom_study_plan_generator\obj\Debug\custom_study_plan_generator.csprojResolveAssemblyReference.cache

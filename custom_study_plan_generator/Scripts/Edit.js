@@ -264,7 +264,7 @@ function dragend(ev, target) {
         else if ($(target).parent().hasClass('planCell')) {
 
             var idRawFrom = dragParentId;
-            if (idRawFrom.indexOf("p") > -1) {
+            if (idRawFrom.indexOf("p") > -1) { 
                 var idStringFrom = idRawFrom.toString();
                 var idFrom = idStringFrom.substring(1);
                 var fromPlan = true;

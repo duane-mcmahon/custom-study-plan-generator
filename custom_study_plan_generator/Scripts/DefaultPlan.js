@@ -470,18 +470,35 @@ function dragend(ev, target) {
 
 
         /* If moved TO the swap space, remove unit from session plan */
-        if ($(target).parent().hasClass('swapSpaceCell') &&
-            (dragParentId.indexOf(PLAN_CELL) === 0)) {
+        if ($(target).parent().hasClass('swapSpaceCell')) {
 
             var idRawFrom = dragParentId;
-            var idString = idRawFrom.toString();
-            var idFrom = idString.replace(/\D/g, '');
 
-            var idRawTo = $(target).parent().attr('id');
+            if (idRawFrom.indexOf("ss") > -1) {
+                var idStringFrom = idRawFrom.toString();
+                var idFrom = idStringFrom.substring(2);
+                var fromSwap = true;
+            }
+            else {
+                var idStringFrom = idRawFrom.toString();
+                var idFrom = idStringFrom.substring(1);
+                var fromSwap = false;
+            }
+
+            var dataRemove = idFrom;
+
+            var idRawTo = $(target).parent().attr("id");
             var idStringTo = idRawTo.toString();
-            var idTo = idStringTo.replace(/\D/g, '');
+            var idTo = idStringTo.substring(2);
 
-            dataRemove = idFrom + "," + idTo;
+            dataRemove += "," + idTo;
+
+            if (fromSwap == true) {
+                dataRemove += "," + "fromSwap";
+            }
+            else {
+                dataRemove += "," + "fromPlan";
+            }
 
             $.ajax({
                 url: "../Home/DefaultPlanRemove",
@@ -500,38 +517,53 @@ function dragend(ev, target) {
         }
 
             // If moved TO the plan, add unit to session plan.
-        else if ($(target).parent().hasClass('planCell') &&
-            (dragParentId.indexOf(SWAP_CELL) === 0)) {
+        else if ($(target).parent().hasClass('planCell')) {
 
             var idRawFrom = dragParentId;
-            var idString = idRawFrom.toString();
-            var idFrom = idString.replace(/\D/g, '');
+            if (idRawFrom.indexOf("p") > -1) {
+                var idStringFrom = idRawFrom.toString();
+                var idFrom = idStringFrom.substring(1);
+                var fromPlan = true;
+            }
+            else {
+                var idStringFrom = idRawFrom.toString();
+                var idFrom = idStringFrom.substring(2);
+                var fromPlan = false;
+            }
+
+            var dataAdd = idFrom;
 
             var idRawTo = $(target).parent().attr('id');
             var idStringTo = idRawTo.toString();
-            var idTo = idStringTo.replace(/\D/g, '');
+            var idTo = idStringTo.substring(1);
 
-            var data = idFrom + "," + idTo;
+            dataAdd += "," + idTo;
 
+            if (fromPlan == true) {
+                dataAdd += "," + "fromPlan";
+            }
+            else {
+                dataAdd += "," + "fromSwap";
+            }
 
             $.ajax({
                 url: "../Home/DefaultPlanAdd",
                 type: "POST",
-                data: { data: data },
+                data: { data: dataAdd },
                 success: function (data) {
                     $('.innerCell').attr("draggable", "true");
                     $('.prevent').css("display", "none");
                     preventProgress = false;
                 },
                 error: function (data) {
-                    alert("Error adding unit, please refresh the page.");
+                    alert("Error adding unit, please refresh the page." + data.responseText);
                 }
             });
 
         }
 
             // If moved WITHIN the Default Plan, update the unit positions in the plan.
-        else if ($(target).parent().hasClass('planCell') &&
+        /*else if ($(target).parent().hasClass('planCell') &&
             (dragParentId.indexOf(PLAN_CELL) === 0)) {
 
             var idRawFrom = dragParentId;
@@ -559,10 +591,10 @@ function dragend(ev, target) {
                 }
             });
 
-        }
+        }*/
 
             // If moved WITHIN the swap space, move it to its new position in the session swap list.
-        else if ($(target).parent().hasClass('swapSpaceCell') &&
+        /*else if ($(target).parent().hasClass('swapSpaceCell') &&
                   (dragParentId.indexOf(SWAP_CELL) === 0)) {
 
             var idRawFrom = dragParentId;
@@ -589,7 +621,7 @@ function dragend(ev, target) {
                 }
             });
 
-        }
+        }*/
 
     }
         /* Drag failed */
