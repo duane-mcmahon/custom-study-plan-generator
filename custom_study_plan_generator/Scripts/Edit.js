@@ -133,15 +133,16 @@ $(document).ready(function () {
 });
 
 $(window).on('resize', function () {
-    var widthBacker = $('#backerEdit').width();
-    var widthText = $('#textEdit').width();
-    $('#backerEdit').css("height", widthBacker * .75);
-    $('#textEdit').css("height", widthText * .73);
+
+    var heightTable = $('#planTable').height();
+    $('#textEdit').css("height", heightTable * 2.7);
+    $('#backerEdit').css("height", heightTable * 2.9);
 
     var heightTopCell = $('#topCell').height();
     var heightp1 = $('#p1').height();
 
     $('#planTable').css("height", heightTopCell + (heightp1 * 4));
+
 });
 
 

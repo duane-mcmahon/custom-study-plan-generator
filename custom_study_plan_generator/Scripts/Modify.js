@@ -4,7 +4,6 @@ var preventProgress = false;
 $(document).ready(function () {
     
     /* Dynamic sizing of background divs and table height */
-
     var heightTable = $('#planTable').height();
     $('#textEdit').css("height", heightTable * 2.7);
     $('#backerEdit').css("height", heightTable * 2.9);
