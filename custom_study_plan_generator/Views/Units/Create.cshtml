@@ -45,14 +45,6 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.type_code, "Unit Type", htmlAttributes: new { @class = "control-label col-md-2 CRUDFont prequisiteCreateTitle" })
-                <div class="col-md-10">
-                    @Html.DropDownList("type_code", new SelectList(ViewBag.type_code, "Value", "Text"), new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.type_code, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
                 @Html.LabelFor(model => model.semester1, "Semester 1", htmlAttributes: new { @class = "control-label col-md-2 CRUDFont prequisiteCreateTitle" })
                 <div class="col-md-10">
                     <div class="checkbox">

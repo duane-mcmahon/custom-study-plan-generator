@@ -18,10 +18,6 @@ namespace custom_study_plan_generator.MetaObjects
         [Required]
         public string name { get; set; }
 
-        [NotMapped]
-        [Required]
-        public string type_code { get; set; }
-
         /* Will need client side validation to make sure on or the other is set */
         [NotMapped]
         public bool semester1 { get; set; }

@@ -28,7 +28,7 @@ namespace custom_study_plan_generator.Controllers
         [Authorize]
         public ActionResult Create()
         {
-            ViewBag.type_code = new SelectList(db.UnitTypes, "type_code", "Description");
+
             return View();
         }
 
@@ -38,7 +38,7 @@ namespace custom_study_plan_generator.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Create([Bind(Include = "unit_code,name,type_code,semester1,semester2")] UnitMeta unit)
+        public ActionResult Create([Bind(Include = "unit_code,name,semester1,semester2")] UnitMeta unit)
         {
 
             var unitCheck = from un in db.Units
@@ -54,11 +54,10 @@ namespace custom_study_plan_generator.Controllers
             Unit unitAdd = new Unit();
             unitAdd.unit_code = unit.unit_code;
             unitAdd.name = unit.name;
-            unitAdd.type_code = unit.type_code;
+            /* Hard coded, does is exist but not used by the web application */
+            unitAdd.type_code = "c";
             unitAdd.semester1 = unit.semester1;
             unitAdd.semester2 = unit.semester2;
-
-            ViewBag.type_code = new SelectList(db.UnitTypes, "type_code", "Description");
             
             if (ModelState.IsValid)
             {
@@ -94,7 +93,6 @@ namespace custom_study_plan_generator.Controllers
             UnitMeta unitEdit = new UnitMeta();
             unitEdit.unit_code = unit.unit_code;
             unitEdit.name = unit.name;
-            unitEdit.type_code = unit.type_code;
             unitEdit.semester1 = unit.semester1;
             unitEdit.semester2 = unit.semester2;
 
@@ -102,7 +100,6 @@ namespace custom_study_plan_generator.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.type_code = new SelectList(db.UnitTypes, "type_code", "Description", unit.type_code);
             return View(unitEdit);
         }
 
@@ -112,11 +109,18 @@ namespace custom_study_plan_generator.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public ActionResult Edit([Bind(Include = "unit_code,name,type_code,semester1,semester2")] Unit unit)
+        public ActionResult Edit([Bind(Include = "unit_code,name,semester1,semester2")] UnitMeta unit)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(unit).State = EntityState.Modified;
+                Unit unitAdd = new Unit();
+                unitAdd.unit_code = unit.unit_code;
+                unitAdd.name = unit.name;
+                unitAdd.semester1 = unit.semester1;
+                unitAdd.semester2 = unit.semester2;
+                unitAdd.type_code = "c";
+                
+                db.Entry(unitAdd).State = EntityState.Modified;
                 
                 try
                 {
@@ -130,7 +134,7 @@ namespace custom_study_plan_generator.Controllers
 
                 return RedirectToAction("Index");
             }
-            ViewBag.type_code = new SelectList(db.UnitTypes, "type_code", "Description", unit.type_code);
+
             return View(unit);
         }
 

@@ -57,7 +57,7 @@
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.mutiple_required, "Mutliple Prerequsistes", htmlAttributes: new { @class = "control-label col-md-2 CRUDFont prequisiteCreateTitle" })
+                @Html.LabelFor(model => model.mutiple_required, "Multiple Prerequisites (a AND b AND c...)", htmlAttributes: new { @class = "control-label col-md-2 CRUDFont prequisiteCreateTitle" })
                 <div class="col-md-10 prerequsiteCRUDCreateRow">
                     <div class="checkbox">
                         @Html.EditorFor(model => model.mutiple_required)

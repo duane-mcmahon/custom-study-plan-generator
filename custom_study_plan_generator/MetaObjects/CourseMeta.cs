@@ -19,7 +19,7 @@ namespace custom_study_plan_generator.MetaObjects
         
         [NotMapped]
         [Required(ErrorMessage = "Number of Units is required")]
-        [Range(0, 20, ErrorMessage = "The number of units must be between 0 and 32 (Maximum 4 years)")]
+        [Range(0, 32, ErrorMessage = "The number of units must be between 0 and 32 (Maximum 4 years)")]
         public int num_units { get; set; }
 
         [NotMapped]

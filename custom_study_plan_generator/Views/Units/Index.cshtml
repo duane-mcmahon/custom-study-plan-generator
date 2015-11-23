@@ -37,9 +37,6 @@
         <th>
             Semester 2
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UnitType.Description)
-        </th>
         <th></th>
     </tr>
 
@@ -57,9 +54,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.semester2)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UnitType.Description)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.unit_code }, new { @class = "prerequisitesCRUDLink CRUDFont" }) |
