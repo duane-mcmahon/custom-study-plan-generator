@@ -39,18 +39,18 @@ $(document).ready(function () {
 
                     /* Create hover icon */
                     var hoverId = 'hover' + count;
-                    $(innerCellId).append("<img id = '" + hoverId + "' class = 'hoverModify' src = '../Content/Images/hover.png' />");
+                    $(innerCellId).append("<img id = '" + hoverId + "' class = 'hoverModify' src = '../Content/Images/hover.png' draggable = 'false' />");
 
                     /* Create prevent icon */
                     var preventId = 'prevent' + count;
-                    $(innerCellId).append("<img id = '" + preventId + "' class = 'prevent' src = '../Content/Images/prevent.png' />");
+                    $(innerCellId).append("<img id = '" + preventId + "' class = 'prevent' src = '../Content/Images/prevent.png' draggable = 'false' />");
                 }
 
                 /* Create prereq violated exclamation mark icon where required */
                 for (var x = 0; x < violatedListConverted.length; x++) {
                     if (entry == violatedListConverted[x]) {
                         var exclamationId = 'exclamation' + count;
-                        $(innerCellId).append("<img id = '" + exclamationId + "' class = 'exclamation' src = '../Content/Images/exclamation.png' />");
+                        $(innerCellId).append("<img id = '" + exclamationId + "' class = 'exclamation' src = '../Content/Images/exclamation.png' draggable = 'false' />");
                     }
                 }
             }
@@ -76,11 +76,11 @@ $(document).ready(function () {
 
                     /* Create hover icon */
                     var hoverId = 'hover' + count;
-                    $(innerCellId).append("<img id = '" + hoverId + "' class = 'hover' src = '../Content/Images/hover.png' />");
+                    $(innerCellId).append("<img id = '" + hoverId + "' class = 'hover' src = '../Content/Images/hover.png' draggable = 'false' />");
 
                     /* Create prevent icon */
                     var preventId = 'prevent' + count;
-                    $(innerCellId).append("<img id = '" + preventId + "' class = 'prevent' src = '../Content/Images/prevent.png' />");
+                    $(innerCellId).append("<img id = '" + preventId + "' class = 'prevent' src = '../Content/Images/prevent.png' draggable = 'false' />");
                 }
 
             }
@@ -133,15 +133,16 @@ $(document).ready(function () {
 });
 
 $(window).on('resize', function () {
-    var widthBacker = $('#backerEdit').width();
-    var widthText = $('#textEdit').width();
-    $('#backerEdit').css("height", widthBacker * .75);
-    $('#textEdit').css("height", widthText * .73);
+
+    var heightTable = $('#planTable').height();
+    $('#textEdit').css("height", heightTable * 2.7);
+    $('#backerEdit').css("height", heightTable * 2.9);
 
     var heightTopCell = $('#topCell').height();
     var heightp1 = $('#p1').height();
 
     $('#planTable').css("height", heightTopCell + (heightp1 * 4));
+
 });
 
 
