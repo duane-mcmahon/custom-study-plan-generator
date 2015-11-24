@@ -45,15 +45,15 @@ $(document).ready(function () {
 
                 /* Create hover icon */
                 var hoverId = 'hover' + count;
-                $(innerCellId).append("<img id = '" + hoverId + "' class = 'hover' src = '../Content/Images/hover.png' />");
+                $(innerCellId).append("<img id = '" + hoverId + "' class = 'hover' src = '../Content/Images/hover.png' draggable = 'false' />");
 
                 /* Create prevent icon */
                 var preventId = 'prevent' + count;
-                $(innerCellId).append("<img id = '" + preventId + "' class = 'prevent' src = '../Content/Images/prevent.png' />");
+                $(innerCellId).append("<img id = '" + preventId + "' class = 'prevent' src = '../Content/Images/prevent.png' draggable = 'false' />");
 
                 /* Create delete icon */
                 var deleteId = 'delete' + count;
-                $(innerCellId).append("<img id = '" + deleteId + "' class = 'delete' src = '../Content/Images/delete.png' />");
+                $(innerCellId).append("<img id = '" + deleteId + "' class = 'delete' src = '../Content/Images/delete.png' draggable = 'false' />");
 
             }
 
@@ -61,7 +61,7 @@ $(document).ready(function () {
             for (var x = 0; x < violatedListConverted.length; x++) {
                 if (entry == violatedListConverted[x]) {
                     var exclamationId = 'exclamation' + count;
-                    $(innerCellId).append("<img id = '" + exclamationId + "' class = 'exclamation' src = '../Content/Images/exclamation.png' />");
+                    $(innerCellId).append("<img id = '" + exclamationId + "' class = 'exclamation' src = '../Content/Images/exclamation.png' draggable = 'false' />");
                 }
             }
             count++
@@ -86,15 +86,15 @@ $(document).ready(function () {
 
                     // Create hover icon.
                     var hoverId = 'hover' + count;
-                    $(innerCellId).append("<img id = '" + hoverId + "' class = 'hover' src = '../Content/Images/hover.png' />");
+                    $(innerCellId).append("<img id = '" + hoverId + "' class = 'hover' src = '../Content/Images/hover.png' draggable = 'false' />");
 
                     // Create prevent icon.
                     var preventId = 'prevent' + count;
-                    $(innerCellId).append("<img id = '" + preventId + "' class = 'prevent' src = '../Content/Images/prevent.png' />");
+                    $(innerCellId).append("<img id = '" + preventId + "' class = 'prevent' src = '../Content/Images/prevent.png' draggable = 'false' />");
 
                     // Create delete icon.
                     var deleteId = 'delete' + count;
-                    $(innerCellId).append("<img id = '" + deleteId + "' class = 'delete' src = '../Content/Images/delete.png' />");
+                    $(innerCellId).append("<img id = '" + deleteId + "' class = 'delete' src = '../Content/Images/delete.png' draggable = 'false' />");
                 }
 
             }
@@ -265,13 +265,13 @@ $(document).ready(function () {
 
                     // Create hover icon.
                     var hoverId = 'hover' + id;
-                    $(innerCellId).append("<img id = '" + hoverId + "' class = 'hover' src = '../Content/Images/hover.png' />");
+                    $(innerCellId).append("<img id = '" + hoverId + "' class = 'hover' src = '../Content/Images/hover.png' draggable = 'false' />");
                     var jId = "#" + hoverId;
                     tooltip(jId, "tooltip");
 
                     // Create delete icon.
                     var deleteId = 'delete' + id;
-                    $(innerCellId).append("<img id = '" + deleteId + "' class = 'delete' src = '../Content/Images/delete.png' />");
+                    $(innerCellId).append("<img id = '" + deleteId + "' class = 'delete' src = '../Content/Images/delete.png' draggable = 'false' />");
 
                     // Reset the delete cell click function to include this unit.
                     $('.delete').click(function () {

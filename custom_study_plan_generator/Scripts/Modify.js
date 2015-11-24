@@ -4,7 +4,6 @@ var preventProgress = false;
 $(document).ready(function () {
     
     /* Dynamic sizing of background divs and table height */
-
     var heightTable = $('#planTable').height();
     $('#textEdit').css("height", heightTable * 2.7);
     $('#backerEdit').css("height", heightTable * 2.9);
@@ -40,18 +39,18 @@ $(document).ready(function () {
 
                     /* Create hover icon */
                     var hoverId = 'hover' + count;
-                    $(innerCellId).append("<img id = '" + hoverId + "' class = 'hoverModify' src = '../Content/Images/hover.png' />");
+                    $(innerCellId).append("<img id = '" + hoverId + "' class = 'hoverModify' src = '../Content/Images/hover.png' draggable = 'false' />");
 
                     /* Create prevent icon */
                     var preventId = 'prevent' + count;
-                    $(innerCellId).append("<img id = '" + preventId + "' class = 'prevent' src = '../Content/Images/prevent.png' />");
+                    $(innerCellId).append("<img id = '" + preventId + "' class = 'prevent' src = '../Content/Images/prevent.png' draggable = 'false' />");
                 }
 
                 /* Create prereq violated exclamation mark icon where required */
                 for (var x = 0; x < violatedListConverted.length; x++) {
                     if (entry.name == violatedListConverted[x]) {
                         var exclamationId = 'exclamation' + count;
-                        $(innerCellId).append("<img id = '" + exclamationId + "' class = 'exclamation' src = '../Content/Images/exclamation.png' />");
+                        $(innerCellId).append("<img id = '" + exclamationId + "' class = 'exclamation' src = '../Content/Images/exclamation.png' draggable = 'false' />");
                     }
                 }
             }
@@ -77,11 +76,11 @@ $(document).ready(function () {
 
                     /* Create hover icon */
                     var hoverId = 'hover' + count;
-                    $(innerCellId).append("<img id = '" + hoverId + "' class = 'hover' src = '../Content/Images/hover.png' />");
+                    $(innerCellId).append("<img id = '" + hoverId + "' class = 'hover' src = '../Content/Images/hover.png' draggable = 'false' />");
 
                     /* Create prevent icon */
                     var preventId = 'prevent' + count;
-                    $(innerCellId).append("<img id = '" + preventId + "' class = 'prevent' src = '../Content/Images/prevent.png' />");
+                    $(innerCellId).append("<img id = '" + preventId + "' class = 'prevent' src = '../Content/Images/prevent.png' draggable = 'false' />");
                 }
 
             }
