@@ -413,9 +413,9 @@
     <Content Include="Documentation\StudyPlanGeneratorUseCases.pdf" />
     <Content Include="Documentation\Custom Study Plan Generator - Trello.pdf" />
     <Content Include="Documentation\BugRegister.pdf" />
+    <Content Include="Google Sheets Script\Code.gs" />
     <Content Include="Documentation\IssuesRegister.pdf" />
     <Content Include="Documentation\TechnicalSolutionDesign.pdf" />
-    <Content Include="Google Sheets Script\Code.gs" />
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
